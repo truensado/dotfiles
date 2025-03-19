@@ -1,12 +1,10 @@
-# ~/.config/chezmoi/chezmoi.toml.tmpl
-
 {{/* Boolean feature tags */}}
 {{- $headless := false -}}
 {{- $desktop := false -}}
 {{- $laptop := false -}}
 {{- $personal := false -}}
 
-{{/* Check Hostaname */}}
+{{/* Check Hostname */}}
 {{- $hostname := .chezmoi.hostname | lower -}}
 
 {{/* Detect host */}}
@@ -16,7 +14,7 @@
   {{- $desktop = true -}}
 {{- end -}}
 
-{{/* Detect headless environment/s */}}
+{{/* Detect headless environment */}}
 {{- if or (not (env "DISPLAY")) (not (env "WAYLAND_DISPLAY")) -}}
   {{- $headless = true -}}
 {{- end -}}
@@ -27,32 +25,33 @@
 {{- end -}}
 
 encryption = "age"
+
 [age]
-    identity = "{{ .chezmoi.homeDir }}/.ssh/id_ed25519"
-    symmetric = true
+identity = "{{ .chezmoi.homeDir }}/.ssh/id_ed25519"
+symmetric = true
 
 [data]
-  laptop = {{ $laptop }}
-  desktop = {{ $desktop }}
-  headless = {{ $headless }}
-  personal = {{ $personal }}
-{{- if .personal }}
-    name = "nsado"
-    email = "171737294+nsado123@users.noreply.github.com"
+laptop = {{ $laptop }}
+desktop = {{ $desktop }}
+headless = {{ $headless }}
+personal = {{ $personal }}
+
+{{- if $personal }}
+name = "nsado"
+email = "171737294+nsado123@users.noreply.github.com"
 {{- else }}
-    name = "{{ promptStringOnce "name" "Enter your name:" }}"
-    email = "{{ promptStringOnce "email" "Enter your email:" }}"
-{{- end -}}
+name = "{{ promptStringOnce "name" "Enter your name:" }}"
+email = "{{ promptStringOnce "email" "Enter your email:" }}"
+{{- end }}
 
 [merge]
-    command = "nvim"
-    args = [
-        "-d",
-        "<< .Destination >>",
-        "<< .Source >>",
-        "<< .Target >>"
-    ]
+command = "nvim"
+args = [
+    "-d",
+    "<< .Destination >>",
+    "<< .Source >>",
+    "<< .Target >>"
+]
 
 [git]
-    autoPush = true
-
+autoPush = true
