@@ -3,19 +3,23 @@
 
 {{- if $boolean.headless }}
 
-# update
-sudo pacman -Syu --noconfirm
+# starting
+echo -e "${LAVENDER}Setting System Up...${NC}\n"
+# ensure system is up to data
+echo -e "${MAROON}Updating System...${NC}\n"
+sudo pacman -Syu --noconfirm --needed && echo -e "${SUCCESS} Pacman packages updated" || echo -e "${FAIL} Pacman update failed"
+
 # Install pacman packages (official repo)
 sudo pacman -S --needed <<EOF
 {{ range .packages.common.pacman -}}
 {{ . | quote }}
-{{ end -}}
+{{- end -}}
 EOF
 {{ if .desktop -}}
 sudo pacman -S --needed <<EOF
 {{ range .packages.desktop.pacman -}}
 {{ . | quote }}
-{{ end -}}
+{{- end -}}
 EOF
 {{ else if .laptop -}}
 sudo pacman -S --needed <<EOF
@@ -29,19 +33,20 @@ EOF
 paru -S --needed <<EOF
 {{ range .packages.common.aur -}}
 {{ . | quote }}
-{{ end -}}
+{{- end -}}
 EOF
 {{ if .desktop -}}
 paru -S --needed <<EOF
 {{ range .packages.desktop.aur -}}
 {{ . | quote }}
-{{ end -}}
+{{- end -}}
 EOF
 {{ else if .laptop -}}
 paru -S --needed <<EOF
 {{ range .packages.laptop.aur -}}
 {{ . | quote }}
-{{ end -}}
-EOF
-
 {{- end -}}
+EOF
+{{ end -}}
+
+{{ end -}}
