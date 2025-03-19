@@ -1,0 +1,13 @@
+[user]
+    name = {{ .name | quote }}
+    email = {{ .email | quote }}
+
+[github]
+    user = {{ .chezmoi.username | quote }}
+
+[core]
+    editor = "nvim"
+
+{{- if .personal }}
+[url "git@github.com:nsado123/"]
+  insteadOf = https://github.com/nsado123/

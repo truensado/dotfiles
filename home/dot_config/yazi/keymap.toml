@@ -1,0 +1,14 @@
+[manager]
+prepend_keymap = [
+    { on = [ "c", "m" ], run = "plugin chmod", desc = "Chmod on selected files" },
+    { on = [ "g", "l" ], run = "cd ~/.local", desc = "Goto ~/.local" },
+    { on = [ "g", "C" ], run = "cd ~/.local/share/chezmoi", desc = "Goto chezmoi" },
+    { on = [ "g", "D" ], run = "cd ~/Documents", desc = "Goto ~/Documents" },
+    { on = [ "g", "p" ], run = "cd ~/Pictures", desc = "Goto ~/Pictures" },
+    { on = [ "<C-d>" ], run = "plugin diff", desc = "Diff the selected with the hovered file" },
+    { on = [ "M" ], run = "plugin mount" },
+    { on = [ "c", "a" ], run = "plugin compress", desc = "Archive selected files" },
+    { on = [ "u" ], run = "plugin restore", desc = "Restore last deleted files/folders" },
+    { on = [ "<C-y>" ], run = "plugin wl-clipboard" },
+    { on = [ "'", ";" ], run = "plugin custom-shell -- auto --interactive", desc = "custom-shell as default, interactive" },
+]

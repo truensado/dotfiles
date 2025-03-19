@@ -1,0 +1,25 @@
+{{- if .personal }}
+#!/usr/bin/env bash
+
+{{ if not (lookPath "ssh") }}
+  echo "OpenSSH is not installed...Installing"
+  sudo pacman -S openssh
+{{- end -}}
+
+{{ if not (lookPath "age") }}
+  echo "Age encryption tool is not installed."
+  sudo pacman -S age
+{{- end -}}
+
+{{ if not (stat "{{ .chezmoi.homeDir }}/.ssh") }}
+  mkdir -p {{ .chezmoi.homeDir }}/.ssh
+  chmod 700 {{ .chezmoi.homeDir }}/.ssh
+{{- end -}}
+
+{{ if not (stat "{{ .chezmoi.homeDir }}/.ssh/id_ed25519") }}
+  age -d -o {{ .chezmoi.homeDir }}/.ssh/id_ed25519 {{ .chezmoi.homeDir }}/.local/share/chezmoi/secrets/id_ed25519.age
+  chmod 600 {{ .chezmoi.homeDir }}/.ssh/id_ed25519
+  cp {{ .chezmoi.homeDir }}/.local/share/chezmoi/secrets/id_ed25519.pub {{ .chezmoi.homeDir }}/.ssh
+{{- end -}}
+
+{{- end -}}

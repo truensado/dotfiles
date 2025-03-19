@@ -1,0 +1,20 @@
+########################################################
+# ____  ____  ____  ____  ____  ____  ____  ____  ____ #
+#||A ||||U ||||T ||||O ||||S ||||T ||||A ||||R ||||T ||#
+#||__||||__||||__||||__||||__||||__||||__||||__||||__||#
+#|/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\||/__\|#
+########################################################
+
+# Applications
+exec-once = uwsm app -- hyprlock &
+exec-once = uwsm app -- swaync &
+exec-once = uwsm app -- swayosd-server &
+exec-once = uwsm app -- nm-applet --indicator &
+exec-once = uwsm app -- blueman-applet &
+exec-once = uwsm app -- waytrogen -r &
+exec-once = uwsm app -- udiskie --no-automount --smart-tray &
+exec-once = uwsm app -- wl-paste --type image --watch clipse &
+exec-once = uwsm app -- clipse -listen &
+{{- if .laptop }}
+exec-once = uwsm app -- libinput-gestures
+{{- end -}}

@@ -1,0 +1,135 @@
+{{- if .headless }}
+#!/usr/bin/env bash
+
+AUR_PACKAGES=(
+  {{- if .desktop }}
+    "prismlauncher-git"
+    "ddcutil"
+  {{- else if .laptop }}
+    "libinput-gestures-git"
+    "auto-cpufreq"
+  {{- end -}}
+  "chezmoi_modify_manager"
+  "topgrade"
+  "waytrogen"
+  "swayosd-git"
+  "uwsm"
+  "bibata-cursor-git"
+  "all-repository-fonts"
+  "dracula-gtk-theme-git"
+  "kvantum-qt6-git"
+  "kvantum-theme-catppuccin-git"
+  "visual-studio-code-bin"
+  "clipse-bin"
+)
+
+# Define Pacman packages
+PACMAN_PACKAGES=(
+  {{- if .desktop }}
+    "nwg-displays"
+    "cachyos-gaming-meta"
+    "cachyos-gaming-applications"
+  {{- end -}}
+  # System Utilities
+  "paru"
+  "btop"
+  "fastfetch"
+  "fish"
+  "starship"
+  "zoxide"
+  "rsync"
+  "git"
+  "jq"
+  "parallel"
+  "imagemagick"
+  "libnotify"
+  "pacman-contrib"
+  "brightnessctl"
+  "7zip"
+  "fd"
+  "fzf"
+  "poppler"
+  "age"
+  "keychain"
+  "openssh"
+  # Hyprland & Wayland Environment
+  "hyprland"
+  "hypridle"
+  "hyprpaper"
+  "hyprlock"
+  "swaync"
+  "nwg-look"
+  "waybar"
+  "wlogout"
+  "wl-clipboard"
+  "slurp"
+  "grimblast-git"
+  "satty"
+  "hyprpolkitagent"
+  "xdg-desktop-portal-hyprland"
+  "xdg-desktop-portal-gtk"
+  # Networking & Bluetooth
+  "networkmanager"
+  "network-manager-applet"
+  "blueman"
+  "bluez"
+  "bluez-utils"
+  "nextcloud-client"
+  "proton-vpn-gtk-app"
+  # File Management
+  "udiskie"
+  "dolphin"
+  "yazi"
+  "ark"
+  "trash-cli"
+  "glow"
+  # Theming & Appearance
+  "qt5ct"
+  "qt6ct"
+  "qt5-wayland"
+  "qt6-wayland"
+  "kde-cli-tools"
+  "tela-circle-icon-theme-dracula"
+  "gtk4"
+  "gtk3"
+  # Pipewire & Audio
+  "pipewire"
+  "pipewire-alsa"
+  "pipewire-audio"
+  "pipewire-jack"
+  "pipewire-pulse"
+  "gst-plugin-pipewire"
+  "wireplumber"
+  "pavucontrol"
+  "pamixer"
+  # Applications
+  "kitty"
+  "rofi-wayland"
+  "spotify-launcher"
+  "vivaldi"
+  "vesktop"
+  "obsidian"
+  "sddm"
+  "cmake"
+  "neovim"
+  # KDE Integration
+  "kwallet"
+  "kwallet-pam"
+  "kio"
+  "qt5-imageformats"
+  "ffmpegthumbs"
+)
+
+# starting
+echo -e "${LAVENDER}Setting System Up...${NC}\n"
+# ensure system is up to data
+echo -e "${MAROON}Updating System...${NC}\n"
+sudo pacman -Syu --noconfirm --needed && echo -e "${SUCCESS} Pacman packages updated" || echo -e "${FAIL} Pacman update failed"
+# install pacman packages
+echo -e "${MAROON}Installing Packages...${NC}\n"
+sudo pacman -S --needed "${PACMAN_PACKAGES[@]}" && echo -e "${SUCCESS} Pacman packages installed" || echo -e "${FAIL} Pacman packages failed to install"
+# install aur packages
+echo -e "${MAROON}Installing Aur Packages...${NC}\n"
+paru -Syu --needed "${AUR_PACKAGES[@]}" && echo -e "${SUCCESS} Aur packages installed" || echo -e "${FAIL} Aur packages failed to install"
+
+{{- end -}}

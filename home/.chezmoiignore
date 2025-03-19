@@ -1,0 +1,8 @@
+secrets/
+~/.config/clipse/clipboard_history.json
+{{- if not .laptop }}
+private_dot_local/share/icons/battery/
+{{- end -}}
+{{- if lookPath "chezmoi_modify_manager" }}
+**/*.src.ini
+{{- end -}}

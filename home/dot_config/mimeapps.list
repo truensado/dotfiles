@@ -1,0 +1,9 @@
+[Added Associations]
+application/zip=ark.desktop;
+
+[Default Applications]
+application/zip=ark.desktop;
+x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/nxm=vortex-steamtinkerlaunch-dl.desktop
+x-scheme-handler/nxm-protocol=vortex-steamtinkerlaunch-dl.desktop
+inode/directory=org.kde.dolphin.desktop

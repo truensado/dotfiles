@@ -1,0 +1,13 @@
+{{- if .personal }}
+[.local/bin/lncrawl]
+  type = "file"
+  url = "https://github.com/dipu-bd/lightnovel-crawler/releases/latest/download/lncrawl"
+  executable = true
+{{- end -}}
+
+{{- if .laptop }}
+[.local/bin/battery-notification-daemon]
+  type = "file"
+  url = "https://github.com/nsado123/battery-notification-daemon/releases/download/rust/battery-notification-daemon"
+  executable = true
+{{- end -}}

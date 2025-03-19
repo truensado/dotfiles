@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+set -a # auto exporting variables
+
+# color codes
+ROSEWATER="\e[38;2;245;224;220m"
+FLAMINGO="\e[38;2;242;205;205m"
+PINK="\e[38;2;245;194;231m"
+MAUVE="\e[38;2;203;166;247m"
+RED="\e[38;2;243;139;168m"
+MAROON="\e[38;2;235;160;172m"
+PEACH="\e[38;2;250;179;135m"
+YELLOW="\e[38;2;249;226;175m"
+GREEN="\e[38;2;166;227;161m"
+TEAL="\e[38;2;148;226;213m"
+BLUE="\e[38;2;137;180;250m"
+LAVENDER="\e[38;2;180;190;254m"
+NC="\e[0m"
+
+#emoji codes
+SUCCESS="${GREEN}\xE2\x9C\x94${NC}"
+FAIL="${RED}\xE2\x9C\x96${NC}"
+WARNING="${RED}\xF0\x9F\x9A\xA8${NC}"
+
+set -e # exit on error
+
+set +a # stop exporting variables
+
+source ./modules/service.sh.tmpl
+source ./modules/misc.sh.tmpl
+
+echo -e "${WARNING}Don't forget to reboot!${NC}"
