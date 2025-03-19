@@ -1,6 +1,8 @@
-{{- if .headless }}
 #!/usr/bin/env bash
 
+{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+
+{{- if $boolean.headless }}
 AUR_PACKAGES=(
   {{- if .desktop }}
     "prismlauncher-git"
@@ -8,8 +10,8 @@ AUR_PACKAGES=(
   {{- else if .laptop }}
     "libinput-gestures-git"
     "auto-cpufreq"
-  {{- end -}}
-  "chezmoi_modify_manager"
+  {{ end }}
+  "chezmoi_modify_manager-git"
   "topgrade"
   "waytrogen"
   "swayosd-git"
@@ -29,7 +31,7 @@ PACMAN_PACKAGES=(
     "nwg-displays"
     "cachyos-gaming-meta"
     "cachyos-gaming-applications"
-  {{- end -}}
+  {{ end }}
   # System Utilities
   "paru"
   "btop"

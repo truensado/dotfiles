@@ -4,15 +4,15 @@
 SYSTEM_SERVICES=(
   {{- if lookPath "sddm" }}
     "sddm"
-  {{- end -}}
-  "swayosd-libinput-backend.service"
+  {{ end }}
+    "swayosd-libinput-backend.service"
 )
 
 # Define user services
 USER_SERVICES=(
   {{- if .laptop }}
     "battery.service"
-  {{- end -}}
+  {{ end }}
   "hyprpolkitagent"
   "waybar"
   "osd.service"

@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+
+{{- if $boolean.headless }}
+
+# update
+sudo pacman -Syu --noconfirm
+# Install pacman packages (official repo)
+sudo pacman -S --needed <<EOF
+{{ range .packages.common.pacman -}}
+{{ . | quote }}
+{{ end -}}
+EOF
+{{ if .desktop -}}
+sudo pacman -S --needed <<EOF
+{{ range .packages.desktop.pacman -}}
+{{ . | quote }}
+{{ end -}}
+EOF
+{{ else if .laptop -}}
+sudo pacman -S --needed <<EOF
+{{ range .packages.laptop.pacman -}}
+{{ . | quote }}
+{{ end -}}
+EOF
+{{- end -}}
+
+# Install AUR packages (using paru)
+paru -S --needed <<EOF
+{{ range .packages.common.aur -}}
+{{ . | quote }}
+{{ end -}}
+EOF
+{{ if .desktop -}}
+paru -S --needed <<EOF
+{{ range .packages.desktop.aur -}}
+{{ . | quote }}
+{{ end -}}
+EOF
+{{ else if .laptop -}}
+paru -S --needed <<EOF
+{{ range .packages.laptop.aur -}}
+{{ . | quote }}
+{{ end -}}
+EOF
+
+{{- end -}}

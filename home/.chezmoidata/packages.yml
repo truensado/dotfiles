@@ -1,0 +1,109 @@
+packages:
+  desktop:
+    pacman:
+      - nwg-displays
+      - cachyos-gaming-meta
+      - cachyos-gaming-applications
+    aur:
+      - prismlauncher-git
+      - ddcutil
+  laptop:
+    pacman:
+    aur:
+      - libinput-gestures-git
+      - auto-cpufreq
+  common:
+    pacman:
+      - paru
+      - btop
+      - fastfetch
+      - fish
+      - starship
+      - zoxide
+      - rsync
+      - git
+      - jq
+      - parallel
+      - imagemagick
+      - libnotify
+      - pacman-contrib
+      - brightnessctl
+      - 7zip
+      - fd
+      - fzf
+      - poppler
+      - age
+      - keychain
+      - openssh
+      - hyprland
+      - hypridle
+      - hyprpaper
+      - hyprlock
+      - swaync
+      - nwg-look
+      - waybar
+      - wlogout
+      - wl-clipboard
+      - slurp
+      - grimblast-git
+      - satty
+      - hyprpolkitagent
+      - xdg-desktop-portal-hyprland
+      - xdg-desktop-portal-gtk
+      - networkmanager
+      - network-manager-applet
+      - blueman
+      - bluez
+      - bluez-utils
+      - nextcloud-client
+      - proton-vpn-gtk-app
+      - udiskie
+      - dolphin
+      - yazi
+      - ark
+      - trash-cli
+      - glow
+      - qt5ct
+      - qt6ct
+      - qt5-wayland
+      - qt6-wayland
+      - kde-cli-tools
+      - tela-circle-icon-theme-dracula
+      - gtk4
+      - gtk3
+      - pipewire
+      - pipewire-alsa
+      - pipewire-audio
+      - pipewire-jack
+      - pipewire-pulse
+      - gst-plugin-pipewire
+      - wireplumber
+      - pavucontrol
+      - pamixer
+      - kitty
+      - rofi-wayland
+      - spotify-launcher
+      - vivaldi
+      - vesktop
+      - obsidian
+      - sddm
+      - cmake
+      - neovim
+      - kwallet
+      - kwallet-pam
+      - kio
+      - qt5-imageformats
+      - ffmpegthumbs
+    aur:
+      - chezmoi_modify_manager-git
+      - topgrade
+      - waytrogen
+      - swayosd-git
+      - uwsm
+      - bibata-cursor-git
+      - all-repository-fonts
+      - dracula-gtk-theme-git
+      - kvantum-qt6-git
+      - kvantum-theme-catppuccin-git
+      - visual-studio-code-bin
+      - clipse-bin

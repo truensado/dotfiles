@@ -1,5 +1,7 @@
-{{- if .headless }}
 #!/usr/bin/env bash
+
+{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+{{- if $boolean.headless }}
 
 USERNAME="{{ .chezmoi.username }}"
 
@@ -25,7 +27,7 @@ case "$response" in
         sddm_autologin && echo -e "${SUCCESS} Autologin set" || echo -e "${FAIL} Autologin failed!"
         ;;
 esac
-{{- end -}}
+{{ end -}}
 
 # ddcutil permissions
 {{- if lookPath "ddcui" }}
@@ -44,7 +46,7 @@ case "$response" in
         echo 'KERNEL=="i2c-[0-9]*", GROUP="i2c", MODE="0660"' | sudo tee /etc/udev/rules.d/45-ddcutil-i2c.rules
         sudo udevadm control --reload-rules && sudo udevadm trigger &> /dev/null && echo -e "${SUCCESS} Group permissions set" || echo -e "${FAIL} Failed to set group permissions!" 
 esac
-{{- end -}}
+{{ end -}}
 
 command -v ya &>/dev/null && ya pack -i -u || echo "yazi not found"
 

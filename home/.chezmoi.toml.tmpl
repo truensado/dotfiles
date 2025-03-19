@@ -1,28 +1,4 @@
-{{/* Boolean feature tags */}}
-{{- $headless := false -}}
-{{- $desktop := false -}}
-{{- $laptop := false -}}
-{{- $personal := false -}}
-
-{{/* Check Hostname */}}
-{{- $hostname := .chezmoi.hostname | lower -}}
-
-{{/* Detect host */}}
-{{- if (contains $hostname "laptop") -}}
-  {{- $laptop = true -}}
-{{- else if contains $hostname "desktop" -}}
-  {{- $desktop = true -}}
-{{- end -}}
-
-{{/* Detect headless environment */}}
-{{- if or (not (env "DISPLAY")) (not (env "WAYLAND_DISPLAY")) -}}
-  {{- $headless = true -}}
-{{- end -}}
-
-{{/* Detect personal */}}
-{{- if eq .chezmoi.username "nsado" -}}
-  {{- $personal = true -}}
-{{- end -}}
+{{- $boolean := includeTemplate "boolean" . | fromJson -}}
 
 encryption = "age"
 
@@ -31,12 +7,10 @@ identity = "{{ .chezmoi.homeDir }}/.ssh/id_ed25519"
 symmetric = true
 
 [data]
-laptop = {{ $laptop }}
-desktop = {{ $desktop }}
-headless = {{ $headless }}
-personal = {{ $personal }}
-
-{{- if $personal }}
+personal = {{ $boolean.personal | toToml }}
+laptop = {{ $boolean.laptop | toToml }}
+desktop = {{ $boolean.desktop | toToml }}
+{{- if $boolean.personal }}
 name = "nsado"
 email = "171737294+nsado123@users.noreply.github.com"
 {{- else }}
