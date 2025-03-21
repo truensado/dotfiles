@@ -1,0 +1,27 @@
+{{- if lookPath "ashell" -}}
+
+clipboardCmd: "kitty --class clipse -e clipse"
+workspaces:
+  visibilityMode: MonitorSpecific
+modules:
+  left:
+    - [Privacy, Workspaces, MediaPlayer]
+  center:
+    - Clock
+  right:
+    - [Tray, Settings]
+appearance:
+  backgroundColor: "#1e1e2e"  # Base
+  primaryColor: "#cba6f7"     # Mauve
+  secondaryColor: "#b4befe"   # Blue
+  successColor: "#a6e3a1"     # Green
+  dangerColor: "#f38ba8"      # Red
+  textColor: "#cdd6f4"        # Text
+  workspaceColors:
+    - "#fab387"              # Peach
+    - "#f9e2af"              # Yellow
+  specialWorkspaceColors:
+    - "#f5c2e7"              # Pink
+    - "#94e2d5"              # Teal
+
+{{- end -}}

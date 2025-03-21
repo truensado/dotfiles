@@ -1,0 +1,6 @@
+{{- if .personal -}}
+.bash_logout
+.bash_profile
+.bashrc
+Templates
+{{- end -}}

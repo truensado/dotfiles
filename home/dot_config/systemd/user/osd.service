@@ -1,7 +1,6 @@
 [Unit]
 Description=SwayOSD Server
 After=swayosd-libinput-backend.service
-Requires=swayosd-libinput-backend.service
 
 [Service]
 ExecStart=/usr/bin/swayosd-server
