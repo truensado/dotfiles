@@ -6,8 +6,8 @@ echo -e "${LAVENDER}Setting System Up...${NC}\n"
 # Ensure system is up to date
 echo -e "${MAROON}Updating System...${NC}\n"
 sudo pacman -Syu --noconfirm --needed && \
-  echo -e "${SUCCESS} Pacman packages updated" || \
-  echo -e "${FAIL} Pacman update failed"
+echo -e "${SUCCESS} Pacman packages updated" || \
+echo -e "${FAIL} Pacman update failed"
 
 # Install pacman packages (common)
 sudo pacman -S --needed <<EOF
