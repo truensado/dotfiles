@@ -15,9 +15,9 @@
 {{- end -}}
 
 {{ if not (stat "{{ .chezmoi.homeDir }}/.ssh/id_ed25519") }}
-  age -d -o {{ .chezmoi.homeDir }}/.ssh/id_ed25519 {{ .chezmoi.sourceDir }}/home/secrets/ssh/id_ed25519.age
+  age -d -o {{ .chezmoi.homeDir }}/.ssh/id_ed25519 {{ .chezmoi.sourceDir }}/secrets/ssh/id_ed25519.age
   chmod 600 {{ .chezmoi.homeDir }}/.ssh/id_ed25519
-  cp {{ .chezmoi.sourceDir }}/home/secrets/ssh/id_ed25519.pub {{ .chezmoi.homeDir }}/.ssh
+  cp {{ .chezmoi.sourceDir }}/secrets/ssh/id_ed25519.pub {{ .chezmoi.homeDir }}/.ssh
 {{- end -}}
 
 {{- end -}}
