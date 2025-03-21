@@ -23,4 +23,5 @@ email = "{{ promptStringOnce "email" "Enter your email:" }}"
     args = ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}", "{{ .Target }}`}}"]
 
 [git]
+    autoCommit = true
     autoPush = true
