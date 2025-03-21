@@ -1,8 +1,16 @@
 {{- if not .laptop }}
 private_dot_local/share/icons/battery/
-dot_config/vivaldi/
-private_dot_secrets/
 {{- end -}}
+
+{{- if not .personal }}
+dot_config/vivaldi/
+secrets/
+{{- end -}}
+
 {{- if lookPath "chezmoi_modify_manager" }}
 **/*.src.ini
+{{- end -}}
+
+{{- if not .desktop }}
+private_dot_local/share/PrismLauncher
 {{- end -}}

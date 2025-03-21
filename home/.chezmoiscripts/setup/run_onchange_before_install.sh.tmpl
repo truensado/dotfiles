@@ -1,52 +1,24 @@
-#!/usr/bin/env bash
-{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+#!/bin/usr/env bash
+{{- $packages := includeTemplate "packages" . | fromYaml -}}
 
-{{- if $boolean.headless }}
-
-# starting
 echo -e "${LAVENDER}Setting System Up...${NC}\n"
-# ensure system is up to data
+
+# Ensure system is up to date
 echo -e "${MAROON}Updating System...${NC}\n"
-sudo pacman -Syu --noconfirm --needed && echo -e "${SUCCESS} Pacman packages updated" || echo -e "${FAIL} Pacman update failed"
+sudo pacman -Syu --noconfirm --needed && \
+  echo -e "${SUCCESS} Pacman packages updated" || \
+  echo -e "${FAIL} Pacman update failed"
 
-# Install pacman packages (official repo)
+# Install pacman packages (common)
 sudo pacman -S --needed <<EOF
-{{ range .packages.common.pacman -}}
+{{- range $packages.packages.pacman }}
 {{ . | quote }}
 {{- end -}}
 EOF
-{{ if .desktop -}}
-sudo pacman -S --needed <<EOF
-{{ range .packages.desktop.pacman -}}
-{{ . | quote }}
-{{- end -}}
-EOF
-{{ else if .laptop -}}
-sudo pacman -S --needed <<EOF
-{{ range .packages.laptop.pacman -}}
-{{ . | quote }}
-{{ end -}}
-EOF
-{{- end -}}
 
-# Install AUR packages (using paru)
+# Install AUR packages (common)
 paru -S --needed <<EOF
-{{ range .packages.common.aur -}}
+{{- range $packages.packages.aur }}
 {{ . | quote }}
 {{- end -}}
 EOF
-{{ if .desktop -}}
-paru -S --needed <<EOF
-{{ range .packages.desktop.aur -}}
-{{ . | quote }}
-{{- end -}}
-EOF
-{{ else if .laptop -}}
-paru -S --needed <<EOF
-{{ range .packages.laptop.aur -}}
-{{ . | quote }}
-{{- end -}}
-EOF
-{{ end -}}
-
-{{ end -}}

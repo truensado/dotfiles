@@ -3,24 +3,21 @@
 {{- if .personal -}}
 
 {{ if not (lookPath "ssh") }}
-  echo "OpenSSH is not installed...Installing"
-  sudo pacman -S openssh
+  echo -e "OpenSSH not installed...Installing\n" && sudo pacman -S openssh || echo "failed to install openssh"
 {{- end -}}
 
 {{ if not (lookPath "age") }}
-  echo "Age encryption tool is not installed."
-  sudo pacman -S age
+  echo -e "Age not installed...Installing\n" && sudo pacman -S age || echo "failed to install age"
 {{- end -}}
 
-{{ if not (stat "{{ .chezmoi.homeDir }}/.ssh") }}
-  mkdir -p {{ .chezmoi.homeDir }}/.ssh
-  chmod 700 {{ .chezmoi.homeDir }}/.ssh
+{{ if not (stat "{{ .chezmoi.homeDir}}/.ssh") }}
+  mkdir -p {{ .chezmoi.homeDir }}/.ssh && chmod 700 {{ .chezmoi.homeDir }}/.ssh || echo "failed to make .ssh directory"
 {{- end -}}
 
 {{ if not (stat "{{ .chezmoi.homeDir }}/.ssh/id_ed25519") }}
-  age -d -o {{ .chezmoi.homeDir }}/.ssh/id_ed25519 {{ .chezmoi.homeDir }}/.local/share/chezmoi/home/secrets/ssh/id_ed25519.age
+  age -d -o {{ .chezmoi.homeDir }}/.ssh/id_ed25519 {{ .chezmoi.sourceDir }}/home/secrets/ssh/id_ed25519.age
   chmod 600 {{ .chezmoi.homeDir }}/.ssh/id_ed25519
-  cp {{ .chezmoi.homeDir }}/.local/share/chezmoi/home/secrets/ssh/id_ed25519.pub {{ .chezmoi.homeDir }}/.ssh
+  cp {{ .chezmoi.sourceDir }}/home/secrets/ssh/id_ed25519.pub {{ .chezmoi.homeDir }}/.ssh
 {{- end -}}
 
 {{- end -}}

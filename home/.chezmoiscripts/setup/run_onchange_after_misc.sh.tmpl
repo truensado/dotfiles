@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
 
-{{- $boolean := includeTemplate "boolean" . | fromJson -}}
-{{- if $boolean.headless }}
-
 # sddm autologin
 {{- if lookPath "sddm" }}
   [ -d "/etc/sddm.conf.d" ] || sudo mkdir -p /etc/sddm.conf.d
   echo -e "[Autologin]\nUser=$USER\nSession=hyprland-uwsm" | sudo tee /etc/sddm.conf.d/autologin.conf
-{{ end -}}
+{{- end }}
 
 # yazi setup
 command -v ya &>/dev/null && ya pack -i -u || echo "yazi not found"
-
-{{- end -}}

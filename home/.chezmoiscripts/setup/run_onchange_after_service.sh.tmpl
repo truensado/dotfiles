@@ -1,9 +1,5 @@
 #!/usr/bin/env bash
 
-{{- $boolean := includeTemplate "boolean" . | fromJson -}}
-
-{{- if $boolean.headless }}
-
 # Define system services
 SYSTEM_SERVICES=(
   {{- if lookPath "sddm" }}
