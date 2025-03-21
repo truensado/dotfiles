@@ -1,0 +1,19 @@
+{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+packages:
+  pacman:
+    - ex
+    {{- if $boolean.desktop }}
+    - ex
+    {{- end }}
+    {{- if $boolean.laptop }}
+    - ex
+    {{- end }}
+  aur:
+    - ex
+    {{- if $boolean.desktop }}
+    - ex
+    {{- end }}
+    - ex
+    {{- if $boolean.laptop }}
+    - ex
+    {{- end }}
