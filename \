@@ -1,0 +1,14 @@
+a
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	deleted:    .chezmoiscripts/run_once_weekly.tmpl
+#	modified:   .chezmoiscripts/setup/run_onchange_before_install.sh.tmpl
+#
+# Untracked files:
+#	.chezmoiscripts/run_maintenance.tmpl
+#
