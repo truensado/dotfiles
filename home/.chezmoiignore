@@ -1,9 +1,9 @@
 {{- if not .laptop }}
-private_dot_local/share/icons/battery/
+.local/share/icons/battery/
 {{- end -}}
 
 {{- if not .personal }}
-dot_config/vivaldi/
+.config/vivaldi/
 secrets/
 {{- end -}}
 
@@ -12,5 +12,5 @@ secrets/
 {{- end -}}
 
 {{- if not .desktop }}
-private_dot_local/share/PrismLauncher
+.local/share/PrismLauncher
 {{- end -}}

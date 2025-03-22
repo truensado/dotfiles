@@ -1,24 +1,17 @@
-#!/bin/usr/env bash
-{{- $packages := includeTemplate "packages" . | fromYaml -}}
+#!/usr/bin/env bash
 
-echo -e "${LAVENDER}Setting System Up...${NC}\n"
+sudo pacman -Syu --noconfirm --needed
 
-# Ensure system is up to date
-echo -e "${MAROON}Updating System...${NC}\n"
-sudo pacman -Syu --noconfirm --needed && \
-echo -e "${SUCCESS} Pacman packages updated" || \
-echo -e "${FAIL} Pacman update failed"
+{{- $packages := includeTemplate "packages" . | fromYaml }}
 
-# Install pacman packages (common)
 sudo pacman -S --needed <<EOF
-{{- range $packages.packages.pacman }}
+{{ range $packages.packages.pacman -}}
 {{ . | quote }}
-{{- end -}}
+{{ end -}}
 EOF
 
-# Install AUR packages (common)
 paru -S --needed <<EOF
-{{- range $packages.packages.aur }}
+{{ range $packages.packages.aur -}}
 {{ . | quote }}
-{{- end -}}
+{{ end -}}
 EOF
