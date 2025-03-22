@@ -4,14 +4,16 @@ sudo pacman -Syu --noconfirm --needed
 
 {{- $packages := includeTemplate "packages" . | fromYaml }}
 
-sudo pacman -S --needed <<EOF
+sudo pacman -S --needed $(cat <<EOF
 {{ range $packages.packages.pacman -}}
-{{ . | quote }}
+{{ . }}
 {{ end -}}
 EOF
+)
 
-paru -S --needed <<EOF
+paru -S --needed $(cat <<EOF
 {{ range $packages.packages.aur -}}
-{{ . | quote }}
+{{ . }}
 {{ end -}}
 EOF
+)
