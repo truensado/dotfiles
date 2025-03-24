@@ -42,7 +42,6 @@ packages:
     - blueman
     - bluez
     - bluez-utils
-    - nextcloud-client
     - proton-vpn-gtk-app
     - udiskie
     - dolphin
@@ -87,6 +86,8 @@ packages:
     - cachyos-gaming-applications
     {{- end }}
   aur:
+    - syshud
+    - nextcloud-client-git
     - proton-mail-bin
     - topgrade
     - waytrogen

@@ -1,9 +1,15 @@
 [Added Associations]
+application/x-php=nvim.desktop;
 application/zip=ark.desktop;
 
 [Default Applications]
+application/x-php=nvim.desktop;
 application/zip=ark.desktop;
+inode/directory=org.kde.dolphin.desktop
 x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/nc=com.nextcloud.desktopclient.nextcloud.desktop
 x-scheme-handler/nxm=vortex-steamtinkerlaunch-dl.desktop
 x-scheme-handler/nxm-protocol=vortex-steamtinkerlaunch-dl.desktop
-inode/directory=org.kde.dolphin.desktop
+
+[Removed Associations]
+application/x-php=vim.desktop;
