@@ -5,7 +5,6 @@ SYSTEM_SERVICES=(
   {{- if lookPath "sddm" }}
     "sddm"
   {{ end }}
-    "swayosd-libinput-backend.service"
 )
 
 # Define user services
@@ -15,7 +14,6 @@ USER_SERVICES=(
   {{ end }}
   "hyprpolkitagent"
   "waybar"
-  "osd.service"
   "hypridle"
 )
 

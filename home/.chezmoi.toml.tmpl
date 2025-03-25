@@ -15,6 +15,7 @@ encryption = "age"
   email = "171737294+nsado123@users.noreply.github.com"
 # secrets
   bw_url = "{{ promptStringOnce . "Bitwarden URL" "Enter your URL:" }}"
+  bw_login = "{{ promptStringOnce . "Bitwarden Login" "Enter your Login:" }}"
 {{- else }}
   name = "{{ promptStringOnce . "name" "Enter your name:" }}"
   email = "{{ promptStringOnce . "email" "Enter your email:" }}"
