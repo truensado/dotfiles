@@ -3,25 +3,27 @@
 encryption = "age"
 
 [age]
-    identity = "{{ .chezmoi.homeDir }}/.ssh/id_ed25519"
-    symmetric = true
+  identity = "{{ .chezmoi.homeDir }}/.ssh/id_ed25519"
+  symmetric = true
 
 [data]
-personal = {{ $boolean.personal | toToml }}
-laptop = {{ $boolean.laptop | toToml }}
-desktop = {{ $boolean.desktop | toToml }}
+  personal = {{ $boolean.personal | toToml }}
+  laptop = {{ $boolean.laptop | toToml }}
+  desktop = {{ $boolean.desktop | toToml }}
 {{- if $boolean.personal }}
-name = "nsado"
-email = "171737294+nsado123@users.noreply.github.com"
+  name = "nsado"
+  email = "171737294+nsado123@users.noreply.github.com"
+# secrets
+  bw_url = "{{ promptStringOnce . "Bitwarden URL" "Enter your URL:" }}"
 {{- else }}
-name = "{{ promptStringOnce "name" "Enter your name:" }}"
-email = "{{ promptStringOnce "email" "Enter your email:" }}"
+  name = "{{ promptStringOnce . "name" "Enter your name:" }}"
+  email = "{{ promptStringOnce . "email" "Enter your email:" }}"
 {{- end }}
 
 [merge]
-    command = "nvim"
-    args = ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}", "{{ .Target }}`}}"]
+  command = "nvim"
+  args = ["-d", "{{`{{ .Destination }}`}}", "{{`{{ .Source }}", "{{ .Target }}`}}"]
 
 [git]
-    autoCommit = true
-    autoPush = true
+  autoCommit = true
+  autoPush = true
