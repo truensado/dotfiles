@@ -9,7 +9,7 @@ return {
       vim.cmd([[colorscheme catppuccin]])
     end,
     opts = {
-	flavour = "mocha",
-    },
-  },
+      flavour = "mocha"
+    }
+  }
 }

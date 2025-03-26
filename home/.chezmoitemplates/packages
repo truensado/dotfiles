@@ -1,6 +1,7 @@
 {{- $boolean := includeTemplate "boolean" . | fromYaml -}}
 packages:
   pacman:
+    - ueberzugpp
     - paru
     - btop
     - fastfetch
