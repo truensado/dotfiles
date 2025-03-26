@@ -12,3 +12,6 @@ prepend_fetchers = [
   { id = "git", name = "*", run  = "git" },
   { id = "git", name = "*/", run  = "git" },
 ]
+
+[preview]
+ueberzug_offset = [15, 4, 80, 40]

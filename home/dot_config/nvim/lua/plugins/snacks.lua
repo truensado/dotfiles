@@ -4,6 +4,7 @@ return {
     priority = 1000,
     lazy = false,
     opts = {
+      animate = { enabled = true },
       bigfile = { enabled = true },
       dashboard = { 
         enabled = true,
@@ -17,8 +18,8 @@ return {
           },
         }
       },
-      explorer = { enabled = true },
       indent = { enabled = true },
+      image = { enabled = true },
       input = { enabled = true },
       picker = { enabled = true },
       notifier = { enabled = true },
