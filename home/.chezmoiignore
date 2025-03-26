@@ -1,3 +1,5 @@
+**/*.src.ini
+
 {{- if not .laptop }}
 .local/share/icons/battery/
 {{- end -}}
@@ -5,10 +7,6 @@
 {{- if not .personal }}
 .config/vivaldi/
 .secrets/
-{{- end -}}
-
-{{- if lookPath "chezmoi_modify_manager" }}
-**/*.src.ini
 {{- end -}}
 
 {{- if not .desktop }}
