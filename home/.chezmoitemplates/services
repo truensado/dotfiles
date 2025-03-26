@@ -1,0 +1,13 @@
+{{- $boolean := includeTemplate "boolean" . | fromYaml -}}
+services:
+  system:
+    {{- if lookPath "sddm" }}
+    - sddm
+    {{- end }}
+  user:
+    {{- if $boolean.laptop }}
+    - battery.service
+    {{- end }}
+    - hyprpolkitagent
+    - hypridle
+    - waybar

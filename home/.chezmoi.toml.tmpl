@@ -1,4 +1,4 @@
-{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+{{- $boolean := includeTemplate "boolean" . | fromYaml -}}
 
 encryption = "age"
 
@@ -7,28 +7,28 @@ encryption = "age"
   symmetric = true
 
 [data]
-  personal = {{ $boolean.personal | toToml }}
-  laptop = {{ $boolean.laptop | toToml }}
-  desktop = {{ $boolean.desktop | toToml }}
+  personal = {{ $boolean.personal }}
+  laptop = {{ $boolean.laptop }}
+  desktop = {{ $boolean.desktop }}
 {{- if $boolean.personal }}
   name = "nsado"
   email = "171737294+nsado123@users.noreply.github.com"
 # secrets
   bw_url = "{{ promptStringOnce . "Bitwarden URL" "Enter your URL:" }}"
   bw_login = "{{ promptStringOnce . "Bitwarden Login" "Enter your Login:" }}"
-{{- else }}
+  bw_pass = "{{ promptStringOnce . "Bitwarden Pass" "Enter your Password:" }}"
+{{ else -}}
   name = "{{ promptStringOnce . "name" "Enter your name:" }}"
   email = "{{ promptStringOnce . "email" "Enter your email:" }}"
 {{- end }}
-
 [merge]
-    command = "nvim"
-    args = [
-        "-d",
-        {{ printf "%q" "{{ .Destination }}" }},
-        {{ printf "%q" "{{ .Source }}" }},
-        {{ printf "%q" "{{ .Target }}" }},
-    ]
+  command = "nvim"
+  args = [
+      "-d",
+      {{ printf "%q" "{{ .Destination }}" }},
+      {{ printf "%q" "{{ .Source }}" }},
+      {{ printf "%q" "{{ .Target }}" }},
+  ]
 
 [git]
   autoCommit = true

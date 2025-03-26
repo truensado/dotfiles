@@ -1,27 +1,9 @@
 #!/usr/bin/env bash
 
-# Define system services
-SYSTEM_SERVICES=(
-  {{- if lookPath "sddm" }}
-    "sddm"
-  {{ end }}
-)
+{{- $services := includeTemplate "services" . | fromYaml }}
 
-# Define user services
-USER_SERVICES=(
-  {{- if .laptop }}
-    "battery.service"
-  {{ end }}
-  "hyprpolkitagent"
-  "waybar"
-  "hypridle"
-)
+sudo systemctl enable {{ $services.services.system | join " " }}
 
-# enable system services
-echo -e "${MAROON}Enabling System Services...${NC}\n"
-sudo systemctl enable "${SYSTEM_SERVICES[@]}" && echo -e "${SUCCESS} System services enabled & started" || echo -e "${FAIL} System services failed to enable/start"
-# enable user services
-echo -e "${MAROON} Enabling User Services...${NC}\n"
-systemctl --user enable "${USER_SERVICES[@]}" && echo -e "${SUCCESS} User services enabled & started" || echo -e "${FAIL} User services failed to enable/start"
-# reload daemon
+systemctl --user enable {{ $services.services.user | join " " }}
+
 systemctl --user daemon-reload

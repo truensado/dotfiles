@@ -1,4 +1,4 @@
-{{- $boolean := includeTemplate "boolean" . | fromJson -}}
+{{- $boolean := includeTemplate "boolean" . | fromYaml -}}
 packages:
   pacman:
     - paru
@@ -80,7 +80,7 @@ packages:
     - kio
     - qt5-imageformats
     - ffmpegthumbs
-    {{- if $boolean.desktop }}
+    {{ if $boolean.desktop -}}
     - nwg-displays
     - cachyos-gaming-meta
     - cachyos-gaming-applications
@@ -100,11 +100,10 @@ packages:
     - kvantum-theme-catppuccin-git
     - visual-studio-code-bin
     - clipse-bin
-    {{- if $boolean.desktop }}
+    {{ if $boolean.desktop -}}
     - prismlauncher-git
-    - ddcutil
-    {{- end }}
-    {{- if $boolean.laptop }}
+    {{ end -}}
+    {{ if $boolean.laptop -}}
     - libinput-gestures-git
     - auto-cpufreq
-    {{- end }}
+    {{ end -}}

@@ -1,19 +1,11 @@
 #!/usr/bin/env bash
 
+sudo -v
+
 sudo pacman -Syu --noconfirm --needed
 
 {{- $packages := includeTemplate "packages" . | fromYaml }}
 
-sudo pacman -S --needed $(cat <<EOF
-{{ range $packages.packages.pacman -}}
-{{ . }}
-{{ end -}}
-EOF
-)
+sudo pacman -S --needed {{ $packages.packages.pacman | join " " }} || true
 
-paru -S --needed $(cat <<EOF
-{{ range $packages.packages.aur -}}
-{{ . }}
-{{ end -}}
-EOF
-)
+paru -S --needed {{ $packages.packages.aur | join " " }} || true
