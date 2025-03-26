@@ -1,0 +1,6 @@
+#!/usr/bin/env chezmoi_modify_manager
+
+source auto
+
+ignore regex "<NO_SECTION>" "^SETUVAR --export BW_SESSION:*"
+

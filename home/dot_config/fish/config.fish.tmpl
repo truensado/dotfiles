@@ -6,7 +6,7 @@ end
 
 {{- if and (.personal) (lookPath "bw") }}
 function bwu
-    set -xU BW_SESSION (bw unlock --raw $argv[1])
+    set -e BW_SESSION && set -xU BW_SESSION (bw unlock --raw $argv[1])
 end
 {{ end -}}
 
