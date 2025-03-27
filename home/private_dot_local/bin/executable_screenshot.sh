@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
+set -euo pipefail
 
-if [ ! -d "$XDG_PICTURES_DIR/screenshots" ]; then
-  mkdir -p $XDG_PICTURES_DIR/screenshots
-fi
+# Constants
+PICTURES_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
+SCREENSHOT_DIR="$PICTURES_DIR/screenshots"
+TIMESTAMP="$(date '+%Y%m%d-%H%M%S')"
+FILENAME="$SCREENSHOT_DIR/${TIMESTAMP}.png"
 
-pkill -x slurp || grim -g "$(slurp -o)" -t ppm - | satty --filename - --early-exit --copy-command wl-copy --output-filename $XDG_PICTURES_DIR/screenshots/$(date '+%Y%m%d-%H:%M:%S').png
+# Ensure screenshot directory exists
+mkdir -p "$SCREENSHOT_DIR"
+
+# Kill existing slurp if hanging
+pkill -x slurp 2>/dev/null || true
+
+# Take screenshot with annotation and copy to clipboard
+grim -g "$(slurp -o)" -t ppm - | \
+  satty --filename - \
+        --early-exit \
+        --copy-command wl-copy \
+        --output-filename "$FILENAME"
