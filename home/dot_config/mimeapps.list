@@ -1,8 +1,10 @@
 [Added Associations]
+application/vnd.ms-publisher=nvim.desktop;
 application/x-php=nvim.desktop;
 application/zip=ark.desktop;
 
 [Default Applications]
+application/vnd.ms-publisher=nvim.desktop;
 application/x-php=nvim.desktop;
 application/zip=ark.desktop;
 inode/directory=org.kde.dolphin.desktop
