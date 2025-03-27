@@ -1,16 +1,24 @@
+# Greeting
 set -g fish_greeting
 
+# Uwsm
+if uwsm check may-start && uwsm select; then
+	exec uwsm start hyprland.desktop
+end
+
+# Starship
 if status is-interactive
     starship init fish | source
 end
 
+# Bitwarden
 {{- if and (.personal) (lookPath "bw") }}
 function bwu
     set -e BW_SESSION && set -xU BW_SESSION (bw unlock --raw $argv[1])
 end
 {{ end -}}
 
-# yazi 
+# Yazi 
 function y
     set tmp (mktemp -t "yazi-cwd.XXXXXX")
     yazi $argv --cwd-file="$tmp"
@@ -24,7 +32,6 @@ end
 if not pgrep -u (id -u) ssh-agent >/dev/null
     eval (ssh-agent -c) >/dev/null 2>&1
 end
-
 # Load SSH keys only in an interactive session
 if status is-interactive
     keychain --eval --agents ssh id_ed25519 --quiet --nogui | source
