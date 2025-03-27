@@ -1,0 +1,14 @@
+# Ghostty Config
+
+theme = catppuccin-mocha
+background-opacity = 0.6
+font-family = CaskaydiaCove Nerd Font Mono
+
+clipboard-read = allow
+clipboard-write = allow
+mouse-hide-while-typing = true
+
+shell-integration = fish
+shell-integration-features = true
+
+keybind = ctrl+r=reload_config
