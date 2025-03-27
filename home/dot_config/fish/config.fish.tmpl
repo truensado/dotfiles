@@ -1,55 +1,62 @@
-# Greeting
+# ---- General ----
+
 set -g fish_greeting
 
-# Uwsm
-if uwsm check may-start && uwsm select; then
-	exec uwsm start hyprland.desktop
+# ---- Environment ----
+
+if not set -q TMUX && uwsm check may-start && select
+  exec uwsm start hyprland.desktop
 end
 
-# Starship
+# ---- Prompt ----
+
 if status is-interactive
-    starship init fish | source
+  starship init fish | source
 end
 
-# Bitwarden
-{{- if and (.personal) (lookPath "bw") }}
+# ---- Bitwarden ----
+
 function bwu
-    set -e BW_SESSION && set -xU BW_SESSION (bw unlock --raw $argv[1])
+  set -e BW_SESSION
+  set -xU BW_SESSION (bw unlock --raw $argv[1])
 end
-{{ end -}}
 
-# Yazi 
+# ---- Yazi ----
+
 function y
     set tmp (mktemp -t "yazi-cwd.XXXXXX")
     yazi $argv --cwd-file="$tmp"
-    if set cwd (command cat -- "$tmp"); and [ -n "$cwd" ]; and [ "$cwd" != "$PWD" ]
-        builtin cd -- "$cwd"
+    if set cwd (cat "$tmp"); and test -n "$cwd"; and test "$cwd" != "$PWD"
+        cd "$cwd"
     end
-    rm -f -- "$tmp"
+    rm -f "$tmp"
 end
 
-# Start SSH agent if not already running
+# ---- SSH ----
+
 if not pgrep -u (id -u) ssh-agent >/dev/null
     eval (ssh-agent -c) >/dev/null 2>&1
 end
-# Load SSH keys only in an interactive session
+
 if status is-interactive
     keychain --eval --agents ssh id_ed25519 --quiet --nogui | source
 end
 
-# List Directory
-alias l='eza -lh  --icons=auto' # long list
-alias ls='eza -1   --icons=auto' # short list
-alias ll='eza -lha --icons=auto --sort=name --group-directories-first' # long list all
-alias ld='eza -lhD --icons=auto' # long list dirs
-alias lt='eza --icons=auto --tree' # list folder as tree
-alias ff='clear && fastfetch' # Fastfetch
-alias fix-pass='faillock --user nsado --reset' # Fix Password
+# ---- Aliases ----
+
+alias l='eza -lh --icons=auto'
+alias ls='eza -1 --icons=auto'
+alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
+alias ld='eza -lhD --icons=auto'
+alias lt='eza --icons=auto --tree'
+alias ff='clear && fastfetch'
 alias cc='clear'
 alias yy='sudo EDITOR=nvim yazi'
 alias tt='tmux'
+alias fix-pass='faillock --user nsado --reset'
 
-# Handy change dir shortcuts
+# ---- Abbreviations ----
+
 abbr .. 'z ..'
 abbr ... 'z ../..'
 abbr .3 'z ../../..'
@@ -57,5 +64,12 @@ abbr .4 'z ../../../..'
 abbr .5 'z ../../../../..'
 abbr mkdir 'mkdir -p'
 
-# Zoxide Initilize
+# ---- Zoxide ----
+
 zoxide init fish | source
+
+# ---- Fastfetch ----
+
+if not set -q TMUX; then
+  ff
+end
