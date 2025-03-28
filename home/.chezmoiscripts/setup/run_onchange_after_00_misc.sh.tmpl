@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+{{- if lookPath "sddm" }}
+
+  [ -d "/etc/sddm.conf.d" ] || sudo mkdir -p "/etc/sddm.conf.d"
+  
+  echo -e "[Autologin]\nUser=$USER\nSession=hyprland-uwsm" | sudo tee "/etc/sddm.conf.d/autologin.conf"
+
+{{- else }}
+  
+  [ -f "/etc/sddm.conf.d/autologin.conf" ] && sudo rm -f "/etc/sddm.conf.d/autologin.conf"
+  
+  [ -d "/etc/systemd/system/getty@tty.service.d" ] || sudo mkdir -p "/etc/systemd/system/getty@tty.service.d"
+  
+  echo -e "[Service]\nExecStart=\nExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $USER %I $TERM" | sudo tee "/etc/systemd/system/getty@tty.service.d/autologin.conf"
+
+{{- end }}
+
+command -v ya &>/dev/null && ya pack -i -u || echo "yazi not found"
