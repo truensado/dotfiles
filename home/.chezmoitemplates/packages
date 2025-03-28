@@ -81,25 +81,30 @@ packages:
     - qt5-imageformats
     - ffmpegthumbs
     {{ if $boolean.desktop -}}
-    - nwg-displays
     - cachyos-gaming-meta
     - cachyos-gaming-applications
     {{- end }}
-  aur:
-    - syshud
+    {{ if .chaotic -}}
     - nextcloud-client-git
-    - proton-mail-bin
-    - topgrade
-    - waytrogen
-    - swayosd-git
-    - uwsm
-    - bibata-cursor-git
+    - visual-studio-code-bin
     - all-repository-fonts
     - dracula-gtk-theme-git
-    - kvantum-qt6-git
-    - kvantum-theme-catppuccin-git
+    - topgrade
+    {{ if $boolean.desktop }}
+    - prismlauncher-git
+    {{- end }}
+    {{ if $boolean.laptop }}
+    - auto-cpufreq
+    - libinput-gestures-qt
+    {{- end }}
+    {{- end }}
+  aur:
+    {{ if not .chaotic -}}
+    - nextcloud-client-git
+    - all-repository-fonts
+    - topgrade
+    - dracula-gtk-theme-git
     - visual-studio-code-bin
-    - clipse-bin
     {{ if $boolean.desktop -}}
     - prismlauncher-git
     {{ end -}}
@@ -107,3 +112,12 @@ packages:
     - libinput-gestures-git
     - auto-cpufreq
     {{ end -}}
+    {{- end }}
+    - proton-mail-bin
+    - syshud
+    - waytrogen
+    - uwsm
+    - bibata-cursor-git
+    - kvantum-qt6-git
+    - kvantum-theme-catppuccin-git
+    - clipse-bin
