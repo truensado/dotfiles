@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-{{- $services := includeTemplate "services" . | fromYaml }}
-
-sudo systemctl enable {{ $services.services.system | join " " }}
-
-systemctl --user enable {{ $services.services.user | join " " }}
-
-systemctl --user daemon-reload
