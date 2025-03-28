@@ -80,6 +80,9 @@ packages:
     - kio
     - qt5-imageformats
     - ffmpegthumbs
+    {{ if not .chaotic -}}
+    - nextcloud-client
+    {{ end -}}
     {{ if $boolean.desktop -}}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
@@ -100,7 +103,6 @@ packages:
     {{- end }}
   aur:
     {{ if not .chaotic -}}
-    - nextcloud-client-git
     - all-repository-fonts
     - topgrade
     - dracula-gtk-theme-git
