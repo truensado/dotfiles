@@ -3,4 +3,5 @@
 .bash_profile
 .bashrc
 Templates
+.viminfo
 {{- end -}}

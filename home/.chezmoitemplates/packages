@@ -73,7 +73,6 @@ packages:
     - vivaldi
     - vesktop
     - obsidian
-    - sddm
     - cmake
     - neovim
     - kwallet
