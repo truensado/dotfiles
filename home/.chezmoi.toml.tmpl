@@ -13,7 +13,6 @@ encryption = "age"
 {{- if $boolean.personal }}
   name = "nsado"
   email = "171737294+nsado123@users.noreply.github.com"
-  chaotic = "{{ promptBoolOnce . "Do you want to enable Chaotic AUR?" "Do you want to enable Chaotic AUR?" }}"
 # secrets
   bw_url = "{{ promptStringOnce . "Bitwarden URL" "Enter your Bitwarden URL:" }}"
   bw_login = "{{ promptStringOnce . "Bitwarden Login" "Enter your Bitwarden Login:" }}"

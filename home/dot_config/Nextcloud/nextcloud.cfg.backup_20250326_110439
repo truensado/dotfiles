@@ -1,0 +1,7 @@
+[General]
+launchOnSystemStartup=true
+promptDeleteAllFiles=false
+showMainDialogAsNormalWindow=true
+
+[%5BGeneral]
+showMainDialogAsNormalWindow=true

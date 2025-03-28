@@ -80,41 +80,21 @@ packages:
     - kio
     - qt5-imageformats
     - ffmpegthumbs
-    {{ if not .chaotic -}}
-    - nextcloud-client
-    {{ end -}}
-    {{ if $boolean.desktop -}}
-    - cachyos-gaming-meta
-    - cachyos-gaming-applications
-    {{- end }}
-    {{ if .chaotic -}}
     - nextcloud-client-git
     - visual-studio-code-bin
     - all-repository-fonts
     - dracula-gtk-theme-git
     - topgrade
-    {{ if $boolean.desktop }}
+    {{ if $boolean.desktop -}}
+    - cachyos-gaming-meta
+    - cachyos-gaming-applications
     - prismlauncher-git
     {{- end }}
     {{ if $boolean.laptop }}
     - auto-cpufreq
     - libinput-gestures-qt
     {{- end }}
-    {{- end }}
   aur:
-    {{ if not .chaotic -}}
-    - all-repository-fonts
-    - topgrade
-    - dracula-gtk-theme-git
-    - visual-studio-code-bin
-    {{ if $boolean.desktop -}}
-    - prismlauncher-git
-    {{ end -}}
-    {{ if $boolean.laptop -}}
-    - libinput-gestures-git
-    - auto-cpufreq
-    {{ end -}}
-    {{- end }}
     - proton-mail-bin
     - syshud
     - waytrogen
