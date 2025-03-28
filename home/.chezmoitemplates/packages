@@ -85,15 +85,15 @@ packages:
     - all-repository-fonts
     - dracula-gtk-theme-git
     - topgrade
-    {{ if $boolean.desktop -}}
+    {{ if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
     - prismlauncher-git
-    {{- end }}
+    {{ end }}
     {{ if $boolean.laptop }}
     - auto-cpufreq
     - libinput-gestures-qt
-    {{- end }}
+    {{ end }}
   aur:
     - proton-mail-bin
     - syshud
