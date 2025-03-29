@@ -1,9 +1,9 @@
--- localization
+---- localization ----
 local o = vim.opt
 local a = vim.api
 local k = vim.keymap.set
 
--- options
+---- options ----
 o.number = true
 
 o.title = true
@@ -51,11 +51,11 @@ o.clipboard = "unnamedplus"
 
 o.termguicolors = true
 
--- commands
+---- commands ----
 a.nvim_create_user_command("Q", "q!", {})
 a.nvim_create_user_command("W", "wq", {})
 
--- keybinds
+---- keybinds ----
 k('n', '<Tab>', ':tabnext<CR>', { silent = true })
 k('n', '<S-Tab>', ':tabprevious<CR>', { silent = true })
 k('n', '<A-h>', '<C-w>h', { silent = true })

@@ -1,5 +1,5 @@
 [General]
-TerminalApplication=kitty
+TerminalApplication=ghostty
 
 [Icons]
 Theme=Tela-circle-dracula

@@ -1,18 +1,14 @@
 // Config //
 configuration {
-    modi:                        "drun,filebrowser,window,run";
+    modi:                        "drun";
     show-icons:                  true;
-    display-drun:                " ";
-    display-run:                 " ";
-    display-filebrowser:         " ";
-    display-window:              " ";
     drun-display-format:         "{name}";
     window-format:               "{w}{t}";
     font:                        "JetBrainsMono Nerd Font 10";
     icon-theme:                  "Tela-circle-dracula";
 }
 
-@theme "~/.config/rofi/theme.rasi"
+@import "~/.config/rofi/colors.rasi"
 
 
 // Main //
@@ -25,6 +21,7 @@ window {
     cursor:                      "default";
     spacing:                     0em;
     padding:                     0em;
+    border:                      1px;
     border-radius:               20px;
     border-color:                @main-br;
     background-color:            @main-bg;
@@ -41,33 +38,11 @@ dummywall {
     spacing:                     0em;
     padding:                     0em;
     width:                       37em;
-    expand:                      false;
+    expand:                      true;
     orientation:                 horizontal;
-    children:                    [ "mode-switcher" , "inputbar" ];
+    children:                    [ "inputbar" ];
     background-color:            transparent;
-    background-image:            url("~/.config/rofi/rofi.bg", height);
-}
-
-
-// Modes //
-mode-switcher{
-    orientation:                 vertical;
-    enabled:                     true;
-    width:                       3.8em;
-    padding:                     9.2em 0.5em 9.2em 0.5em;
-    spacing:                     1.2em;
-    background-color:            transparent;
-    background-image:            url("~/.config/rofi/rofi.bg", height);
-}
-button {
-    cursor:                      pointer;
-    border-radius:               2em;
-    background-color:            @main-bg;
-    text-color:                  @main-fg;
-}
-button selected {
-    background-color:            @main-fg;
-    text-color:                  @main-bg;
+    background-image:            url("~/.config/rofi/assets/main.bg", height);
 }
 
 
@@ -88,6 +63,7 @@ listbox {
     padding:                     2em;
     children:                    [ "dummy" , "listview" , "dummy" ];
     background-color:            transparent;
+    background-image:            url("~/.config/rofi/assets/main-2.bg", height);
 }
 listview {
     enabled:                     true;

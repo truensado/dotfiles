@@ -1,7 +1,7 @@
 * {
   all: unset;
   font-size: 12px;
-  font-family: "Ubuntu Nerd Font";
+  font-family: "Cantarell Regular";
   transition: 200ms;
 }
 
@@ -22,10 +22,10 @@ slider {
 }
 
 .floating-notifications.background .notification-row .notification-background {
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px #313244;
+  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px #313244;
   border-radius: 12.6px;
   margin: 18px;
-  background-color: #1e1e2e;
+  background-color: rgba(30, 30, 46, 0.1);
   color: #cdd6f4;
   padding: 0;
 }
@@ -67,7 +67,7 @@ slider {
   margin: 7px;
 }
 
-.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action:hover {
+.floating-notifications.background .notification-row .notification-background .notification > *:last-child > * .notification-action {
   box-shadow: inset 0 0 0 1px #45475a;
   background-color: #313244;
   color: #cdd6f4;
@@ -87,7 +87,7 @@ slider {
   background-color: #f38ba8;
 }
 
-.floating-notifications.background .notification-row .notification-background .close-button:hover {
+.floating-notifications.background .notification-row .notification-background .close-button {
   background-color: #eba0ac;
   color: #1e1e2e;
 }
@@ -98,10 +98,10 @@ slider {
 }
 
 .control-center {
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.8), inset 0 0 0 1px #313244;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.3), inset 0 0 0 1px #313244;
   border-radius: 12.6px;
   margin: 18px;
-  background-color: #1e1e2e;
+  background-color: rgba(30, 30, 46, 0.3);
   color: #cdd6f4;
   padding: 14px;
 }
@@ -119,7 +119,7 @@ slider {
   padding: 8px;
 }
 
-.control-center .widget-title button:hover {
+.control-center .widget-title button {
   box-shadow: inset 0 0 0 1px #45475a;
   background-color: #585b70;
   color: #cdd6f4;
@@ -176,7 +176,7 @@ slider {
   margin: 7px;
 }
 
-.control-center .notification-row .notification-background .notification > *:last-child > * .notification-action:hover {
+.control-center .notification-row .notification-background .notification > *:last-child > * .notification-action {
   box-shadow: inset 0 0 0 1px #45475a;
   background-color: #313244;
   color: #cdd6f4;
@@ -200,7 +200,7 @@ slider {
   border-radius: 6.3px;
 }
 
-.control-center .notification-row .notification-background .close-button:hover {
+.control-center .notification-row .notification-background .close-button {
   background-color: #f38ba8;
   color: #1e1e2e;
 }
@@ -210,7 +210,7 @@ slider {
   color: #1e1e2e;
 }
 
-.control-center .notification-row .notification-background:hover {
+.control-center .notification-row .notification-background {
   box-shadow: inset 0 0 0 1px #45475a;
   background-color: #7f849c;
   color: #cdd6f4;
@@ -293,9 +293,9 @@ slider {
   color: #f38ba8;
 }
 
-.power-buttons button:hover,
-.powermode-buttons button:hover,
-.screenshot-buttons button:hover {
+.power-buttons button,
+.powermode-buttons button,
+.screenshot-buttons button {
   background: #313244;
 }
 

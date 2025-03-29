@@ -4,8 +4,8 @@
   "positionY": "top",
   "cssPriority": "user",
 
-  "control-center-width": 350,
-  "control-center-height": 860,
+  "control-center-width": 400,
+  "control-center-height": 800,
   "control-center-margin-top": 2,
   "control-center-margin-bottom": 2,
   "control-center-margin-right": 1,
@@ -44,8 +44,12 @@
     "blueman-transient": {
       "state": "transient",
       "app-name": "blueman"
-    }
+    },
 
+    "network-transient": {
+      "state": "transient",
+      "app-name": "NetworkManager"
+    }
   },
 
   "widgets": [

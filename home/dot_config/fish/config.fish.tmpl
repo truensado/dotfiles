@@ -4,7 +4,7 @@ set -g fish_greeting
 
 # ---- Environment ----
 
-if not set -q TMUX && uwsm check may-start && select
+if not set -q TMUX && uwsm check may-start
   exec uwsm start hyprland.desktop
 end
 
@@ -67,9 +67,3 @@ abbr mkdir 'mkdir -p'
 # ---- Zoxide ----
 
 zoxide init fish | source
-
-# ---- Fastfetch ----
-
-if not set -q TMUX; then
-  ff
-end
