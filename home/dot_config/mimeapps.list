@@ -2,12 +2,14 @@
 application/vnd.ms-publisher=nvim.desktop;
 application/x-php=nvim.desktop;
 application/zip=ark.desktop;
+text/plain=nvim.desktop;
 
 [Default Applications]
 application/vnd.ms-publisher=nvim.desktop;
 application/x-php=nvim.desktop;
 application/zip=ark.desktop;
 inode/directory=org.kde.dolphin.desktop
+text/plain=nvim.desktop;
 x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/nc=com.nextcloud.desktopclient.nextcloud.desktop
 x-scheme-handler/nxm=vortex-steamtinkerlaunch-dl.desktop
@@ -15,3 +17,4 @@ x-scheme-handler/nxm-protocol=vortex-steamtinkerlaunch-dl.desktop
 
 [Removed Associations]
 application/x-php=vim.desktop;
+text/plain=vim.desktop;
