@@ -15,9 +15,11 @@
   sudo tee /etc/systemd/system/getty@tty.service.d/autologin.conf > /dev/null <<'EOF'
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin YOUR_USERNAME %I $TERM
+ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin {{ .chezmoi.username }} %I $TERM
 EOF
-
+  
+  sudo systemctl daemon-reload
+  
 {{- end }}
 
 command -v ya &>/dev/null && ya pack -i -u || echo "yazi not found"
