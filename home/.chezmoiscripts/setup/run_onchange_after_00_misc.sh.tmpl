@@ -10,16 +10,17 @@
   
   [ -f "/etc/sddm.conf.d/autologin.conf" ] && sudo rm -f "/etc/sddm.conf.d/autologin.conf"
   
-  [ -d "/etc/systemd/system/getty@tty.service.d" ] || sudo mkdir -p "/etc/systemd/system/getty@tty.service.d"
+  [ -d "/etc/systemd/system/getty@tty1.service.d" ] || sudo mkdir -p "/etc/systemd/system/getty@tty1.service.d"
   
   sudo tee /etc/systemd/system/getty@tty.service.d/autologin.conf > /dev/null <<'EOF'
 [Service]
 ExecStart=
-ExecStart=-/sbin/agetty -o '-p -f -- \\u' --noclear --autologin {{ .chezmoi.username }} %I $TERM
+ExecStart=-/sbin/agetty --autologin {{ .chezmoi.username }} --noclear --login-options '-p -f -- \\u' %I linux
 EOF
   
-  sudo systemctl daemon-reload
-  
+  sudo systemctl daemon-reexec
+  sudo systemctl enable getty@tty1
+
 {{- end }}
 
 command -v ya &>/dev/null && ya pack -i -u || echo "yazi not found"
