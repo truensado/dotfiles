@@ -39,7 +39,7 @@ if not pgrep -u (id -u) ssh-agent >/dev/null
 end
 
 if status is-interactive
-    keychain --eval --agents ssh id_ed25519 --quiet --nogui | source
+    keychain --eval --agents ssh id_ed25519 --quiet --nogui 2>/dev/null | source
 end
 
 # ---- Aliases ----
