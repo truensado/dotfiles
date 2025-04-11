@@ -1,0 +1,22 @@
+# ---- Plugins ----
+
+[pyprland]
+plugins = [
+    "scratchpads",
+]
+
+[scratchpads.term]
+animation = "fromTop"
+command = "uwsm-app -- ghostty --class=com.ghostty-term"
+class = "com.ghostty-term"
+size = "75% 70%"
+max_size = "2560px 100%"
+margin = 170
+
+[scratchpads.yazi]
+animation = "fromTop"
+command = "uwsm-app -- ghostty --class=com.ghostty-yazi -e yazi"
+class = "com.ghostty-yazi"
+size = "75% 70%"
+max_size = "2560px 100%"
+margin = 170

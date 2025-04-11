@@ -86,6 +86,7 @@ packages:
     - dracula-gtk-theme-git
     - topgrade
     - kvantum-qt5
+    - pyprland
     {{ if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
