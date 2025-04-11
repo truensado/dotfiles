@@ -1,6 +1,7 @@
--- Colors
+---- Colors ----
+
 local catppuccin_palette = {
-	rosewater = "#f5e0dc",
+  rosewater = "#f5e0dc",
 	flamingo = "#f2cdcd",
 	pink = "#f5c2e7",
 	mauve = "#cba6f7",
@@ -27,32 +28,32 @@ local catppuccin_palette = {
 	mantle = "#181825",
 	crust = "#11111b",
 }
--- Plugins
--- full-border
+
+---- Plugins ----
 require("full-border"):setup({
 	type = ui.Border.ROUNDED,
 })
--- git
+
 require("git"):setup()
--- zoxide
+
 require("zoxide"):setup({
 	update_db = true,
 })
--- session
+
 require("session"):setup({
 	sync_yanked = true,
 })
--- restore
+
 require("restore"):setup({
 	position = { "center", w = 70, h = 40 },
 	show_confirm = true,
 })
--- shell
+
 require("custom-shell"):setup({
 	history_path = "default",
 	save_history = true,
 })
--- yatline
+
 require("yatline"):setup({
 	section_separator = { open = "", close = "" },
 	inverse_separator = { open = "", close = "" },
@@ -143,7 +144,7 @@ require("yatline"):setup({
 		},
 	},
 })
--- yatline-githead
+
 require("yatline-githead"):setup({
 	show_branch = true,
 	branch_prefix = "",

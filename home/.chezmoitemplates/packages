@@ -67,7 +67,7 @@ packages:
     - wireplumber
     - pavucontrol
     - pamixer
-    - kitty
+    - ghostty
     - rofi-wayland
     - spotify-launcher
     - vivaldi
@@ -85,6 +85,7 @@ packages:
     - all-repository-fonts
     - dracula-gtk-theme-git
     - topgrade
+    - kvantum-qt5
     {{ if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
