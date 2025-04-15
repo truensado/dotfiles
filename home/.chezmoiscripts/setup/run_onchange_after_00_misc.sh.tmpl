@@ -23,4 +23,18 @@ EOF
 
 {{- end }}
 
-command -v ya &>/dev/null && ya pack -i -u || echo "yazi not found"
+if command -v "nextcloud" &>/dev/null; then
+
+  if [ ! -f "$HOME/.config/Nextcloud/nextcloud.cfg" ]; then
+  
+    echo "[General]" > "$HOME/.config/Nextcloud/nextcloud.cfg" && echo "showMainDialogAsNormalWindow=true" >> "$HOME/.config/Nextcloud/nextcloud.cfg"  
+
+  elif ! grep -q "showMainDialogAsNormalWindow=true" "$HOME/.config/Nextcloud/nextcloud.cfg"; then
+
+    echo -e "\r\n[General]\nshowMainDialogAsNormalWindow=true" >>"$HOME/.config/Nextcloud/nextcloud.cfg"
+
+  fi
+
+fi
+
+command -v ya &>/dev/null && ya pack -i -u
