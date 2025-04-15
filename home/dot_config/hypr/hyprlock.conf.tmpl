@@ -2,11 +2,14 @@
 
 source = ./catppuccin-mocha.conf
 
+{{ if .laptop -}}
+  $mm = eDP-1
 
-
-  $mm = DP-1
+{{- else -}}
   
-  $sm = DP-2
+  $mm = DP-1
+
+{{ end -}}
 
 general {
 
