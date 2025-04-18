@@ -86,6 +86,7 @@ packages:
     - dracula-gtk-theme-git
     - topgrade
     - kvantum-qt5
+    - spicetify-cli-git
     {{ if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
