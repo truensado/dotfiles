@@ -33,7 +33,7 @@
             "enabled": false
         },
         "MessageEventsAPI": {
-            "enabled": false
+            "enabled": true
         },
         "MessagePopoverAPI": {
             "enabled": false
@@ -169,7 +169,7 @@
             "enabled": false
         },
         "FakeNitro": {
-            "enabled": false
+            "enabled": true
         },
         "FakeProfileThemes": {
             "enabled": false
@@ -566,6 +566,9 @@
         },
         "SupportHelper": {
             "enabled": true
+        },
+        "DisableDeepLinks": {
+            "enabled": true
         }
     },
     "notifications": {
@@ -578,6 +581,6 @@
         "authenticated": false,
         "url": "https://api.vencord.dev/",
         "settingsSync": false,
-        "settingsSyncVersion": 1739895636211
+        "settingsSyncVersion": 1745070351851
     }
 }

@@ -50,12 +50,11 @@
         },
          
         "custom/updates": {
-            "exec": "echo ",
+            "format": "",
             "rotate": 0,
-            "on-click": "hyprctl dispatch exec 'kitty -e update.sh'",
+            "exec": "update.sh",
+            "on-click": "hyprctl dispatch exec update.sh",
             "interval": 21600000, // once every 6 hours
-            "tooltip": true,
-            "tooltip-format": "update system",
             "signal": 20
         },        
 

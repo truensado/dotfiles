@@ -1,7 +1,5 @@
 # ---- Hyprlock ----
 
-source = ./catppuccin-mocha.conf
-
 {{ if .laptop -}}
   $mm = eDP-1
 
@@ -11,70 +9,68 @@ source = ./catppuccin-mocha.conf
 
 {{ end -}}
 
+source = $HOME/.config/hypr/catppuccin-mocha.conf
+
 general {
 
-  disable_loading_bar = true
+  hide_cursor = true       
 
-  hide_cursor         = true       
-
-  grace               = 1          
+  grace = 0          
   
-  ignore_empty_input  = true       
+  ignore_empty_input = true       
   
-  immediate_render    = true       
+  immediate_render = true       
 
 }
 
 background {
 
-  monitor     = 
+  monitor = 
   
-  path        = ./assets/wallpapers/minimal-6.png  
+  path = $HOME/.config/hypr/assets/wallpapers/minimal.png
   
-  blur_passes = 0
-
 }
 
 image {
 
-  monitor  = $mm                   
+  monitor = $mm                   
   
-  path     = ./assets/faces/face-6.png  
+  path = $HOME/.config/hypr/assets/faces/face.png  
   
   position = 0, 80                 
   
-  halign   = center                
+  halign = center                
   
-  valign   = center                
+  valign = center                
 
 }
 
 input-field {
 
-  monitor       = $mm              
+  monitor = $mm              
   
-  position      = 0, -43           
+  position = 0, -43           
   
-  halign        = center           
+  halign = center           
   
-  valign        = center           
+  valign = center           
   
-  size          = 300, 50          
+  size = 300, 50          
   
-  outer_color   = rgba(255, 255, 255, 1.0)  
+  outer_color = rgba(255, 255, 255, 1.0)  
   
-  inner_color   = rgba(0, 0, 0, 1.0)        
+  inner_color = rgba(0, 0, 0, 1.0)        
   
-  font_color    = rgba(255, 255, 255, 1.0)  
+  font_color = rgba(255, 255, 255, 1.0)  
   
   fade_on_empty = false            
   
   placeholder_text = Enter Password
   
-  capslock_color   = $yellow       
+  capslock_color = $yellow       
   
-  fail_color       = $red          
+  fail_color = $red          
   
-  fail_text        = <i>$FAIL <b>($ATTEMPTS)</b></i>  
+  fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i>  
 
 }
