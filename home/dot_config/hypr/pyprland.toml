@@ -7,8 +7,8 @@ plugins = [
 
 [scratchpads.yazi]
 animation = "fromTop"
-command = "uwsm-app -- ghostty --class=com.ghostty-yazi -e yazi"
-class = "com.ghostty-yazi"
+command = "uwsm-app -- ghostty --class=com.pypr-yazi -e yazi"
+class = "com.pypr-yazi"
 size = "75% 70%"
 max_size = "2560px 100%"
 margin = 170
