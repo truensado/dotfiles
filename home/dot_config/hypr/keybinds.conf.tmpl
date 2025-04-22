@@ -63,10 +63,17 @@ bindl = , F15, exec, playerctl next
 bindl = , F16, exec, audio.sh
 
 # ---- Brightness ----
+{{ if .desktop -}}
+  
+  bindl = , XF86MonBrightnessUp, exec, hyprctl hyprsunset gamma +5
+  bindl = , XF86MonBrightnessDown, exec, hyprctl hyprsunset gamma -5
 
-bindl = , XF86MonBrightnessUp, exec, brightness.sh +5
-bindl = , XF86MonBrightnessDown, exec, brightness.sh -5
+{{ else -}}
 
+  bindl = , XF86MonBrightnessUp, exec, brightness.sh +5
+  bindl = , XF86MonBrightnessDown, exec, brightness.sh -5
+
+{{ end -}}
 # ---- Windows ----
 
 bind = $s, Left, movefocus, l      # Move focus left
