@@ -9,7 +9,7 @@ services:
     - battery.service
     {{- end }}
     {{- if $boolean.desktop }}
-    - hyprsunset.service
+    - hyprsunset
     {{- end }}
     - hyprpolkitagent
     - hypridle
