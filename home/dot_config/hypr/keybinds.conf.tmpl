@@ -22,14 +22,15 @@ $ss = screenshot.sh
 
 # ---- General ----
 
-bind = $s, Q, killactive                 # Close active window
-bind = $s, Delete, exit                  # Exit session
-bind = $s, W, togglefloating             # Toggle window floating state
-bind = $s, G, togglegroup                # Toggle window grouping
-bind = $s, V, exec, $clipboard           # Launch clipboard manager
-bind = Alt, Return, fullscreen           # Toggle fullscreen
-bind = $s, Backspace, exec, $pmenu        # Open power menu
+bind = $s, Q, killactive                   # Close active window
+bind = $s, Delete, exit                    # Exit session
+bind = $s, W, togglefloating               # Toggle window floating state
+bind = $s, G, togglegroup                  # Toggle window grouping
+bind = $s, V, exec, $clipboard             # Launch clipboard manager
+bind = Alt, Return, fullscreen             # Toggle fullscreen
+bind = $s, Backspace, exec, $pmenu         # Open power menu
 bind = Ctrl+Alt, W, exec, $restart waybar  # Restart Waybar
+bind = , Print, exec, $ss                  # Screenshot
 
 # ---- Applications ----
 
