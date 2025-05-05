@@ -1,7 +1,9 @@
-UWSM_USE_SESSION_SLICE=true
+# ---- Hyprland Env ----
+
+export UWSM_USE_SESSION_SLICE="true"
 export XDG_CURRENT_DESKTOP="Hyprland"
 export XDG_SESSION_TYPE="wayland"
 export XDG_SESSION_DESKTOP="Hyprland"
 export WLR_DRM_NO_ATOMIC=1
-export HYPRCURSOR_SIZE=24
-export HYPRCURSOR_THEME=Bibata-Modern-Ice 20
+export HYPRCURSOR_SIZE="24"
+export HYPRCURSOR_THEME="Bibata-Modern-Ice"

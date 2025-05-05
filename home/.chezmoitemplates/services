@@ -8,6 +8,9 @@ services:
     {{- if $boolean.laptop }}
     - battery.service
     {{- end }}
+    {{- if $boolean.desktop }}
+    - hyprsunset
+    {{- end }}
     - hyprpolkitagent
     - hypridle
     - waybar
