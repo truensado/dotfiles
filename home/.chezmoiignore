@@ -1,7 +1,9 @@
 **/*.src.ini
+.config/systemd/user/**
 
 {{- if not .laptop }}
 .local/share/icons/battery/
+.local/bin/battery.sh
 {{- end -}}
 
 {{- if not .personal }}
