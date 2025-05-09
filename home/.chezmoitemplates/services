@@ -5,9 +5,6 @@ services:
     - sddm
     {{- end }}
   user:
-    {{- if $boolean.laptop }}
-    - battery.service
-    {{- end }}
     {{- if $boolean.desktop }}
     - hyprsunset
     {{- end }}
