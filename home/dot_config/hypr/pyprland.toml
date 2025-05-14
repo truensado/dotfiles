@@ -12,3 +12,11 @@ class = "com.pypr-yazi"
 size = "75% 70%"
 max_size = "2560px 100%"
 margin = 170
+
+[scratchpads.obsidian]
+animation = "fromTop"
+command = "uwsm-app obsidian"
+class = "obsidian"
+size = "75% 75%"
+max_size = "2560px 100%"
+margin = 170
