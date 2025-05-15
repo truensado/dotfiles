@@ -1,0 +1,10 @@
+{
+  "markdown-tree:new-tree-block-command": [
+    {
+      "modifiers": [
+        "Mod"
+      ],
+      "key": "."
+    }
+  ]
+}
