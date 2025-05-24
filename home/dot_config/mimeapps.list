@@ -4,7 +4,7 @@ application/x-msdownload=wine.desktop;protontricks-launch.desktop;
 application/x-php=nvim.desktop;
 application/zip=ark.desktop;
 image/png=satty.desktop;gimp.desktop;vivaldi-stable.desktop;
-text/plain=nvim.desktop;
+text/plain=nvim.desktop;code.desktop;
 
 [Default Applications]
 application/vnd.ms-publisher=nvim.desktop;
