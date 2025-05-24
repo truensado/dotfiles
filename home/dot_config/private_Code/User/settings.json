@@ -1,7 +1,0 @@
-{
-    "editor.fontFamily": "'JetbrainsMono Nerd Font','Maple Mono', monospace",
-    "editor.tabSize": 2,
-    "workbench.colorTheme": "Catppuccin Mocha",
-    "workbench.iconTheme": "catppuccin-mocha",
-    "terminal.external.linuxExec": "ghostty"
-}
