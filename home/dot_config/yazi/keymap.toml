@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 prepend_keymap = [
     { on = [ "c", "m" ], run = "plugin chmod", desc = "Chmod on selected files" },
     { on = [ "g", "l" ], run = "cd ~/.local", desc = "Goto ~/.local" },
