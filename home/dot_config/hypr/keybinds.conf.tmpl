@@ -8,8 +8,7 @@ $restart = systemctl --user restart  # Restart user services
 $term = uwsm-app ghostty
 $editor = uwsm-app code
 $browser = uwsm-app vivaldi
-$file = uwsm-app pypr toggle yazi
-$file2 = uwsm-app dolphin
+$file = uwsm-app dolphin
 $music = uwsm-app spotify-launcher
 $notes = uwsm-app pypr toggle obsidian
 $menu = uwsm-app -- rofi -show drun -run-command "uwsm-app -- {cmd}"
@@ -43,7 +42,6 @@ bind = $s, Z, exec, $music      # Music launcher
 bind = $s, O, exec, $notes      # Note-taking app
 bind = $s, N, exec, $notify     # Notifications
 bind = $s, D, exec, $discord    # Discord
-bind = Alt, E, exec, $file2  # File manager
 bind = $s+Shift, S, exec, $steam # Steam
 bind = $s, A, exec, pkill -x rofi || $menu  # Rofi launcher fallback
 
