@@ -92,6 +92,7 @@ packages:
     - cachyos-gaming-applications
     - prismlauncher-git
     - hyprsunset
+    - game-devices-udev
     {{ end }}
     {{ if $boolean.laptop }}
     - auto-cpufreq
