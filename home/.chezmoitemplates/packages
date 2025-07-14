@@ -78,6 +78,7 @@ packages:
     - kwallet
     - kwallet-pam
     - kio
+    - kio-admin
     - qt5-imageformats
     - ffmpegthumbs
     - nextcloud-client-git
@@ -100,6 +101,7 @@ packages:
     {{ end }}
   aur:
     - proton-mail-bin
+    - lmstudio
     - pyprland
     - syshud
     - uwsm
