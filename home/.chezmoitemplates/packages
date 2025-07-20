@@ -88,6 +88,7 @@ packages:
     - topgrade
     - kvantum-qt5
     - waypaper-git
+    - appimagelauncher
     {{ if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
