@@ -94,6 +94,25 @@ tooltip {
     min-height: 10px
 }
 
+menu {
+  margin-top: 32px;                       /* keeps it below the bar */
+  border-radius: 12px;                    /* rounded corners */
+  background-color: rgba(30, 30, 46, 0.8);/* semi-transparent BG */
+  color: #cdd6f4;                         /* your text color */
+  padding: 4px;                           /* tighten it up */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);  /* subtle drop-shadow */
+}
+
+menuitem {
+  padding: 6px 12px;
+  border-radius: 4px;                     /* inner items also rounded */
+  background-color: transparent;          /* let the menu’s transparently show through */
+}
+
+menuitem:hover {
+  background-color: rgba(49, 50, 68, 0.5);/* translucent hover state */
+}
+
 #backlight,
 #battery,
 #bluetooth,

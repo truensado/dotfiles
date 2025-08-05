@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="GtkMenu" id="menu">
+    <!-- Power Off -->
+    <child>
+      <object class="GtkMenuItem" id="poweroff">
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <!-- icon -->
+            <child>
+              <object class="GtkImage">
+                <property name="icon-name">system-shutdown-symbolic</property>
+                <property name="pixel-size">16</property>
+              </object>
+            </child>
+            <!-- label -->
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Power Off</property>
+                <property name="halign">start</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Reboot -->
+    <child>
+      <object class="GtkMenuItem" id="reboot">
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkImage">
+                <property name="icon-name">system-reboot-symbolic</property>
+                <property name="pixel-size">16</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Reboot</property>
+                <property name="halign">start</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Suspend -->
+    <child>
+      <object class="GtkMenuItem" id="suspend">
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkImage">
+                <property name="icon-name">system-suspend-symbolic</property>
+                <property name="pixel-size">16</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Suspend</property>
+                <property name="halign">start</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+    <!-- Lock -->
+    <child>
+      <object class="GtkMenuItem" id="lock">
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">10</property>
+            <child>
+              <object class="GtkImage">
+                <property name="icon-name">system-lock-screen-symbolic</property>
+                <property name="pixel-size">16</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="label">Lock</property>
+                <property name="halign">start</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+
+  </object>
+</interface>
+
+

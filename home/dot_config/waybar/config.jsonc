@@ -192,14 +192,17 @@
         },
     
         "custom/power": {
-            "format": "{}",
-            "rotate": 0,
-            "exec": "echo ; echo  logout",
-            "on-click": "wlogout",
-            "interval" : 86400, // once every day
-            "tooltip": true
-        },
-    
+          "format": "{}",                 // Power icon
+          "tooltip": false,
+          "menu": "on-click",            // trigger on left-click
+          "menu-file": "$HOME/.config/waybar/power_menu.xml",
+          "menu-actions": {
+            "poweroff":  "systemctl poweroff",
+            "reboot":    "systemctl reboot",
+            "lock":      "hyprlock &",
+            "suspend":   "hyprlock && systemctl suspend"
+          }
+        },   
     
     // modules for padding //
     
