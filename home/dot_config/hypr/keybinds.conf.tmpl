@@ -17,7 +17,7 @@ $pmenu = uwsm-app wlogout
 $notify = uwsm-app -- swaync-client -t -sw
 $clipboard = uwsm-app -- ghostty --class=com.clipse -e 'clipse'
 $steam = uwsm-app steam-native
-$ss = screenshot.sh
+$ss = screenshot
 
 # ---- General ----
 
@@ -60,7 +60,7 @@ bindl = , XF86AudioPrev, exec, playerctl previous
 bindl = , F13, exec, playerctl play-pause
 bindl = , F14, exec, playerctl previous
 bindl = , F15, exec, playerctl next
-bindl = , F16, exec, audio.sh
+bindl = , F16, exec, audio
 
 # ---- Brightness ----
 {{ if .desktop -}}
@@ -70,8 +70,8 @@ bindl = , XF86MonBrightnessDown, exec, hyprctl hyprsunset gamma -5
 
 {{ else -}}
 
-bindl = , XF86MonBrightnessUp, exec, brightness.sh +5
-bindl = , XF86MonBrightnessDown, exec, brightness.sh -5
+bindl = , XF86MonBrightnessUp, exec, brightness +5
+bindl = , XF86MonBrightnessDown, exec, brightness -5
 
 {{ end -}}
 # ---- Windows ----
