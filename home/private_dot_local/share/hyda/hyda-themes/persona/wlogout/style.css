@@ -1,0 +1,55 @@
+* {
+	background-image: none;
+	box-shadow: none;
+}
+
+window {
+    background-color: rgba(0, 0, 0, 0.308);
+    background-image: url("/home/nsado/.config/wlogout/wlogout.bg");
+    background-size: cover; /* Ensures the image covers the entire background */
+    background-position: center; /* Centers the background image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
+
+button {
+    background-color: rgba(30, 30, 30, 0.3); /* Fully transparent background */
+    border-radius: 30px;
+    border-color: black;
+    text-decoration-color: #FFFFFF;
+    color: #FFFFFF;
+    border-style: solid;
+    border-width: 1px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 25%;
+}
+
+button:focus, button:active, button:hover {
+    background-color: rgba(0, 66, 97, 0.6);
+}
+
+#shutdown {
+    background-image: image(url("/home/nsado/.config/wlogout/icons/shutdown_white.png"));
+}
+
+#logout {
+    background-image: image(url("/home/nsado/.config/wlogout/icons/logout_white.png"));
+
+}
+
+#reboot {
+    background-image: image(url("/home/nsado/.config/wlogout/icons/reboot_white.png"));
+}
+
+#lock {
+    background-image: image(url("/home/nsado/.config/wlogout/icons/lock_white.png"));
+}
+
+#hibernate {
+    background-image: image(url("/home/nsado/.config/wlogout/icons/hibernate_white.png"));
+}
+
+#suspend {
+    background-image: image(url("/home/nsado/.config/wlogout/icons/suspend_white.png"));
+}
