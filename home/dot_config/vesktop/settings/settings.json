@@ -5,7 +5,7 @@
     "themeLinks": [],
     "eagerPatches": false,
     "enabledThemes": [
-        "mocha.theme.css"
+        "theme.css"
     ],
     "enableReactDevtools": false,
     "frameless": false,

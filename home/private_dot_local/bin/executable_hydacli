@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# hydacli — centralized CLI for the Hyda project
+
+# Base directory where all Hyda scripts live
+HYDA_SCRIPTS_DIR="$HOME/.local/share/hyda/bin"
+
+usage() {
+  cat <<EOF
+Hyda CLI — manage all Hyda project scripts
+
+Usage:
+  hydacli <command> [args...]
+
+Commands:
+  theme       Manage Hyprland themes
+  update      Manage Hyda configs
+  audio       Manage Hyda configs
+  screenshot  Manage Hyda configs
+
+Examples:
+  hydacli theme list
+  hydacli audio
+  hydacli update
+EOF
+}
+
+main() {
+  local cmd="$1"
+  shift || true
+
+  case "$cmd" in
+    theme)
+      "$HYDA_SCRIPTS_DIR/hyda-theme.sh" "$@"
+      ;;
+    audio)
+      "$HYDA_SCRIPTS_DIR/hyda-switch-audio.sh" "$@"
+      ;;
+    screenshot)
+      "$HYDA_SCRIPTS_DIR/hyda-screenshot.sh" "$@"
+      ;;
+    update)
+      "$HYDA_SCRIPTS_DIR/hyda-update.sh" "$@"
+      ;;
+    ""|-h|--help|help)
+      usage
+      ;;
+    *)
+      echo "Unknown command: $cmd" >&2
+      usage
+      exit 1
+      ;;
+  esac
+}
+
+main "$@"

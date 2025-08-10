@@ -49,14 +49,16 @@
     "network-transient": {
       "state": "transient",
       "app-name": "NetworkManager"
+    },
+
+    "nextcloud-transient": {
+      "state": "transient",
+      "app-name": "Nextcloud"
     }
   },
 
   "widgets": [
     "label",
-    "buttons-grid",
-    "volume",
-    "backlight",
     "title",
     "dnd",
     "notifications"

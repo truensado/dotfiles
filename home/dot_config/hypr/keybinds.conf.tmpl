@@ -1,50 +1,49 @@
 # ---- Keybinds ----
 
-$s = Super                     # Main modifier key (Super/Windows)
-$restart = systemctl --user restart  # Restart user services
+$s = Super
+$restart = systemctl --user restart
 
 # ---- Defines ----
 
-$term = uwsm-app ghostty
-$editor = uwsm-app code
-$browser = uwsm-app vivaldi
-$file = uwsm-app dolphin
-$music = uwsm-app spotify-launcher
-$notes = uwsm-app pypr toggle obsidian
-$menu = uwsm-app -- rofi -show drun -run-command "uwsm-app -- {cmd}"
-$discord = uwsm-app vesktop
-$pmenu = uwsm-app wlogout
-$notify = uwsm-app -- swaync-client -t -sw
-$clipboard = uwsm-app -- ghostty --class=com.clipse -e 'clipse'
-$steam = uwsm-app steam-native
-$ss = screenshot
+$term = uwsm app ghostty
+$editor = uwsm app -- code
+$browser = uwsm app -- vivaldi
+$file = uwsm app dolphin
+$music = uwsm app spotify-launcher
+$notes = uwsm app obsidian
+$menu = uwsm app -- rofi -show drun -run-command "uwsm app -- {cmd}"
+$discord = uwsm app vesktop
+$pmenu = uwsm app wlogout
+$notify = uwsm app -- swaync-client -t -sw
+$clipboard = uwsm app -- ghostty --class=com.clipse -e 'clipse'
+$steam = uwsm app -- steam-native
+$ss = hydacli screenshot
 
 # ---- General ----
 
-bind = $s, Q, killactive                   # Close active window
-bind = $s, Delete, exit                    # Exit session
-bind = $s, W, togglefloating               # Toggle window floating state
-bind = $s, G, togglegroup                  # Toggle window grouping
-bind = $s, V, exec, $clipboard             # Launch clipboard manager
-bind = Alt, Return, fullscreen             # Toggle fullscreen
-bind = $s, Backspace, exec, $pmenu         # Open power menu
-bind = Ctrl+Alt, W, exec, $restart waybar  # Restart Waybar
-bind = , Print, exec, $ss                  # Screenshot
+bind = $s, Q, killactive
+bind = $s, Delete, exit
+bind = $s, W, togglefloating
+bind = $s, G, togglegroup
+bind = $s, V, exec, $clipboard
+bind = Alt, Return, fullscreen
+bind = $s, Backspace, exec, $pmenu
+bind = Ctrl+Alt, W, exec, $restart waybar
+bind = , Print, exec, $ss
 bind = $s, Escape, exec, hyprctl kill
 
 # ---- Applications ----
 
-bind = $s+Alt, E, exec, $file2  # File manager
-bind = $s, T, exec, $term       # Terminal
-bind = $s, E, exec, $file       # File manager
-bind = $s, C, exec, $editor     # Code editor
-bind = $s, F, exec, $browser    # Web browser
-bind = $s, Z, exec, $music      # Music launcher
-bind = $s, O, exec, $notes      # Note-taking app
-bind = $s, N, exec, $notify     # Notifications
-bind = $s, D, exec, $discord    # Discord
-bind = $s+Shift, S, exec, $steam # Steam
-bind = $s, A, exec, pkill -x rofi || $menu  # Rofi launcher fallback
+bind = $s, T, exec, $term
+bind = $s, E, exec, $file
+bind = $s, C, exec, $editor
+bind = $s, F, exec, $browser
+bind = $s, Z, exec, $music
+bind = $s, O, exec, $notes
+bind = $s, N, exec, $notify
+bind = $s, D, exec, $discord
+bind = $s+Shift, S, exec, $steam
+bind = $s, A, exec, pkill -x rofi || $menu
 
 # ---- Media ----
 
@@ -60,7 +59,7 @@ bindl = , XF86AudioPrev, exec, playerctl previous
 bindl = , F13, exec, playerctl play-pause
 bindl = , F14, exec, playerctl previous
 bindl = , F15, exec, playerctl next
-bindl = , F16, exec, audio
+bindl = , F16, exec, hydacli audio
 
 # ---- Brightness ----
 {{ if .desktop -}}
@@ -70,17 +69,17 @@ bindl = , XF86MonBrightnessDown, exec, hyprctl hyprsunset gamma -5
 
 {{ else -}}
 
-bindl = , XF86MonBrightnessUp, exec, brightness +5
-bindl = , XF86MonBrightnessDown, exec, brightness -5
+bindl = , XF86MonBrightnessUp, exec, brightnessctl +5
+bindl = , XF86MonBrightnessDown, exec, brightnessctl -5
 
 {{ end -}}
 # ---- Windows ----
 
-bind = $s, Left, movefocus, l      # Move focus left
-bind = $s, Right, movefocus, r     # Move focus right
-bind = $s, Up, movefocus, u        # Move focus up
-bind = $s, Down, movefocus, d      # Move focus down
-bind = Alt, Tab, movefocus, d      # Alternate focus (Alt+Tab)
+bind = $s, Left, movefocus, l
+bind = $s, Right, movefocus, r
+bind = $s, Up, movefocus, u
+bind = $s, Down, movefocus, d
+bind = Alt, Tab, movefocus, d
 
 # ---- Workspaces ----
 
@@ -94,9 +93,9 @@ bind = $s, 7, workspace, 7
 bind = $s, 8, workspace, 8
 bind = $s, 9, workspace, 9
 bind = $s, 0, workspace, 10
-bind = $s+Ctrl, Right, workspace, r+1  # Next workspace
-bind = $s+Ctrl, Left, workspace, r-1   # Previous workspace
-bind = $s+Ctrl, Down, workspace, empty  # Jump to an empty workspace
+bind = $s+Ctrl, Right, workspace, r+1
+bind = $s+Ctrl, Left, workspace, r-1
+bind = $s+Ctrl, Down, workspace, empty
 
 bind = $s+Shift, 1, movetoworkspace, 1
 bind = $s+Shift, 2, movetoworkspace, 2
@@ -130,19 +129,19 @@ bind = $s+Alt, 8, movetoworkspacesilent, 8
 bind = $s+Alt, 9, movetoworkspacesilent, 9
 bind = $s+Alt, 0, movetoworkspacesilent, 10
 
-bind = $s+Alt, S, movetoworkspacesilent, special  # Move to special workspace silently
-bind = $s, S, togglespecialworkspace,              # Toggle special workspace view
+bind = $s+Alt, S, movetoworkspacesilent, special
+bind = $s, S, togglespecialworkspace,
 
 # ---- Size ----
 
-binde = $s+Shift, Right, resizeactive, 30 0   # Increase width by 30
-binde = $s+Shift, Left, resizeactive, -30 0    # Decrease width by 30
-binde = $s+Shift, Up, resizeactive, 0 -30      # Decrease height by 30
-binde = $s+Shift, Down, resizeactive, 0 30     # Increase height by 30
+binde = $s+Shift, Right, resizeactive, 30 0
+binde = $s+Shift, Left, resizeactive, -30 0
+binde = $s+Shift, Up, resizeactive, 0 -30
+binde = $s+Shift, Down, resizeactive, 0 30
 
-bindm = $s, mouse:272, movewindow   # Move window with mouse button 272
-bindm = $s, mouse:273, resizewindow   # Resize window with mouse button 273
-bindm = $s, Z, movewindow             # Alternative key for moving window
-bindm = $s, X, resizewindow           # Alternative key for resizing window
+bindm = $s, mouse:272, movewindow
+bindm = $s, mouse:273, resizewindow
+bindm = $s, Z, movewindow
+bindm = $s, X, resizewindow
 
-bind = $s, J, togglesplit            # Toggle between split and stack layouts
+bind = $s, J, togglesplit

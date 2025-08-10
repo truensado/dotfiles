@@ -89,6 +89,7 @@ packages:
     - kvantum-qt5
     - waypaper-git
     - appimagelauncher
+    - swww
     {{ if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
@@ -103,7 +104,6 @@ packages:
   aur:
     - proton-mail-bin
     - lmstudio
-    - pyprland
     - syshud
     - uwsm
     - bibata-cursor-git
