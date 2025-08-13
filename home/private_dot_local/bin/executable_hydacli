@@ -13,9 +13,10 @@ Usage:
 
 Commands:
   theme       Manage Hyprland themes
-  update      Manage Hyda configs
-  audio       Manage Hyda configs
-  screenshot  Manage Hyda configs
+  update      Launches Updater
+  audio       Changes Audio Output
+  binds       Launches Keybinds Cheat Sheet
+  screenshot  Takes Screenshot
 
 Examples:
   hydacli theme list
@@ -40,6 +41,9 @@ main() {
       ;;
     update)
       "$HYDA_SCRIPTS_DIR/hyda-update.sh" "$@"
+      ;;
+    binds)
+      "$HYDA_SCRIPTS_DIR/hyda-binds.sh" "$@"
       ;;
     ""|-h|--help|help)
       usage
