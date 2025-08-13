@@ -16,6 +16,8 @@ pkill -x slurp 2>/dev/null || true
 # Take screenshot with annotation and copy to clipboard
 grim -g "$(slurp -o)" -t ppm - | \
   satty --filename - \
+        --actions-on-enter save-to-clipboard \
+        --save-after-copy \
         --early-exit \
         --copy-command wl-copy \
         --output-filename "$FILENAME"
