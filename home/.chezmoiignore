@@ -16,7 +16,7 @@
 .config/Proton
 {{ end -}}
 
-{{ if not (lookPath "proton-mail") -}}
+{{ if not (lookPath "proton-mail-bin") -}}
 .config/Proton Mail
 {{ end -}}
 

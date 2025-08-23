@@ -2,6 +2,12 @@
 
 set -e
 
+ERROR="\e[31m"
+SUCCESS="\e[32m"
+WARNING="\e[33m"
+RESET="\e[0m"
+BOLD="\e[1m"
+
 chaotic_key=3056513887B78AEB
 chaotic_full=EF925EA60F33D0CB85C44AD13056513887B78AEB
 file_path=/etc/pacman.conf
@@ -10,7 +16,7 @@ grep -q "chaotic-aur" "$file_path" && exit 0
 
 write_chaotic() {
   
-  echo "backing up pacman.conf"
+  echo -e "${BOLD}backing up pacman.conf${RESET}"
   
   sudo cp "$file_path" "$file_path.bak.$(date +%s)"
   
@@ -20,7 +26,7 @@ write_chaotic() {
 
 clean_chaotic() {
   
-  echo "cleaning up chaotic entries"
+  echo -e "${BOLD}cleaning up chaotic entries${RESET}"
   
   sudo pacman-key --list-keys "$chaotic_key" &> /dev/null && sudo pacman-key --delete "$chaotic_full" || true
   
@@ -39,7 +45,7 @@ install_chaotic() {
   
   trap 'chaotic_error' ERR
 
-  echo "installing chaotic aur"
+  echo -e "${BOLD}installing chaotic aur${RESET}"
 
   sudo pacman-key --recv-key "$chaotic_key" --keyserver keyserver.ubuntu.com
   
@@ -53,7 +59,7 @@ install_chaotic() {
 
   sudo pacman -Sy
 
-  echo "installed chaotic aur successfully"
+  echo -e "${SUCCESS}installed chaotic aur successfully${RESET}"
   
   exit 0
 
@@ -63,17 +69,17 @@ chaotic_error() {
   
   tput setaf 1
   
-  echo "ERROR: install failed, reverting..."
+  echo -e "${ERROR}ERROR${RESET}: ${BOLD}install failed, reverting${RESET}..."
   
   tput sgr0
   
   clean_chaotic
   
-  echo "revert successful"
+  echo -e "${SUCCESS}revert successful${RESET}"
   
   exit 1
 }
 
-command -v pacman &> /dev/null || { echo "pacman not found"; exit 1; }
+command -v pacman &> /dev/null || { echo -e "${ERROR}pacman not found${RESET}"; exit 1; }
 
 install_chaotic

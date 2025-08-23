@@ -2,12 +2,18 @@
 
 {{- if .personal }}
 
+ERROR="\e[31m"
+SUCCESS="\e[32m"
+WARNING="\e[33m"
+RESET="\e[0m"
+BOLD="\e[1m"
+
 check_install() {
   local cmd="$1"
   local pkg="$2"
   
   if ! command -v "$cmd" &>/dev/null; then
-    echo "installing $pkg"
+    echo -e "{$BOLD}installing${RESET} $pkg"
     sudo pacman -S --needed --noconfirm "$pkg"
   fi
 
@@ -15,11 +21,10 @@ check_install() {
 
 set_bw() {
   if ! bw login --check &> /dev/null; then
-    echo "logging into bitwarden"
-    bw config server "{{ .bw_url }}"
-    bw login {{ .bw_login }}
+    echo -e "${BOLD}logging into bitwarden${RESET}"
+    bw config server "{{ .bw_url }}" &> /dev/null
+    bw login {{ .bw_login }} &> /dev/null
   fi
-  export BW_SESSION="$(bw unlock --raw)"
 }
 
 check_install bw bitwarden-cli

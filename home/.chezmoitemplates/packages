@@ -109,7 +109,6 @@ packages:
     {{- end }}
   aur:
     - proton-mail-bin
-    - lmstudio
     - syshud
     - uwsm
     - bibata-cursor-git
