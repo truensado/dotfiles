@@ -2,6 +2,7 @@
 packages:
   pacman:
     - ueberzugpp
+    - bitwarden-cli
     - paru
     - btop
     - fastfetch
@@ -15,7 +16,6 @@ packages:
     - imagemagick
     - libnotify
     - pacman-contrib
-    - brightnessctl
     - 7zip
     - fd
     - fzf
@@ -65,6 +65,7 @@ packages:
     - pipewire-pulse
     - gst-plugin-pipewire
     - wireplumber
+    - python
     - pavucontrol
     - pamixer
     - ghostty
@@ -89,18 +90,24 @@ packages:
     - kvantum-qt5
     - waypaper-git
     - appimagelauncher
+    - tmux
+    - entr
     - swww
-    {{ if $boolean.desktop }}
+    {{ if $boolean.desktop -}}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
     - prismlauncher-git
     - hyprsunset
+    - tk
+    - rpcs3-git
     - game-devices-udev
-    {{ end }}
-    {{ if $boolean.laptop }}
+    - shadps4-git
+    {{- end }}
+    {{ if $boolean.laptop -}}
     - auto-cpufreq
+    - brightnessctl
     - libinput-gestures-qt
-    {{ end }}
+    {{ end -}}
   aur:
     - proton-mail-bin
     - lmstudio

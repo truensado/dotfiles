@@ -10,17 +10,16 @@ encryption = "age"
   personal = {{ $boolean.personal }}
   laptop = {{ $boolean.laptop }}
   desktop = {{ $boolean.desktop }}
-{{- if $boolean.personal }}
+{{ if $boolean.personal }}  
   name = "nsado"
   email = "171737294+nsado123@users.noreply.github.com"
-# secrets
+
   bw_url = "{{ promptStringOnce . "Bitwarden URL" "Enter your Bitwarden URL:" }}"
   bw_login = "{{ promptStringOnce . "Bitwarden Login" "Enter your Bitwarden Login:" }}"
-  bw_pass = "{{ promptStringOnce . "Bitwarden Pass" "Enter your Bitwarden Password:" }}"
-{{ else -}}
+{{ else }}
   name = "{{ promptStringOnce . "name" "Enter your name:" }}"
   email = "{{ promptStringOnce . "email" "Enter your email:" }}"
-{{- end }}
+{{ end }}
 [merge]
   command = "nvim"
   args = [
@@ -33,3 +32,10 @@ encryption = "age"
 [git]
   autoCommit = true
   autoPush = true
+
+[bitwarden]
+unlock = "auto"
+
+[hooks.apply.post]
+command = "sh"
+args = ["-c", "chmod -R ug+x \"$HOME/.local/share/wemod-launcher\" || true"]

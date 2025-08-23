@@ -1,16 +1,35 @@
-**/*.src.ini
-.config/systemd/user/**
+{{ if not .laptop -}}
+.local/share/icons/battery
+.local/share/hyda/bin/hyda-battery.sh
+.config/systemd/user/hyda-battery.service
+{{ end -}}
 
-{{- if not .laptop }}
-.local/share/icons/battery/
-.local/bin/battery.sh
-{{- end -}}
+{{ if not (lookPath "mako") -}}
+.config/mako
+{{ end -}}
 
-{{- if not .personal }}
-.config/vivaldi/
-.secrets/
-{{- end -}}
+{{ if not (lookPath "swaync") -}}
+.config/swaync
+{{ end -}}
 
-{{- if not .desktop }}
+{{ if not (lookPath "proton-vpn-gtk-app") -}}
+.config/Proton
+{{ end -}}
+
+{{ if not (lookPath "proton-mail") -}}
+.config/Proton Mail
+{{ end -}}
+
+{{ if not (lookPath "vesktop") -}}
+.local/share/applications/vesktop.desktop
+{{end -}}
+
+{{ if not .personal -}}
+.config/vivaldi
+.secrets
+{{ end -}}
+
+{{ if not .desktop -}}
 .local/share/PrismLauncher
-{{- end -}}
+.config/hypr/hyprsunset.conf
+{{ end -}}

@@ -1,11 +1,31 @@
+[".config/tmux/tpm"]
+  type = "git-repo"
+  url = "https://github.com/tmux-plugins/tpm"
+  refreshPeriod = "744h"
+
+{{ if .desktop -}}
+[".local/share/wemod-launcher"]
+  type = "git-repo"
+  url = "https://github.com/DeckCheatz/wemod-launcher"
+  refreshPeriod = "48h"
+
+[".local/share/hyda/bin/hyda-reshade.sh"]
+  type = "file"
+  url = "https://raw.githubusercontent.com/kevinlekiller/reshade-steam-proton/refs/heads/main/reshade-steam-proton.sh"
+  refreshPeriod = "48h"
+  executable = true
+{{ end -}}
+
 {{- if .personal }}
 [".local/bin/lncrawl"]
   type = "file"
   url = "https://github.com/dipu-bd/lightnovel-crawler/releases/latest/download/lncrawl-linux"
+  refreshPeriod = "24h"
   executable = true
 
 [".local/bin/itch-setup"]
   type = "file"
   url = "https://itch.io/app/download?platform=linux"
+  refreshPeriod = "744h"
   executable = true
-{{- end -}}
+{{ end -}}

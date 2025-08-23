@@ -76,32 +76,6 @@
     "label": {
       "max-lines": 1,
       "text": " "
-    },
-    "volume": {
-      "label": "󰕾",
-      "show-per-app": true
-    },
-    "backlight": {
-      "subsystem": "backlight",
-      "label": "󰃟"
-    },
-    "buttons-grid": {
-      "actions": [
-        {
-          "label": " ",
-          "type": "toggle",
-          "command": "amixer set Master toggle"
-        },
-        {
-          "label": "",
-          "type": "toggle",
-          "command": "amixer set Capture toggle"
-        },
-        {
-          "label": "󰏘",
-          "command": "waytrogen"
-        }
-      ]
     }
   }
 }

@@ -1,13 +1,20 @@
 {{- $boolean := includeTemplate "boolean" . | fromYaml -}}
 services:
   system:
-    {{- if lookPath "sddm" }}
+    {{ if lookPath "sddm" -}}
     - sddm
-    {{- end }}
+    {{ end -}}
+    - bluetooth
   user:
-    {{- if $boolean.desktop }}
+    {{ if $boolean.desktop -}}
     - hyprsunset
-    {{- end }}
+    {{ end -}}
     - hyprpolkitagent
     - hypridle
     - waybar
+    - swaync
+    - hyda-devices
+    - hyda-events
+    {{- if $boolean.laptop }}
+    - hyda-battery
+    {{- end }}

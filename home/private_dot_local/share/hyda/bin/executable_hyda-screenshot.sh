@@ -1,23 +1,27 @@
 #!/usr/bin/env bash
-set -euo pipefail
 
-# Constants
-PICTURES_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
-SCREENSHOT_DIR="$PICTURES_DIR/screenshots"
-TIMESTAMP="$(date '+%Y%m%d-%H%M%S')"
-FILENAME="$SCREENSHOT_DIR/${TIMESTAMP}.png"
+scrDir=$(dirname "$(realpath "$0")")
+source "$scrDir/hyda-variables.sh"
 
-# Ensure screenshot directory exists
-mkdir -p "$SCREENSHOT_DIR"
+deps=(grim slurp satty)
 
-# Kill existing slurp if hanging
-pkill -x slurp 2>/dev/null || true
+for dep in "${deps[@]}"; do
+  if ! command -v "$dep" >/dev/null 2>&1; then
+    echo -e "${ERROR}Error${RESET}: Missing dependency ${BOLD}$dep"
+    exit 1
+  fi
+done
 
-# Take screenshot with annotation and copy to clipboard
+SsDir="${XDG_PICTURES_DIR:-$HOME/Pictures}/screenshots"
+
+mkdir -p "$SsDir"
+  
+pkill -x slurp
+
 grim -g "$(slurp -o)" -t ppm - | \
   satty --filename - \
         --actions-on-enter save-to-clipboard \
         --save-after-copy \
         --early-exit \
         --copy-command wl-copy \
-        --output-filename "$FILENAME"
+        --output-filename "$SsDir/screenshot-$(date +'%Y%m%d_%H-%M-%S').png"

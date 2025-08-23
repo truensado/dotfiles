@@ -37,8 +37,6 @@ jq -r '
     | gsub("@DEFAULT(_AUDIO)?_SINK@"; "output")
     | gsub("hyprctl[[:space:]]+kill"; "killsession")
     | gsub("hydacli[[:space:]]+"; "")
-    | gsub("brightnessctl[[:space:]]+"; "brightness")
-    | gsub("hyprctl[[:space:]]+hyprsunset[[:space:]]+gamma"; "brightness")
     | gsub("(^|[[:space:]])audio($|[[:space:]])"; " switch-audio ")
     | gsub("[[:space:]]+toggle"; "")
     | gsub("steam-[^[:space:]]+"; "steam")

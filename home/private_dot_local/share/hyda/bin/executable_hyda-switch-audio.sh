@@ -1,47 +1,114 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
+scrDir=$(dirname "$(realpath "$0")")
+source "$scrDir/hyda-variables.sh"
 
-# 🚫 Sinks to ignore
-IGNORED=(
+exSinks=(
   "alsa_output.pci-0000_00_1f.3.iec958-stereo"
   "alsa_output.pci-0000_01_00.1.hdmi-stereo"
 )
 
-# Get array of filtered sinks
-mapfile -t sinks < <(
-  pactl list short sinks | awk '{print $2}' | grep -vFf <(printf "%s\n" "${IGNORED[@]}")
+exSources=(
+  "alsa_output.pci-0000_00_1f.3.iec958-stereo.monitor"
+  "alsa_input.pci-0000_00_1f.3.analog-stereo"
+  "alsa_output.pci-0000_01_00.1.hdmi-stereo.monitor"
+  "alsa_output.usb-Generic_USB2.0_Device_20170726905923-00.analog-stereo.monitor"
+  "alsa_input.usb-Generic_USB2.0_Device_20170726905923-00.mono-fallback"
 )
 
-# Exit if no valid sinks found
-[[ ${#sinks[@]} -eq 0 ]] && {
-  echo "❌ No valid sinks to cycle through." >&2
-  exit 1
+sinks="$(pactl list short sinks | awk '{print $2}' | grep -vFf <(printf "%s\n" "${exSinks[@]}"))"
+sources="$(pactl list short sources | awk '{print $2}' | grep -vFf <(printf "%s\n" "${exSources[@]}"))"
+
+[[ -z "$sinks" && -z "$sources" ]] && { echo -e "${ERROR}no sinks or sources available"; exit 1; }
+
+usage() {
+  cat <<'EOF'
+
+Hyda-Switch-Audio — Changes Audio Sink or Source
+
+Usage:
+ list         -l  ->  Lists available sinks while filtered
+ switch       -s  ->  Use with source or sink to cycle through either
+EOF
 }
 
-# Get current default sink
-current_sink=$(pactl info | awk -F': ' '/Default Sink/ {print $2}')
+switch_sink() {
+  [[ -z "$sinks" ]] && { echo -e "${ERROR}no sinks available"; return 1; }
 
-# Find current sink index
-current_index=-1
-for i in "${!sinks[@]}"; do
-  if [[ "${sinks[$i]}" == "$current_sink" ]]; then
-    current_index=$i
-    break
-  fi
+  local current next idx=-1 i
+ 
+  current="$(pactl info | sed -n 's/^Default Sink: //p')"
+
+  mapfile -t sinks_array <<< "$sinks"
+
+  for i in "${!sinks_array[@]}"; do
+    if [[ "${sinks_array[$i]}" == "$current" ]]; then
+      idx=$i
+      break
+    fi
+  done
+
+  next="${sinks_array[$(((idx + 1) % ${#sinks_array[@]}))]}"
+
+  pactl set-default-sink "$next"
+  echo "${SUCCESS}Switched sink to${RESET}: $next"
+}
+
+switch_source() {
+  [[ -z "$sources" ]] && { echo -e "${ERROR}no sources available"; return 1; }
+
+  local current next idx=-1 i
+ 
+  current="$(pactl info | sed -n 's/^Default Source: //p')"
+
+  mapfile -t sources_array <<< "$sources"
+
+  for i in "${!sources_array[@]}"; do
+    if [[ "${sources_array[$i]}" == "$current" ]]; then
+      idx=$i
+      break
+    fi
+  done
+
+  next="${sources_array[$(((idx + 1) % ${#sources_array[@]}))]}"
+
+  pactl set-default-source "$next"
+  echo "${SUCCESS}Switched source to${RESET}: $next"
+}
+
+while (($#)); do
+  case $1 in
+    list | -l)
+      [[ -n "$sinks" ]] && echo -e "${BOLD}List of Sinks${RESET}:\n$sinks\n"
+      [[ -n "$sources" ]] && echo -e "${BOLD}List of Sources${RESET}:\n$sources"
+      shift
+      ;;
+    switch | -s)
+      case "${2:-}" in
+        sink | sinks)
+          switch_sink
+          shift
+          ;;
+        source | sources)
+          switch_source
+          shift
+          ;;
+        *)
+          echo -e "${ERROR}unknown switch target: '$2' (expected 'sink' or 'source')"
+          usage
+          exit 1
+          ;;
+      esac
+      shift
+      ;;
+    help | -h | --help | -help)
+      usage
+      shift
+      ;;
+    *)
+      echo -e "${ERROR}unknown argument: $1"
+      usage
+      exit 1
+      ;;
+  esac
 done
-
-# Compute next sink (wrap around)
-next_index=$(( (current_index + 1) % ${#sinks[@]} ))
-next_sink="${sinks[$next_index]}"
-
-# Apply new default sink
-pactl set-default-sink "$next_sink"
-
-# Move all streams to new sink
-pactl list short sink-inputs | while read -r line; do
-  input_id=$(awk '{print $1}' <<< "$line")
-  pactl move-sink-input "$input_id" "$next_sink"
-done
-
-echo "🔄 Audio output switched to: $next_sink"

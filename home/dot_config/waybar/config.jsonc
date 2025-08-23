@@ -50,12 +50,14 @@
         },
          
         "custom/updates": {
-            "format": "",
-            "rotate": 0,
-            "exec": "update.sh",
-            "on-click": "hyprctl dispatch exec update",
-            "interval": 21600000, // once every 6 hours
-            "signal": 20
+          "exec": "hydacli updater waybar",
+          "return-type": "json",
+          "format": "{0}",
+          "rotate": 0,
+          "on-click": "hyprctl dispatch exec hydacli updater default", 
+          "interval": 86400,
+          "tooltip": true,
+          "signal": 20
         },        
 
         "custom/notification": {

@@ -1,7 +1,8 @@
-{{- if .personal -}}
+{{ if .personal -}}
+Templates
+.bash_history
 .bash_logout
 .bash_profile
 .bashrc
-Templates
 .viminfo
-{{- end -}}
+{{ end -}}

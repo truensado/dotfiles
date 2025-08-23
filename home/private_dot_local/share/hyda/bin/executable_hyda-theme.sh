@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# ---- Globals
+source "${XDG_DATA_HOME:-$HOME/.local/share}/hyda/bin/hyda-state.sh"
 
 COMMAND="${1-}"
 SUBCOMMAND="${2-}"
@@ -269,6 +269,8 @@ apply_theme() {
   apply_kvantum "$meta"
   install_hypr_include "$theme_path" "$meta"
   apply_wallpapers "$theme_path"
+
+  set_state_lock "Current Theme" "$theme"
 
   echo "Theme '$theme' applied."
   NOTIFY "Theme $theme applied"
