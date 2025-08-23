@@ -1,0 +1,13 @@
+[Unit]
+Description=Notification Daemon and Center
+After=graphical.target
+
+[Service]
+Environment=GSK_RENDERER=gl
+Environment=GTK_DISABLE_VULKAN=1
+ExecStart=/usr/bin/swaync
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target

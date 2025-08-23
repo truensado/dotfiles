@@ -1,0 +1,13 @@
+[Unit]
+Description=Hyda IPC Daemon for Dynamically Changing Config
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/hydacli events
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target

@@ -1,0 +1,46 @@
+# ---- General ----
+
+max-history=50
+sort=-time
+font= Cantarell Regular 10
+width=300
+height=150
+actions=1
+history=1
+format= <b>%s</b>\n%b
+text-alignment=left
+default-timeout=3000
+ignore-timeout=0
+max-visible=3
+layer=top
+anchor=top-right
+
+# ---- Icons ----
+
+icons=1
+max-icon-size=48
+icon-path=/usr/share/icons/Tela-circle-dracula
+icon-location=left
+
+# ---- Actions ----
+
+on-button-left=invoke-default-action
+on-button-middle=dismiss-group
+on-button-right=dismiss
+on-touch=invoke-default-action
+
+# ---- Theme ----
+
+background-color=#1e1e2e
+text-color=#cdd6f4
+border-color=#cba6f7
+progress-color=over #313244
+outer-margin=1
+margin=1
+padding=10
+border-size=1
+border-radius=5
+
+# ---- Do-Not-Disturb ----
+[mode=do-not-disturb]
+invisible=1

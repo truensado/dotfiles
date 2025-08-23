@@ -1,0 +1,11 @@
+[Unit]
+Description=Run updater every 6 hours
+
+[Timer]
+OnStartupSec=30s
+OnUnitActiveSec=3h
+Unit=hyda-updater.service
+Persistent=true
+
+[Install]
+WantedBy=timers.target

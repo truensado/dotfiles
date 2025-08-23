@@ -1,0 +1,6 @@
+[Unit]
+Description=Runs Hyda Updater Every 6 Hours
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/hyda/bin/hyda-updater.sh notify

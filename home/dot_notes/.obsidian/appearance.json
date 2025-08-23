@@ -1,0 +1,9 @@
+{
+  "theme": "system",
+  "cssTheme": "Catppuccin",
+  "nativeMenus": true,
+  "accentColor": "",
+  "monospaceFontFamily": "",
+  "textFontFamily": "",
+  "baseFontSizeAction": true
+}

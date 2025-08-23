@@ -1,0 +1,13 @@
+[Unit]
+Description=Hyda Daemon for Laptop Battery Notifications
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/hydacli battery
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target
