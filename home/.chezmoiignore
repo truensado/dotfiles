@@ -12,11 +12,11 @@
 .config/swaync
 {{ end -}}
 
-{{ if not (lookPath "proton-vpn-gtk-app") -}}
+{{ if not (lookPath "protonvpn-app") -}}
 .config/Proton
 {{ end -}}
 
-{{ if not (lookPath "proton-mail-bin") -}}
+{{ if not (lookPath "proton-mail") -}}
 .config/Proton Mail
 {{ end -}}
 
