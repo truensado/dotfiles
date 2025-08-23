@@ -85,7 +85,6 @@ packages:
     - nextcloud-client-git
     - visual-studio-code-bin
     - all-repository-fonts
-    - dracula-gtk-theme-git
     - topgrade
     - kvantum-qt5
     - waypaper-git
@@ -93,7 +92,7 @@ packages:
     - tmux
     - entr
     - swww
-    {{ if $boolean.desktop -}}
+    {{- if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
     - prismlauncher-git
@@ -103,11 +102,11 @@ packages:
     - game-devices-udev
     - shadps4-git
     {{- end }}
-    {{ if $boolean.laptop -}}
+    {{- if $boolean.laptop }}
     - auto-cpufreq
     - brightnessctl
     - libinput-gestures-qt
-    {{ end -}}
+    {{- end }}
   aur:
     - proton-mail-bin
     - lmstudio
