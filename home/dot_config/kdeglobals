@@ -12,6 +12,3 @@ widgetStyle=kvantum
 
 [UiSettings]
 ColorScheme=*
-
-[Wallet]
-Enabled=false
