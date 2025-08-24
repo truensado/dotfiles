@@ -101,6 +101,9 @@ packages:
     - rpcs3-git
     - game-devices-udev
     - shadps4-git
+    - jdk17-openjdk
+    - jdk21-openjdk
+    - shadps4-git
     {{- end }}
     {{- if $boolean.laptop }}
     - auto-cpufreq

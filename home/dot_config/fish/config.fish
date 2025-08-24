@@ -104,6 +104,7 @@ alias tk='tmux kill-session'
 alias tl='tmux ls'
 alias yy='sudo EDITOR=nvim yazi'
 alias fix-pass='faillock --user nsado --reset'
+alias gca='git commit -am'
 
 # ---- Abbreviations ----
 
