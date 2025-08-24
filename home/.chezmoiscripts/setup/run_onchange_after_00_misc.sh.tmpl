@@ -33,12 +33,12 @@ do_autologin() {
 ExecStart=
 ExecStart=-/sbin/agetty --autologin {{ .chezmoi.username }} --noclear -o '-p -f -- \\u' %I linux
 EOF
-  fi
 
-  sudo systemctl daemon-reexec
   sudo systemctl daemon-reload
   sudo systemctl enable getty@tty1
   sudo systemctl restart getty@tty1
+
+  fi
 }
 
 do_yazi() {
