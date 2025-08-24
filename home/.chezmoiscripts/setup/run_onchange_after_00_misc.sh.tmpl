@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+do_nextcloud() {
+  if command -v nextcloud &> /dev/null; then
+    
+    local path="${XDG_CONFIG_HOME:-$HOME/.config}/Nextcloud/nextcloud.cfg"
+    local value="showMainDialogAsNormalWindow=true"
+    
+    mkdir -p "$(dirname "$path")"
+    
+    if [ ! -f "$path" ]; then
+      printf "[General]\n%s=%s\n" "$value" >"$path"
+    elif ! grep -q "^${value}\$" "$path"; then
+      if grep -q "^\[General\]" "$path"; then
+        sed -i "/\[General\]/a $value" "$path"
+      else
+        printf "\n[General]\n%s\n" "$value" >> "$path"
+      fi
+    fi
+
+  fi
+}
+
+do_autologin() {
+  local path="/etc/systemd/system/getty@tty1.service.d"
+  local file="$path/autologin.conf"
+
+  sudo mkdir -p "$path"
+  
+  if [[ ! -f "$file" ]]; then
+    sudo tee "$file" > /dev/null <<'EOF'
+[Service]
+ExecStart=
+ExecStart=-/sbin/agetty --autologin {{ .chezmoi.username }} --noclear -o '-p -f -- \\u' %I linux
+EOF
+  fi
+
+  sudo systemctl daemon-reexec
+  sudo systemctl daemon-reload
+  sudo systemctl enable getty@tty1
+  sudo systemctl restart getty@tty1
+}
+
+do_yazi() {
+  if command -v ya &> /dev/null; then
+    ya pkg install && ya pkg upgrade
+  fi
+}
+
+do_autologin
+do_nextcloud
+do_yazi
