@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 state_file="${XDG_CACHE_HOME:-$HOME/.cache}/hyda/state.lock"
 
 header="${1:-}"

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 scrDir=$(dirname "$(realpath "$0")")
 source "$scrDir/hyda-variables.sh"
 

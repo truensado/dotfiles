@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -euo pipefail
-
 scrDir=$(dirname "$(realpath "$0")")
 source "$scrDir/hyda-variables.sh"
 source "$scrDir/hyda-state.sh"

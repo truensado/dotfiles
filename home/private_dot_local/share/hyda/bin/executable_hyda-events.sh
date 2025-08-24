@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -eu
-
 current_1=""
 current_2=""
 

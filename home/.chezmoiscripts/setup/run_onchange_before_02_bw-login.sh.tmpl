@@ -4,7 +4,6 @@
 
 ERROR="\e[31m"
 SUCCESS="\e[32m"
-WARNING="\e[33m"
 RESET="\e[0m"
 BOLD="\e[1m"
 
@@ -22,8 +21,8 @@ check_install() {
 set_bw() {
   if ! bw login --check &> /dev/null; then
     echo -e "${BOLD}logging into bitwarden${RESET}"
-    bw config server "{{ .bw_url }}" &> /dev/null
-    bw login {{ .bw_login }} &> /dev/null
+    bw config server "{{ .bw_url }}"
+    bw login {{ .bw_login }}
   fi
 }
 

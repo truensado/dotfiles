@@ -12,7 +12,7 @@ fi
 
 sudo -v
 
-sudo pacman -Syu --noconfirm --needed {{ $packages.packages.pacman | join " " }} || true
+sudo pacman -Syu --needed {{ $packages.packages.pacman | join " " }} || true
 
 if [[ $aur != "false" ]]; then
   $aur -S --needed {{ $packages.packages.aur | join " " }} || true

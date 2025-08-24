@@ -2,6 +2,7 @@
 packages:
   pacman:
     - ueberzugpp
+    - eza
     - bitwarden-cli
     - paru
     - btop
@@ -80,6 +81,7 @@ packages:
     - kwallet-pam
     - kio
     - kio-admin
+    - kio-fuse
     - qt5-imageformats
     - ffmpegthumbs
     - nextcloud-client-git
@@ -104,6 +106,7 @@ packages:
     - jdk17-openjdk
     - jdk21-openjdk
     - shadps4-git
+    - dotnet-runtime-8.0
     {{- end }}
     {{- if $boolean.laptop }}
     - auto-cpufreq

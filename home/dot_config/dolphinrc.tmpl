@@ -3,11 +3,7 @@ MenuBar=Disabled
 [$Version]
 update_info=dolphin_detailsmodesettings.upd:rename-leading-padding
 
-[ExtractDialog]
-2 screens: Window-Maximized=true
-
 [General]
-LockPanels=false
 ShowSelectionToggle=false
 ShowStatusBar=false
 Version=202
@@ -15,7 +11,7 @@ ViewPropsTimestamp=2023,4,26,16,58,48.324
 
 [IconsMode]
 MaximumTextLines=1
-PreviewSize=96
+PreviewSize=112
 
 [InformationPanel]
 dateFormat=ShortFormat
@@ -25,14 +21,11 @@ Places Icons Auto-resize=false
 Places Icons Static Size=16
 
 [KPropertiesDialog]
-{{ if .desktop -}}
-2560x1440 screen: Window-Maximized=true
-{{ else if .laptop -}}
-1920x1080 screen: Window-Maximized=true
-{{ else -}}
-{{ end }}
+2560x1080 screen: Window-Maximized=true
+
 [MainWindow]
 MenuBar=Disabled
+ToolBarsMovable=Disabled
 
 [MainWindow][Toolbar mainToolBar]
 IconSize=16

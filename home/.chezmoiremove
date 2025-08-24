@@ -5,4 +5,5 @@ Templates
 .bash_profile
 .bashrc
 .viminfo
+.lesshst
 {{ end -}}
