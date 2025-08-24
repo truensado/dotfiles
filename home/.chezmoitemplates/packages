@@ -115,3 +115,6 @@ packages:
     - kvantum-qt6-git
     - kvantum-theme-catppuccin-git
     - clipse-bin
+    {{- if $boolean.desktop }}
+    - via-bin
+    {{- end }}
