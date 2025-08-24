@@ -16,6 +16,11 @@
   stripComponents = 1
 {{- end }}
 
+["Documents/PkgEditor"]
+  type = "archive"
+  url = {{ gitHubLatestReleaseAssetURL "KimieStar/Pkg-Editor-2023" "PkgEditor-*.rar" | quote }}
+  stripComponents = 1
+
 [".local/share/hyda/bin/hyda-reshade.sh"]
   type = "file"
   url = "https://raw.githubusercontent.com/kevinlekiller/reshade-steam-proton/refs/heads/main/reshade-steam-proton.sh"
