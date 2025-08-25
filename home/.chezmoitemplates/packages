@@ -94,6 +94,8 @@ packages:
     - tmux
     - entr
     - swww
+    - stremio
+    - qbittorrent-qt5
     {{- if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
