@@ -96,6 +96,7 @@ packages:
     - swww
     - stremio
     - qbittorrent-qt5
+    - tree
     {{- if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
