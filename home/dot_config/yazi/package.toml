@@ -1,32 +1,54 @@
 [[plugin.deps]]
 use = "imsi32/yatline"
+rev = "88bd1c5"
+hash = "981acbe9b758b1af3a8154c932bb936d"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:full-border"
+rev = "d7588f6"
+hash = "3996fc74044bc44144b323686f887e1"
 
 [[plugin.deps]]
 use = "imsi32/yatline-githead"
+rev = "f8f969e"
+hash = "4d441b38138ce6492a4e10fa349fd65"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:git"
+rev = "d7588f6"
+hash = "63b6c222bf2103b3023389dde5e2ecfe"
 
 [[plugin.deps]]
 use = "Reledia/glow"
+rev = "bd3eaa5"
+hash = "92b5c58159a51c567f82b618cee2b78"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:chmod"
+rev = "d7588f6"
+hash = "1adc12c2b2b025411ab61eb8f0879574"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:diff"
+rev = "d7588f6"
+hash = "47865a70cade14a0b9b6bc6a54f16bdb"
 
 [[plugin.deps]]
 use = "yazi-rs/plugins:mount"
+rev = "d7588f6"
+hash = "e1de3054c0d1a2d8dc6f007eadc0fa31"
 
 [[plugin.deps]]
 use = "boydaihungst/restore"
+rev = "2a2ba2f"
+hash = "12d8576d0cb8355a7e15d622913eb250"
 
 [[plugin.deps]]
 use = "AnirudhG07/custom-shell"
+rev = "b04213d"
+hash = "3efc7ddc9bac120c618462eb994edf75"
 
 [[flavor.deps]]
 use = "yazi-rs/flavors:catppuccin-mocha"
+rev = "9cd2ac4"
+hash = "f54b45bdd33f607ddde47f0afad96142"
