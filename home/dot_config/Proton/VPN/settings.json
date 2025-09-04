@@ -6,7 +6,7 @@
         "ip_list": []
     },
     "ipv6": true,
-    "anonymous_crash_reports": true,
+    "anonymous_crash_reports": false,
     "features": {
         "netshield": 1,
         "moderate_nat": false,
