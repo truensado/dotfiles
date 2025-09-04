@@ -2,6 +2,7 @@
 packages:
   pacman:
     - ueberzugpp
+    - hyprpicker
     - eza
     - bitwarden-cli
     - paru
@@ -118,6 +119,7 @@ packages:
     {{- end }}
   aur:
     - proton-mail-bin
+    - pyprland
     - syshud
     - uwsm
     - bibata-cursor-git

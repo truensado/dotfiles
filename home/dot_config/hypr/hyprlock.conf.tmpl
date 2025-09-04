@@ -1,4 +1,6 @@
-# ---- Hyprlock ----
+# ---- Hyprlock
+
+source = ./modules/theme.conf
 
 {{ if .laptop -}}
 $mm = eDP-1
@@ -9,68 +11,52 @@ $mm = DP-1
 
 {{ end -}}
 
-source = $HOME/.config/hypr/theme.conf
-
 general {
-
   hide_cursor = true
-
   grace = 0
-
   ignore_empty_input = true
-
-  immediate_render = true
-
 }
 
 background {
-
   monitor =
-
-  path = $HOME/.config/hypr/assets/wallpapers/background.bg
-
+  path = $HOME/.config/hypr/assets/background.bg
+  blur_passes = 1
+  contrast = 1
+  brightness = 0.5
+  vibrancy = 0.2
+  vibrancy_darkness = 0.2
 }
 
 image {
-
   monitor = $mm
-
-  path = $HOME/.config/hypr/assets/faces/face.png
-
+  path = $HOME/.config/hypr/assets/face.png
   position = 0, 80
-
   halign = center
-
   valign = center
-
 }
 
 input-field {
-
   monitor = $mm
-
   position = 0, -43
-
   halign = center
-
   valign = center
-
   size = 300, 50
-
-  outer_color = $main_fg
-
-  inner_color = $main_bg
-
+  outer_color = $inactive
+  inner_color = $active
   font_color = $text
-
   fade_on_empty = false
-
   placeholder_text = Enter Password
-
-  capslock_color = $yellow
-
-  fail_color = $red
-
+  fail_color = $fail
   fail_text = <i>$FAIL <b>($ATTEMPTS)</b></i>
+}
 
+label {
+    monitor = $mm
+    text = $TIME12
+    color  = $inactive
+    font_size = 24
+    font_family = $font
+    position = -20, -10
+    halign = right
+    valign = top
 }
