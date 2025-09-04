@@ -1,0 +1,10 @@
+[pyprland]
+plugins = ["scratchpads"]
+
+[scratchpads.notes]
+animation = "fromTop"
+class = "obsidian"
+command = "uwsm app obsidian"
+size = "75% 70%"
+lazy = "true"
+margin = 180
