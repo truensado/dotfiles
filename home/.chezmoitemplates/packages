@@ -2,6 +2,7 @@
 packages:
   pacman:
     - ueberzugpp
+    - gwenview
     - hyprpicker
     - eza
     - bitwarden-cli
