@@ -3,27 +3,13 @@
   url = "https://github.com/tmux-plugins/tpm"
   refreshPeriod = "744h"
 
-{{ if .desktop -}}
-[".local/share/wemod-launcher"]
-  type = "git-repo"
-  url = "https://github.com/DeckCheatz/wemod-launcher"
-  refreshPeriod = "48h"
-
-{{ if stat (joinPath .chezmoi.homeDir "Games/steam/steamapps/common/Session") -}}
-["Games/steam/steamapps/common/Session/Session Mod Manager"]
-  type = "archive"
-  url = {{ gitHubLatestReleaseAssetURL "rodriada000/SessionMapSwitcher" "Session_Mod_Manager_*_linux.zip" | quote }}
-  stripComponents = 1
-  refreshPeriod = "168h"
-{{- end }}
-
 [".local/share/hyda/bin/hyda-reshade.sh"]
   type = "file"
   url = "https://raw.githubusercontent.com/kevinlekiller/reshade-steam-proton/refs/heads/main/reshade-steam-proton.sh"
   executable = true
-{{ end -}}
 
-{{- if .personal }}
+{{ if .personal -}}
+
 [".local/bin/lncrawl"]
   type = "file"
   url = "https://github.com/dipu-bd/lightnovel-crawler/releases/latest/download/lncrawl-linux"
@@ -34,4 +20,24 @@
   type = "file"
   url = "https://itch.io/app/download?platform=linux"
   executable = true
+
+{{ if .desktop -}}
+
+[".local/share/wemod-launcher"]
+  type = "git-repo"
+  url = "https://github.com/DeckCheatz/wemod-launcher"
+  refreshPeriod = "48h"
+
+{{ if stat (joinPath .chezmoi.homeDir "Games/steam/steamapps/common/Session") -}}
+
+["Games/steam/steamapps/common/Session/Session Mod Manager"]
+  type = "archive"
+  url = {{ gitHubLatestReleaseAssetURL "rodriada000/SessionMapSwitcher" "Session_Mod_Manager_*_linux.zip" | quote }}
+  stripComponents = 1
+  refreshPeriod = "168h"
+
+{{ end -}}
+
+{{ end -}}
+
 {{ end -}}
