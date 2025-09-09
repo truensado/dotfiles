@@ -1,4 +1,4 @@
+personal: {{ or (contains "nsado" .chezmoi.username) (contains "nsado" .chezmoi.hostname) }}
 headless: {{ not (or (env "DISPLAY") (env "WAYLAND_DISPLAY")) }}
-laptop: {{ eq .chezmoi.hostname "nsado-laptop" }}
-desktop: {{ eq .chezmoi.hostname "nsado-desktop" }}
-personal: {{ eq .chezmoi.username "nsado" }}
+desktop: {{ contains "desktop" .chezmoi.hostname }}
+laptop: {{ contains "laptop" .chezmoi.hostname }}
