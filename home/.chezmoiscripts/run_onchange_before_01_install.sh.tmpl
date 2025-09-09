@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+if command -v paru &> /dev/null; then
+  aur=paru
+elif command -v yay &> /dev/null; then
+  aur=yay
+else
+  aur=false
+fi
+
+{{- $packages := includeTemplate "packages" . | fromYaml }}
+
+sudo -v
+
+sudo pacman -Syu --needed {{ $packages.packages.pacman | join " " }} || true
+
+if [[ $aur != "false" ]]; then
+  $aur -S --needed {{ $packages.packages.aur | join " " }} || true
+fi

@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+scrDir={{ .chezmoi.sourceDir }}/.chezmoiscripts/lib
+source "$scrDir/colors.sh"
+source "$scrDir/paths.sh"
+source "$scrDir/vars.sh"
+
+grep -q "chaotic-aur" "$pacConf" && { echo -e "${bold}Detected${reset}: ${warning}chaotic aur already set up...${reset}${iwarning}"; exit 0; }
+
+backup_chaotic() {
+  echo -e "${bold}Info${reset}: ${info}backing up pacman.conf...${reset}${iinfo}"
+  sudo cp "$pacConf" "$pacConf.bak.$(date +%s)"
+}
+
+write_chaotic() {
+  backup_chaotic
+  echo -e "${bold}Info${reset}: ${info}writing to pacman.conf...${reset}${iinfo}"
+  printf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | sudo tee -a "$pacConf" > /dev/null
+}
+
+install_chaotic() {
+  trap 'error_chaotic' ERR
+  echo -e "${bold}Info${reset}: ${info}installing chaotic aur...${reset}${iinfo}"
+  sudo pacman-key --recv-key "$cKey" --keyserver keyserver.ubuntu.com
+  sudo pacman-key --lsign-key "$cKey"
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+  write_chaotic
+  sudo pacman -Sy
+  echo -e "${bold}Success${reset}: ${success}installed chaotic aur successfully...${reset}${isuccess}"
+  exit 0
+}
+
+clean_chaotic() {
+  echo -e "${bold}Warning${reset}: ${warning}cleaning up chaotic entries...${reset}${iwarning}"
+  sudo pacman-key --list-keys "$cKey" &> /dev/null && sudo pacman-key --delete "$cFull" || true
+  pacman -Qq chaotic-keyring &> /dev/null && sudo pacman -Rns --noconfirm chaotic-keyring || true
+  pacman -Qq chaotic-mirrorlist &> /dev/null && sudo pacman -Rns --noconfirm chaotic-mirrorlist || true
+  sudo sed -i '/chaotic-aur/d' "$pacConf" || true
+  sudo sed -i '/chaotic-mirrorlist/d' "$pacConf" || true
+  sudo pacman -Sy
+}
+
+error_chaotic() {
+  tput setaf 1
+  echo -e "${bold}ERROR${reset}: ${error}install failed, reverting...${reset}${ierror}"
+  tput sgr0
+  clean_chaotic
+  echo -e "${bold}Success${reset}: ${success}revert successful...${reset}${isuccess}"
+  exit 1
+}
+
+install_chaotic

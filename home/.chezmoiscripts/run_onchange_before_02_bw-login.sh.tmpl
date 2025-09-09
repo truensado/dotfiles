@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+{{- if .personal }}
+
+scrDir={{ .chezmoi.sourceDir }}/.chezmoiscripts/lib
+source "$scrDir/colors.sh"
+
+check_install() {
+  local cmd="$1"
+  local pkg="$2"
+  
+  if ! command -v "$cmd" &>/dev/null; then
+    echo -e "{$bold}installing${reset} $pkg"
+    sudo pacman -S --needed --noconfirm "$pkg"
+  fi
+
+}
+
+set_bw() {
+  if ! bw login --check &> /dev/null; then
+    echo -e "${bold}logging into bitwarden${reset}"
+    bw config server "{{ .bw_url }}"
+    bw login {{ .bw_login }}
+  fi
+}
+
+check_install bw bitwarden-cli
+
+set_bw
+
+{{ end -}}
