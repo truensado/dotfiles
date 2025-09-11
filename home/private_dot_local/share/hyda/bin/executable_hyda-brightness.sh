@@ -4,18 +4,13 @@ scrDir=$(dirname "$(realpath "$0")")
 source "$scrDir/hyda-variables.sh"
 source "$scrDir/hyda-state.sh"
 
-use_backlight=false
-use_hyprsunset=false
-use_swayosd=false
+is_backlight=false
+is_hyprsunset=false
 
 if [ -n "$(ls -A /sys/class/backlight 2>/dev/null)" ]; then
-  use_backlight=true
+  is_backlight=true
 elif command -v hyprsunset >/dev/null 2>&1 && pgrep -x hyprsunset >/dev/null; then
-  use_hyprsunset=true
-fi
-
-if command -v swayosd-client >/dev/null 2>&1 && pgrep -x swayosd-server >/dev/null; then
-  use_swayosd=true
+  is_hyprsunset=true
 fi
 
 usage() {
@@ -24,10 +19,10 @@ usage() {
 Hyda-Brightness — Control Brightness
 
 Usage:
-  increase [amount]   | i [amount] | -i [amount]   ->  Increase Brightness (default: 5)
-  decrease [amount]   | d [amount] | -d [amount]   ->  Decrease Brightness (default: 5)
-  set <value>         ->  Set brightness directly (0–100)
-  restore             ->  Restore to previous brightness
+  increase [amount]   | i [amount]  | -i [amount]   ->  Increase Brightness (default: 5)
+  decrease [amount]   | d [amount]  | -d [amount]   ->  Decrease Brightness (default: 5)
+  set <value>         | s <value>   | -s <value>    ->  Set brightness directly (0–100)
+  restore             | r           | -r            ->  Restore to previous brightness
 
 Examples:
   ./hyda-brightness.sh increase 10
@@ -36,112 +31,81 @@ Examples:
 EOF
 }
 
-save_previous_brightness() {
-  local current
-  if current=$(awk '/\[Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null); then
-    set_state_lock "PreviousBrightness" "$current"
-  fi
-}
-
 use_hyprsunset() {
-  save_previous_brightness
+  local base new current previous
+  local cHeader="Brightness"
+  local pHeader="Previous Brightness"
 
-  local delta=$1
-  local base new header="Brightness"
-
-  if ! base=$(awk '/\[Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null) || [[ -z "$base" ]]; then
-    base=100
-  fi
-
-  if [[ ! "$delta" =~ ^[+-]?[0-9]+$ ]]; then
-    echo "Invalid delta: must be an integer like +10 or -5"
+  base=$(awk '/\[Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null | tr -dc '0-9')
+  previous=$(awk '/\[Previous Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null | tr -dc '0-9')
+  
+  [[ -z "$base" ]] && base=100
+  [[ -z "$previous" ]] && previous=$base
+  
+  if [[ ! "$1" =~ ^[+-]?[0-9]+$ ]]; then
+    echo -e "${bold}ERROR${reset}: ${error}number must be an integer like 10 or 5...${reset}${ierror}"
     return 1
   fi
-
-  new=$((base + delta))
-  ((new < 0 )) && new=0
+  
+  new=$((base + $1))
   ((new > 100)) && new=100
+  ((new < 0)) && new=0
 
-  set_state_lock "$header" "$new"
-  notify-send "$header" "<big>=====<b>$new%</b>=====</big>" -e -a "HYDA" -r 9992 -i "brightness-display-symbolic" -h string:synchronous:brightness -h int:value:$new
+  if [[ "$new" -ne "$base" ]]; then
+    set_state_lock "$pHeader" "$base"
+    set_state_lock "$cHeader" "$new"
+  fi
+
+  notify-send "$cHeader" "<big>=====<b>$new%</b>=====</big>" -e -a "HYDA" -r 9992 -i "brightness-display-symbolic" -h string:synchronous:brightness -h int:value:$new
   hyprctl hyprsunset gamma "$new"
 }
 
-set_brightness() {
-  save_previous_brightness
+restore_hyprsunset() {
+  local value=$(awk '/\[Previous Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null)
 
-  local value=$1
-  if [[ ! "$value" =~ ^[0-9]+$ ]] || ((value < 0 || value > 100)); then
-    echo "Brightness must be a number between 0 and 100"
-    return 1
+  if [[ ! "$value" =~ ^[0-9]+$ ]] || [[ -z "$value" ]]; then
+    value=100
   fi
 
-  set_state_lock "Brightness" "$value"
-
-  if $use_backlight; then
-    if $use_swayosd; then
-      swayosd-client --brightness "$value"
-    else
-      brightnessctl set "$value%"
-    fi
-  elif $use_hyprsunset; then
-    notify-send "Brightness" "<big>=====<b>$value%</b>=====</big>" -e -a "HYDA" -r 9992 -i "brightness-display-symbolic" -h string:synchronous:brightness -h int:value:$value
-    hyprctl hyprsunset gamma "$value"
-  else
-    echo -e "${ERROR}ERROR${RESET}: No backlight method found"
-    return 1
-  fi
+  use_hyprsunset "$value"
 }
-
-restore_brightness() {
-  local value
-  if ! value=$(awk '/\[PreviousBrightness\]/{getline; print $0}' "$state_file" 2>/dev/null) || [[ -z "$value" ]]; then
-    echo "No previous brightness state found."
-    return 1
-  fi
-  set_brightness "$value"
-}
-
-# Default step value
-step=5
-[[ "$2" =~ ^[0-9]+$ ]] && step=$2
 
 case $1 in
   increase | i | -i)
-    if $use_backlight; then
-      if $use_swayosd; then
-        swayosd-client --brightness "+$step"
-      else
-        brightnessctl "+$step"
-      fi
-    elif $use_hyprsunset; then
-      use_hyprsunset "+$step"
+    if $is_backlight; then
+      brightnessctl "+${2:-10}"
+    elif $is_hyprsunset; then
+      use_hyprsunset "+${2:-10}"
     else
-      echo -e "${ERROR}ERROR${RESET}: No backlight method found"
+      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
   decrease | d | -d)
-    if $use_backlight; then
-      if $use_swayosd; then
-        swayosd-client --brightness "-$step"
-      else
-        brightnessctl "-$step"
-      fi
-    elif $use_hyprsunset; then
-      use_hyprsunset "-$step"
+    if $is_backlight; then
+      brightnessctl "-${2:-10}"
+    elif $is_hyprsunset; then
+      use_hyprsunset "-${2:-10}"
     else
-      echo -e "${ERROR}ERROR${RESET}: No backlight method found"
+      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
-  set)
-    if [[ -z "$2" ]]; then
-      echo "Usage: set <value>"
+  restore | r | -r)
+    if $is_backlight; then
+      brightnessctl -r
+    elif $is_hyprsunset; then
+      restore_hyprsunset
     else
-      set_brightness "$2"
+      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
-  restore)
-    restore_brightness
+  set | s | -s)
+    if $is_backlight; then
+      brightnessctl "${2:-10}"
+    elif $is_hyprsunset; then
+      use_hyprsunset "${2:-10}"
+    else
+      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
+    fi
     ;;
   *)
     usage
