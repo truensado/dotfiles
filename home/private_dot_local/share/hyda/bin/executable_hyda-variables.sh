@@ -1,9 +1,7 @@
 # ---- Colors ----
 
-ERROR="\e[31m"
-SUCCESS="\e[32m"
-WARNING="\e[33m"
-RESET="\e[0m"
-BOLD="\e[1m"
-
-# ---- Paths ----
+error="\e[31m"
+success="\e[32m"
+warning="\e[33m"
+reset="\e[0m"
+bold="\e[1m"

@@ -43,7 +43,7 @@ use_hyprsunset() {
   [[ -z "$previous" ]] && previous=$base
   
   if [[ ! "$1" =~ ^[+-]?[0-9]+$ ]]; then
-    echo -e "${bold}ERROR${reset}: ${error}number must be an integer like 10 or 5...${reset}${ierror}"
+    echo -e "${bold}Error${reset}: ${error}number must be an integer like 10 or 5...${reset}${ierror}"
     return 1
   fi
   
@@ -77,7 +77,7 @@ case $1 in
     elif $is_hyprsunset; then
       use_hyprsunset "+${2:-10}"
     else
-      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
+      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
   decrease | d | -d)
@@ -86,7 +86,7 @@ case $1 in
     elif $is_hyprsunset; then
       use_hyprsunset "-${2:-10}"
     else
-      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
+      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
   restore | r | -r)
@@ -95,7 +95,7 @@ case $1 in
     elif $is_hyprsunset; then
       restore_hyprsunset
     else
-      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
+      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
   set | s | -s)
@@ -104,7 +104,7 @@ case $1 in
     elif $is_hyprsunset; then
       use_hyprsunset "${2:-10}"
     else
-      echo -e "${bold}ERROR${reset}: ${error}no backlight method found...${reset}${ierror}"
+      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
     fi
     ;;
   *)

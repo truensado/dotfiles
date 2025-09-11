@@ -19,7 +19,7 @@ exSources=(
 sinks="$(pactl list short sinks | awk '{print $2}' | grep -vFf <(printf "%s\n" "${exSinks[@]}"))"
 sources="$(pactl list short sources | awk '{print $2}' | grep -vFf <(printf "%s\n" "${exSources[@]}"))"
 
-[[ -z "$sinks" && -z "$sources" ]] && { echo -e "${ERROR}no sinks or sources available"; exit 1; }
+[[ -z "$sinks" && -z "$sources" ]] && { echo -e "${error}no sinks or sources available"; exit 1; }
 
 usage() {
   cat <<'EOF'
@@ -33,7 +33,7 @@ EOF
 }
 
 switch_sink() {
-  [[ -z "$sinks" ]] && { echo -e "${ERROR}no sinks available"; return 1; }
+  [[ -z "$sinks" ]] && { echo -e "${error}no sinks available"; return 1; }
 
   local current next idx=-1 i
  
@@ -51,11 +51,11 @@ switch_sink() {
   next="${sinks_array[$(((idx + 1) % ${#sinks_array[@]}))]}"
 
   pactl set-default-sink "$next"
-  echo "${SUCCESS}Switched sink to${RESET}: $next"
+  echo "${success}Switched sink to${reset}: $next"
 }
 
 switch_source() {
-  [[ -z "$sources" ]] && { echo -e "${ERROR}no sources available"; return 1; }
+  [[ -z "$sources" ]] && { echo -e "${error}no sources available"; return 1; }
 
   local current next idx=-1 i
  
@@ -73,14 +73,14 @@ switch_source() {
   next="${sources_array[$(((idx + 1) % ${#sources_array[@]}))]}"
 
   pactl set-default-source "$next"
-  echo "${SUCCESS}Switched source to${RESET}: $next"
+  echo "${success}Switched source to${reset}: $next"
 }
 
 while (($#)); do
   case $1 in
     list | -l)
-      [[ -n "$sinks" ]] && echo -e "${BOLD}List of Sinks${RESET}:\n$sinks\n"
-      [[ -n "$sources" ]] && echo -e "${BOLD}List of Sources${RESET}:\n$sources"
+      [[ -n "$sinks" ]] && echo -e "${bold}List of Sinks${reset}:\n$sinks\n"
+      [[ -n "$sources" ]] && echo -e "${bold}List of Sources${reset}:\n$sources"
       shift
       ;;
     switch | -s)
@@ -94,7 +94,7 @@ while (($#)); do
           shift
           ;;
         *)
-          echo -e "${ERROR}unknown switch target: '$2' (expected 'sink' or 'source')"
+          echo -e "${error}unknown switch target: '$2' (expected 'sink' or 'source')"
           usage
           exit 1
           ;;
@@ -106,7 +106,7 @@ while (($#)); do
       shift
       ;;
     *)
-      echo -e "${ERROR}unknown argument: $1"
+      echo -e "${error}unknown argument: $1"
       usage
       exit 1
       ;;

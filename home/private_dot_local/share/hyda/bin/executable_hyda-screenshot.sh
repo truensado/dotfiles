@@ -7,7 +7,7 @@ deps=(grim slurp satty)
 
 for dep in "${deps[@]}"; do
   if ! command -v "$dep" >/dev/null 2>&1; then
-    echo -e "${ERROR}Error${RESET}: Missing dependency ${BOLD}$dep"
+    echo -e "${error}Error${reset}: Missing dependency ${bold}$dep"
     exit 1
   fi
 done

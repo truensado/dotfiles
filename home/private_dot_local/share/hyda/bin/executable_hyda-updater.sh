@@ -44,7 +44,7 @@ check_dependencies() {
     local action=$(notify_send "Hyda" "Topgrade not installed" 5000 -u critical --action="install=Install Now" --action="dismiss=Dismiss")
     [[ "$action" == "install" ]] && \
     $TERMINAL --title=install-topgrade\
-    --initial-command="echo -e '${BOLD}Installing Topgrade${RESET}...';\
+    --initial-command="echo -e '${bold}Installing Topgrade${reset}...';\
     sudo pacman -S --noconfirm topgrade && notify-send 'Hyda' 'topgrade installed' -i $icon -t 5000\
     || notify-send -u critical 'Hyda' 'failed to install topgrade' -i $icon -t 5000"
   fi
@@ -78,7 +78,7 @@ check_updates_notify() {
   local action=$(notify_send "$title" "$msg" 5000 --action="update=Update Now" --action="dismiss=Dismiss" 2>/dev/null)
   if [[ "$action" == "update" ]]; then
     $TERMINAL --title=systemupdate\
-    --initial-command="echo -e '{$BOLD}Starting updates${RESET}...';\
+    --initial-command="echo -e '{$bold}Starting updates${reset}...';\
     topgrade --skip-notify --only system && notify-send '✅ System Update Complete' -i '$icon' -e -t 3500\
     || notify-send -u critical 'Hyda' 'failed to update system' -i $icon -t 3500"
   else
@@ -89,7 +89,7 @@ check_updates_notify() {
 update_now() {
   if (( ofc > 0 || aur > 0 )); then
     $TERMINAL --title=systemupdate\
-    --initial-command="echo -e '{$BOLD}Starting updates${RESET}...';\
+    --initial-command="echo -e '{$bold}Starting updates${reset}...';\
     topgrade --skip-notify --only system && notify-send '✅ System Update Complete' -i '$icon' -e -t 3500\
     || notify-send -u critical 'Hyda' 'failed to update system' -i $icon -t 3500"
   fi
