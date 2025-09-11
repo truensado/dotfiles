@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+{{- $serv := includeTemplate "services" . | fromYaml }}
+
+echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}enabling system services...{{ .color.reset }}{{ .icon.info }}"
+sudo systemctl enable {{ $serv.services.system | join " " }} || { echo -e "{{ .color.bold }}Error{{ .color.reset }}: {{ .color.error }}failed to enable system services...{{ .color.reset }}{{ .icon.error }}"; exit 1; }
+
+echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}enabling user services...{{ .color.reset }}{{ .icon.info }}"
+systemctl --user enable {{ $serv.services.user | join " " }} || { echo -e "{{ .color.bold }}Error{{ .color.reset }}: {{ .color.error }}failed to enable user services...{{ .color.reset }}{{ .icon.error }}"; exit 1; }
+
+systemctl --user daemon-reload

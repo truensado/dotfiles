@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+pacConf="/etc/pacman.conf"
+
+cKey=3056513887B78AEB
+cFull=EF925EA60F33D0CB85C44AD13056513887B78AEB
+
+grep -q "chaotic-aur" "$pacConf" && { echo -e "{{ .color.bold }}Detected{{ .color.reset }}: {{ .color.warning }}chaotic aur already set up...{{ .color.reset }}{{ .icon.warning }}"; exit 0; }
+
+backup_chaotic() {
+  echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}backing up pacman.conf...{{ .color.reset }}{{ .icon.info }}"
+  sudo cp "$pacConf" "$pacConf.bak.$(date +%s)"
+}
+
+write_chaotic() {
+  backup_chaotic
+  echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}writing to pacman.conf...{{ .color.reset }}{{ .icon.info }}"
+  printf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | sudo tee -a "$pacConf" > /dev/null
+}
+
+install_chaotic() {
+  trap 'error_chaotic' ERR
+  echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}installing chaotic aur...{{ .color.reset }}{{ .icon.info }}"
+  sudo pacman-key --recv-key "$cKey" --keyserver keyserver.ubuntu.com
+  sudo pacman-key --lsign-key "$cKey"
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+  write_chaotic
+  sudo pacman -Sy
+  echo -e "{{ .color.bold }}Success{{ .color.reset }}: {{ .color.success }}installed chaotic aur successfully...{{ .color.reset }}{{ .icon.success }}"
+  exit 0
+}
+
+clean_chaotic() {
+  echo -e "{{ .color.bold }}Warning{{ .color.reset }}: {{ .color.warning }}cleaning up chaotic entries...{{ .color.reset }}{{ .icon.warning }}"
+  sudo pacman-key --list-keys "$cKey" &> /dev/null && sudo pacman-key --delete "$cFull" || true
+  pacman -Qq chaotic-keyring &> /dev/null && sudo pacman -Rns --noconfirm chaotic-keyring || true
+  pacman -Qq chaotic-mirrorlist &> /dev/null && sudo pacman -Rns --noconfirm chaotic-mirrorlist || true
+  sudo sed -i '/chaotic-aur/d' "$pacConf" || true
+  sudo sed -i '/chaotic-mirrorlist/d' "$pacConf" || true
+  sudo pacman -Sy
+}
+
+error_chaotic() {
+  tput setaf 1
+  echo -e "{{ .color.bold }}ERROR{{ .color.reset }}: {{ .color.error }}install failed, reverting...{{ .color.reset }}{{ .icon.error }}"
+  tput sgr0
+  clean_chaotic
+  echo -e "{{ .color.bold }}Success{{ .color.reset }}: {{ .color.success }}revert successful...{{ .color.reset }}{{ .icon.success }}"
+  exit 1
+}
+
+install_chaotic

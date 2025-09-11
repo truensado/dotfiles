@@ -3,7 +3,7 @@
 do_nextcloud() {
   if command -v nextcloud &> /dev/null; then
     
-    local path="${XDG_CONFIG_HOME:-$HOME/.config}/Nextcloud/nextcloud.cfg"
+    local path="{{ .chezmoi.homeDir }}/Nextcloud/nextcloud.cfg"
     local value="showMainDialogAsNormalWindow=true"
     
     mkdir -p "$(dirname "$path")"

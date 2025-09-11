@@ -2,17 +2,12 @@
 
 {{- if .personal }}
 
-ERROR="\e[31m"
-SUCCESS="\e[32m"
-RESET="\e[0m"
-BOLD="\e[1m"
-
 check_install() {
   local cmd="$1"
   local pkg="$2"
   
   if ! command -v "$cmd" &>/dev/null; then
-    echo -e "{$BOLD}installing${RESET} $pkg"
+    echo -e "{{ .color.bold }}installing{{ .color.reset }} $pkg"
     sudo pacman -S --needed --noconfirm "$pkg"
   fi
 
@@ -20,7 +15,7 @@ check_install() {
 
 set_bw() {
   if ! bw login --check &> /dev/null; then
-    echo -e "${BOLD}logging into bitwarden${RESET}"
+    echo -e "{{ .color.bold }}logging into bitwarden{{ .color.reset }}"
     bw config server "{{ .bw_url }}"
     bw login {{ .bw_login }}
   fi
