@@ -1,14 +1,11 @@
 #!/usr/bin/env bash
 
-scrDir={{ .chezmoi.sourceDir }}/.chezmoiscripts/lib
-source "$scrDir/colors.sh"
+{{- $serv := includeTemplate "services" . | fromYaml }}
 
-{{- $services := includeTemplate "services" . | fromYaml }}
+echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}enabling system services...{{ .color.reset }}{{ .icon.info }}"
+sudo systemctl enable {{ $serv.services.system | join " " }} || { echo -e "{{ .color.bold }}Error{{ .color.reset }}: {{ .color.error }}failed to enable system services...{{ .color.reset }}{{ .icon.error }}"; exit 1; }
 
-echo -e "${bold}Info${reset}: ${info}enabling system services...${reset}${iinfo}"
-sudo systemctl enable {{ $services.services.system | join " " }} || { echo -e "${bold}Error${reset}: ${error}failed to enable system services...${reset}${ierror}"; exit 1; }
-
-echo -e "${bold}Info${reset}: ${info}enabling user services...${reset}${iinfo}"
-systemctl --user enable {{ $services.services.user | join " " }} || { echo -e "${bold}Error${reset}: ${error}failed to enable user services...${reset}${ierror}"; exit 1; }
+echo -e "{{ .color.bold }}Info{{ .color.reset }}: {{ .color.info }}enabling user services...{{ .color.reset }}{{ .icon.info }}"
+systemctl --user enable {{ $serv.services.user | join " " }} || { echo -e "{{ .color.bold }}Error{{ .color.reset }}: {{ .color.error }}failed to enable user services...{{ .color.reset }}{{ .icon.error }}"; exit 1; }
 
 systemctl --user daemon-reload

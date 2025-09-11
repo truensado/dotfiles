@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# ---- chaotic
-cKey=3056513887B78AEB
-cFull=EF925EA60F33D0CB85C44AD13056513887B78AEB

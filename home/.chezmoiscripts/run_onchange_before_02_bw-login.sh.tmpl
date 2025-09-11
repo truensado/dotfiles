@@ -2,15 +2,12 @@
 
 {{- if .personal }}
 
-scrDir={{ .chezmoi.sourceDir }}/.chezmoiscripts/lib
-source "$scrDir/colors.sh"
-
 check_install() {
   local cmd="$1"
   local pkg="$2"
   
   if ! command -v "$cmd" &>/dev/null; then
-    echo -e "{$bold}installing${reset} $pkg"
+    echo -e "{{ .color.bold }}installing{{ .color.reset }} $pkg"
     sudo pacman -S --needed --noconfirm "$pkg"
   fi
 
@@ -18,7 +15,7 @@ check_install() {
 
 set_bw() {
   if ! bw login --check &> /dev/null; then
-    echo -e "${bold}logging into bitwarden${reset}"
+    echo -e "{{ .color.bold }}logging into bitwarden{{ .color.reset }}"
     bw config server "{{ .bw_url }}"
     bw login {{ .bw_login }}
   fi
