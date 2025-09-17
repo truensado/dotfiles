@@ -51,7 +51,8 @@ switch_sink() {
   next="${sinks_array[$(((idx + 1) % ${#sinks_array[@]}))]}"
 
   pactl set-default-sink "$next"
-  echo "${success}Switched sink to${reset}: $next"
+  notify-send -e "Switched Sink:" "$next" -i "audio-speakers-symbolic" -a "Hyda Devices" -r 9998 -h string:synchronous:sinks -t 3000
+  echo -e "${success}Switched sink to${reset}: $next"
 }
 
 switch_source() {
@@ -73,7 +74,8 @@ switch_source() {
   next="${sources_array[$(((idx + 1) % ${#sources_array[@]}))]}"
 
   pactl set-default-source "$next"
-  echo "${success}Switched source to${reset}: $next"
+  notify-send -e "Switched Source:" "$next" -i "audio-input-microphone-symbolic" -a "Hyda Devices" -r 9999 -h string:synchronous:sources -t 3000
+  echo -e "${success}Switched source to${reset}: $next"
 }
 
 while (($#)); do

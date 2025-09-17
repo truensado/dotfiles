@@ -23,6 +23,7 @@ Commands:
   gamemode          Toggles Animations and effects for better performance
   reshade           Set Up Reshade for Steam Proton Game 'Credits to kevinlekiller for the script'
   brightness        Changes Brightness
+  install           Launches pacman fzf installer
 
 Examples:
   hydacli theme list
@@ -73,6 +74,9 @@ main() {
       ;;
     reshade)
       "$hydaScript/hyda-reshade.sh" "$@"
+      ;;
+    install)
+      "$hydaScript/hyda-install.sh" "$@"
       ;;
     ""|-h|--help|help)
       usage

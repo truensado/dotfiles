@@ -102,7 +102,7 @@ packages:
     {{- if $boolean.desktop }}
     - cachyos-gaming-meta
     - cachyos-gaming-applications
-    - prismlauncher-git
+    - prismlauncher
     - hyprsunset
     - tk
     - rpcs3-git
