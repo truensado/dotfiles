@@ -112,6 +112,7 @@ packages:
     - jdk21-openjdk
     - shadps4-git
     - dotnet-runtime-8.0
+    - xorg-xinput
     {{- end }}
     {{- if $boolean.laptop }}
     - auto-cpufreq

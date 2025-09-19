@@ -1,0 +1,18 @@
+[Added Associations]
+application/json=code.desktop;nvim.desktop;
+application/vnd.microsoft.portable-executable=wine.desktop;protontricks-launch.desktop;
+image/jpeg=org.kde.gwenview.desktop;satty.desktop;vivaldi-stable.desktop;
+image/png=org.kde.gwenview.desktop;satty.desktop;vivaldi-stable.desktop;
+text/plain=code.desktop;
+
+[Default Applications]
+application/json=code.desktop;
+application/vnd.microsoft.portable-executable=wine.desktop;
+image/jpeg=org.kde.gwenview.desktop;
+image/png=org.kde.gwenview.desktop;
+text/plain=code.desktop;
+x-scheme-handler/discord=vesktop.desktop
+x-scheme-handler/discord-1139939140494971051=discord-1139939140494971051.desktop
+
+[Removed Associations]
+text/plain=code-2.desktop;nvim.desktop;

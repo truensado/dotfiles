@@ -38,19 +38,23 @@ input {
     follow_mouse = true
     kb_options = fkeys:basic_13-24, compose:ralt
     scroll_method = on_button_down
-
-    touchpad {
-        natural_scroll = false
-    }
-
     sensitivity = 0
     force_no_accel = true
     numlock_by_default = true
+    
+    touchpad {
+        natural_scroll = false
+    }
 }
 
 device {
+  {{- if .personal }}
+    name = razer-razer-viper-v3-pro
+    accel_profile = flat
+  {{- else }}
     name = epic-mouse-v1
     sensitivity = -0.5
+  {{- end }}
 }
 
 dwindle {
