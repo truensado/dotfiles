@@ -1,6 +1,6 @@
 # Ghostty Config
 
-theme = catppuccin-mocha
+theme = Catppuccin Mocha
 background-opacity = 0.6
 font-family = CaskaydiaCove Nerd Font Mono
 
