@@ -19,8 +19,8 @@ encryption = "age"
   gitname = "truensado"
   gitemail = "171737294+truensado@users.noreply.github.com"
 {{ else }}
-  gitname = "{{ promptStringOnce . "name" "Enter your name:" }}"
-  gitemail = "{{ promptStringOnce . "email" "Enter your email:" }}"
+  gitname = "{{ promptStringOnce . "Git name" "Enter your git name:" }}"
+  gitemail = "{{ promptStringOnce . "Git email" "Enter your git email:" }}"
 {{ end -}}
 {{ end -}}
 
