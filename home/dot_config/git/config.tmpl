@@ -1,6 +1,6 @@
 [user]
-    name = {{ .name | quote }}
-    email = {{ .email | quote }}
+    name = {{ .gitname | quote }}
+    email = {{ .gitemail | quote }}
 
 [github]
     user = {{ .chezmoi.username | quote }}
@@ -9,6 +9,6 @@
     editor = "nvim"
 
 {{ if .personal -}}
-[url "git@github.com:truensado/"]
-  insteadOf = https://github.com/truensado/
+[url "git@github.com:{{ .gitname }}/"]
+  insteadOf = https://github.com/{{ .gitname }}/
 {{ end -}}
