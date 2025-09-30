@@ -1,18 +1,25 @@
 [Added Associations]
+application/ini=code.desktop;nvim.desktop;
 application/json=code.desktop;nvim.desktop;
 application/vnd.microsoft.portable-executable=wine.desktop;protontricks-launch.desktop;
-image/jpeg=org.kde.gwenview.desktop;satty.desktop;vivaldi-stable.desktop;
-image/png=org.kde.gwenview.desktop;satty.desktop;vivaldi-stable.desktop;
-text/plain=code.desktop;
+application/x-wine-extension-ini=code.desktop; nvim.desktop;
+image/jpeg=org.kde.gwenview.desktop;satty.desktop;
+image/png=org.kde.gwenview.desktop;satty.desktop;
+text/plain=nvim.desktop;code.desktop;
+text/x-ini=code.desktop;nvim.desktop;
+video/x-matroska=org.kde.gwenview.desktop;mpv.desktop;
 
 [Default Applications]
 application/json=code.desktop;
 application/vnd.microsoft.portable-executable=wine.desktop;
+application/x-wine-extension-ini=code.desktop;
 image/jpeg=org.kde.gwenview.desktop;
 image/png=org.kde.gwenview.desktop;
-text/plain=code.desktop;
+text/plain=nvim.desktop;
+text/x-ini=code.desktop;
+video/x-matroska=org.kde.gwenview.desktop;
 x-scheme-handler/discord=vesktop.desktop
 x-scheme-handler/discord-1139939140494971051=discord-1139939140494971051.desktop
 
 [Removed Associations]
-text/plain=code-2.desktop;nvim.desktop;
+video/x-matroska=com.stremio.stremio.desktop;
