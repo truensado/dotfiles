@@ -24,6 +24,7 @@ Commands:
   reshade           Set Up Reshade for Steam Proton Game 'Credits to kevinlekiller for the script'
   brightness        Changes Brightness
   install           Launches pacman fzf installer
+  record            Starts and stops screenrecord
 
 Examples:
   hydacli theme list
@@ -77,6 +78,9 @@ main() {
       ;;
     install)
       "$hydaScript/hyda-install.sh" "$@"
+      ;;
+    record)
+      "$hydaScript/hyda-record.sh" "$@"
       ;;
     ""|-h|--help|help)
       usage

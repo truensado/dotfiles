@@ -22,7 +22,7 @@ tooltip {
 
 #workspaces button {
     box-shadow: none;
-	text-shadow: none;
+	  text-shadow: none;
     padding: 0px;
     border-radius: 8px;
     margin-top: 2px;
@@ -55,7 +55,7 @@ tooltip {
 
 #taskbar button {
     box-shadow: none;
-	text-shadow: none;
+  	text-shadow: none;
     padding: 0px;
     border-radius: 8px;
     margin-top: 2px;
@@ -95,59 +95,44 @@ tooltip {
 }
 
 menu {
-  margin-top: 32px;                       /* keeps it below the bar */
-  border-radius: 12px;                    /* rounded corners */
-  background-color: rgba(30, 30, 46, 0.8);/* semi-transparent BG */
-  color: #cdd6f4;                         /* your text color */
-  padding: 4px;                           /* tighten it up */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.5);  /* subtle drop-shadow */
+  margin-top: 32px;                       
+  border-radius: 12px;                    
+  background-color: rgba(30, 30, 46, 0.8);
+  color: #cdd6f4;                         
+  padding: 4px;                           
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5); 
 }
 
 menuitem {
   padding: 6px 12px;
-  border-radius: 4px;                     /* inner items also rounded */
-  background-color: transparent;          /* let the menu’s transparently show through */
+  border-radius: 4px;           
+  background-color: transparent;
 }
 
 menuitem:hover {
-  background-color: rgba(49, 50, 68, 0.5);/* translucent hover state */
+  background-color: rgba(49, 50, 68, 0.5);
 }
 
-#backlight,
 #battery,
-#bluetooth,
-#custom-cava,
-#custom-cliphist,
 #clock,
-#custom-cpuinfo,
-#cpu,
-#custom-github_hyprdots,
-#custom-gpuinfo,
 #idle_inhibitor,
-#custom-keybindhint,
-#language,
-#memory,
 #mpris,
-#network,
 #custom-power,
+#custom-reboot,
+#custom-lock,
+#custom-quit,
 #privacy,
 #pulseaudio,
-#custom-spotify,
 #taskbar,
-#custom-theme,
 #tray,
-#custom-notification,
+#custom-swaync,
+#power,
 #custom-updates,
-#custom-wallchange,
-#custom-wbar,
 #window,
 #workspaces,
-#custom-l_end,
-#custom-r_end,
-#custom-sl_end,
-#custom-sr_end,
-#custom-rl_end,
-#custom-rr_end {
+#custom-l,
+#custom-r,
+#custom-end {
     color: @mauve;
     background: @mantle;
     opacity: 1;
@@ -161,38 +146,32 @@ menuitem:hover {
     padding: 0px;
 }
 
-#custom-r_end {
+#custom-r {
     border-radius: 0px 20px 20px 0px;
     margin-right: 8px;
     padding-right: 0px;
 }
 
-#custom-l_end {
+#custom-l {
     border-radius: 20px 0px 0px 20px;
     margin-left: 8px;
     padding-left: 0px;
 }
 
-#custom-sr_end {
-    border-radius: 0px;
-    margin-right: 8px;
-    padding-right: 0px;
-}
-
-#custom-sl_end {
-    border-radius: 0px;
-    margin-left: 8px;
-    padding-left: 0px;
-}
-
-#custom-rr_end {
+#custom-end {
     border-radius: 0px 7px 7px 0px;
     margin-right: 8px;
     padding-right: 0px;
 }
 
-#custom-rl_end {
-    border-radius: 7px 0px 0px 7px;
-    margin-left: 8px;
-    padding-left: 0px;
+#power #custom-reboot {
+  font-size: 15px;
+}
+
+#power #custom-lock {
+  font-size: 15px;
+}
+
+#power #custom-quit {
+  font-size: 15px;
 }
