@@ -223,6 +223,7 @@
     "return-type": "json",
     "exec": "pgrep -x swaync && swaync-client -swb",
     "on-click": "swaync-client -t -sw",
+    "on-click-middle": "swaync-client -d",
     "escape": true,
     "menu": "on-click-right",
     "menu-file": "${XDG_CONFIG_HOME:-$HOME/.config}/waybar/menus/swaync.xml",
