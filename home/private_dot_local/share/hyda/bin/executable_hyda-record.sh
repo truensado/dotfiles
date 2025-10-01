@@ -10,8 +10,12 @@ do_record() {
   local region=$(slurp -o)
 
   [[ -z "$region" ]] && { notify-send -e "Screen recording cancelled" -i "replay-record-error" -t 3000; exit 1; }
-
-  wf-recorder -g "$region" -a -f "$file" &
+  
+  if lspci | grep -qi 'nvidia'; then
+    wf-recorder --audio=$(pactl get-default-sink).monitor -g "$region" -f "$file" -c libx264 -p crf=23 -p preset=medium -p movflags=+faststart &
+  else
+    wf-recorder --audio=$(pactl get-default-sink).monitor -g "$region" -f "$file" --ffmpeg-encoder-options="-c:v libx264 -crf 23 -preset medium -movflags +faststart" &
+  fi
 }
 
 stop_record() {
@@ -24,6 +28,7 @@ do_deps() {
   for dep in "${deps[@]}"; do
     if ! command -v "$dep" >/dev/null 2>&1; then
       echo -e "${error}Error${reset}: Missing dependency ${bold}$dep"
+      notify-send -e "Missing dependency $dep"
       exit 1
     fi
   done
