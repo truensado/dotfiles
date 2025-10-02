@@ -25,6 +25,7 @@ Commands:
   brightness        Changes Brightness
   install           Launches pacman fzf installer
   record            Starts and stops screenrecord
+  spotify           spotify daemon for waybar
 
 Examples:
   hydacli theme list
@@ -81,6 +82,9 @@ main() {
       ;;
     record)
       "$hydaScript/hyda-record.sh" "$@"
+      ;;
+    spotify)
+      "$hydaScript/hyda-spotify.sh" "$@"
       ;;
     ""|-h|--help|help)
       usage
