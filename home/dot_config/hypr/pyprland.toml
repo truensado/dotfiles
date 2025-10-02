@@ -3,8 +3,16 @@ plugins = ["scratchpads"]
 
 [scratchpads.notes]
 animation = "fromTop"
-class = "obsidian"
+class = "[Oo]bsidian"
 command = "uwsm app obsidian"
 size = "75% 70%"
 lazy = "true"
 margin = 180
+
+[scratchpads.spotify]
+animation = "fromTop"
+class = "[Ss]potify"
+command = "uwsm app spotify-launcher"
+size = "50% 50%"
+lazy = "true"
+margin = 330

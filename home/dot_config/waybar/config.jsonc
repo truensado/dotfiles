@@ -9,7 +9,7 @@
 
   "modules-left": ["group/left", "wlr/taskbar", "mpris", "group/right"],
   "modules-center": ["group/left", "custom/updates", "clock", "idle_inhibitor", "group/right"],
-  "modules-right": ["group/left", "privacy", "tray", "battery", "pulseaudio", "custom/swaync", "group/power", "group/right"],
+  "modules-right": ["group/left", "privacy", "tray", "custom/spotify", "battery", "pulseaudio", "custom/swaync", "group/power", "group/right"],
 
   "group/left": {
     "orientation": "inherit",
@@ -62,7 +62,8 @@
     "on-click-right": "fullscreen",
     "on-click-middle": "close",
     "ignore-list": [
-        ""
+        "Spotify",
+        "obsidian"
     ],
     "app_ids-mapping": {
         "firefoxdeveloperedition": "firefox-developer-edition",
@@ -180,6 +181,28 @@
 
   "tray": {
     "spacing": 5
+  },
+
+  "custom/spotify": {
+    "exec": "hydacli spotify",
+    "format": "{0}",
+    "rotate": 0,
+    "return-type": "json",
+    "on-click": "playerctl play-pause --player spotify",
+    "tooltip": true,
+    "menu": "on-click-right",
+    "menu-file": "${XDG_CONFIG_HOME:-$HOME/.config}/waybar/menus/spotify.xml",
+    "menu-actions": {
+      "play-pause": "playerctl play-pause --player spotify",
+      "next": "playerctl next --player spotify",
+      "previous": "playerctl previous --player spotify",
+      "stop": "playerctl stop --player spotify",
+      "shuffle": "playerctl shuffle toggle --player spotify",
+      "repeat": "playerctl loop Track --player spotify",
+      "loop": "playerctl loop Playlist --player spotify",
+      "disable-loop": "playerctl loop None --player spotify",
+      "open": "pypr toggle spotify"
+    }
   },
 
   "battery": {
