@@ -3,12 +3,9 @@
 scrDir=$(dirname "$(realpath "$0")")
 source "$scrDir/hyda-variables.sh"
 
-exSinks=(
+filter=(
   "alsa_output.pci-0000_00_1f.3.iec958-stereo"
   "alsa_output.pci-0000_01_00.1.hdmi-stereo"
-)
-
-exSources=(
   "alsa_output.pci-0000_00_1f.3.iec958-stereo.monitor"
   "alsa_input.pci-0000_00_1f.3.analog-stereo"
   "alsa_output.pci-0000_01_00.1.hdmi-stereo.monitor"
@@ -16,8 +13,8 @@ exSources=(
   "alsa_input.usb-Generic_USB2.0_Device_20170726905923-00.mono-fallback"
 )
 
-sinks="$(pactl list short sinks | awk '{print $2}' | grep -vFf <(printf "%s\n" "${exSinks[@]}"))"
-sources="$(pactl list short sources | awk '{print $2}' | grep -vFf <(printf "%s\n" "${exSources[@]}"))"
+sources=$(pactl list short sources | awk '{print $2}' | grep -vFf <(printf "%s\n" "${filter[@]}"))
+sinks=$(pactl list short sinks | awk '{print $2}' | grep -vFf <(printf "%s\n" "${filter[@]}"))
 
 [[ -z "$sinks" && -z "$sources" ]] && { echo -e "${error}no sinks or sources available"; exit 1; }
 
@@ -37,7 +34,7 @@ switch_sink() {
 
   local current next idx=-1 i
  
-  current="$(pactl info | sed -n 's/^Default Sink: //p')"
+  current="$(pactl info | awk '/Default Sink:/ {print $3}')"
 
   mapfile -t sinks_array <<< "$sinks"
 
@@ -60,7 +57,7 @@ switch_source() {
 
   local current next idx=-1 i
  
-  current="$(pactl info | sed -n 's/^Default Source: //p')"
+  current="$(pactl info | awk '/Default Source:/ {print $3}')"
 
   mapfile -t sources_array <<< "$sources"
 
@@ -74,7 +71,7 @@ switch_source() {
   next="${sources_array[$(((idx + 1) % ${#sources_array[@]}))]}"
 
   pactl set-default-source "$next"
-  notify-send -e "Switched Source:" "$next" -i "audio-input-microphone-symbolic" -a "Hyda Devices" -r 9999 -h string:synchronous:sources -t 3000
+  notify-send -e "Switched Source:" "$next" -i "audio-input-microphone-symbolic" -a "Hyda Devices" -r 9998 -h string:synchronous:sources -t 3000
   echo -e "${success}Switched source to${reset}: $next"
 }
 
