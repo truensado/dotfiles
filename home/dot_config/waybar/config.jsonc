@@ -9,7 +9,7 @@
 
   "modules-left": ["group/left", "wlr/taskbar", "mpris", "group/right"],
   "modules-center": ["group/left", "custom/updates", "clock", "idle_inhibitor", "group/right"],
-  "modules-right": ["group/left", "privacy", "tray", "battery", "custom/swaync", "pulseaudio", "group/power", "group/right"],
+  "modules-right": ["group/left", "privacy", "tray", "battery", "pulseaudio", "custom/swaync", "group/power", "group/right"],
 
   "group/left": {
     "orientation": "inherit",
