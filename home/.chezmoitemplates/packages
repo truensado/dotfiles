@@ -2,6 +2,7 @@
 packages:
   pacman:
     - ueberzugpp
+    - upower
     - gwenview
     - hyprpicker
     - eza
