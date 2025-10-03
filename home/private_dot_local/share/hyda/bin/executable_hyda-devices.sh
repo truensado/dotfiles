@@ -24,7 +24,7 @@ notify_event() {
   local raw="$2"
   local name=$(trim_name "$raw")
 
-  notify-send -e "🔌 Device $status" "<b>$name</b>" -a "HYDA" -r 9993 -h string:synchronous:connection -t 3000
+  notify-send -e "🔌 Device $status" "<b>$name</b>" -a "HYDA" -r 9993 -t 3000
 }
 
 main() {
@@ -46,4 +46,4 @@ if [[ $# -gt 0 ]]; then
   exit 0
 fi
 
-upower --monitor 2>/dev/null | grep --line-buffered -E "device (added|removed):" | { while read -r line; do main "$line"; done }
+while read -r line; do main "$line"; done < <(upower --monitor 2>/dev/null | grep --line-buffered -E "device (added|removed):")
