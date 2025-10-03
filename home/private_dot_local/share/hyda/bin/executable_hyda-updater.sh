@@ -34,7 +34,7 @@ check_top() {
   if ! command -v topgrade &> /dev/null; then
     local action=$(notify-send -u critical -a "HYDA Updater" -r 9996 -i "$icon" -t 5000 "Hyda Updater" "Topgrade not installed" --action="install=Install Now" --action="dismiss=Dismiss")
     if [[ "$action" == "install" ]]; then
-      "$term" --title=install-topgrade --initial-command="echo -e '${bold}Installing Topgrade${reset}...';\
+      "$term" --class=com.install-topgrade --title=install-topgrade --initial-command="echo -e '${bold}Installing Topgrade${reset}...';\
       sudo pacman -S --noconfirm topgrade && notify-send -e 'Hyda' 'topgrade installed' -i $icon -t 3000\
       || notify-send -e -u critical 'Hyda' 'tograde failled to install' -i $icon -t 3000"
     fi
@@ -67,7 +67,7 @@ updates_not() {
 }
 
 update_now() {
-  "$term" --title="systemupdate" \
+  "$term" --class=com.systemupdate --title="systemupdate" \
   --initial-command="echo -e '${bold}Starting updates${reset}...'; \
     topgrade --skip-notify --only system && \
     notify-send '✅ System Update Complete' -i '$icon' -e -t 3500 || \
