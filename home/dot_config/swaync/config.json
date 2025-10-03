@@ -38,22 +38,27 @@
 
     "spotify-transient": {
       "state": "transient",
-      "app-name": "Spotify"
+      "app-name": "[Ss]potify"
     },
     
     "blueman-transient": {
       "state": "transient",
-      "app-name": "blueman"
+      "app-name": "[Bb]lueman"
     },
 
     "network-transient": {
       "state": "transient",
       "app-name": "NetworkManager"
     },
+    
+    "youtube-muted": {
+      "state": "muted",
+      "app-name": ".*[Yy]outube.*"
+    },
 
     "nextcloud-transient": {
       "state": "transient",
-      "app-name": "Nextcloud"
+      "app-name": "[Nn]extcloud"
     }
   },
 
