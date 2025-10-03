@@ -45,6 +45,8 @@ encryption = "age"
 [bitwarden]
   unlock = "auto"
 
+{{ if $boolean.desktop -}}
 [hooks.apply.post]
   command = "sh"
   args = ["-c", "chmod -R ug+x \"$HOME/.local/share/wemod-launcher\" || true"]
+{{ end -}}
