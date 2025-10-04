@@ -93,7 +93,6 @@ packages:
     - topgrade
     - kvantum-qt5
     - waypaper-git
-    - appimagelauncher
     - tmux
     - entr
     - swww
