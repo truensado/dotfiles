@@ -21,21 +21,21 @@ EOF
 
 get_perc() {
   if [[ "$cur_perc" -ge "$full_threshold" && "$cur_stat" != "Discharging" && "$cur_stat" != "Full" ]] && ((cur_perc - prev_perc >= gap)); then
-    notify-send -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-full-charged-symbolic" "Battery Charged" "Battery is at $cur_perc%. You can unplug the charger"
+    notify-send -e -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-full-charged-symbolic" "Battery Charged" "Battery is at $cur_perc%. You can unplug the charger"
     prev_perc=$cur_perc
   elif [[ "$cur_perc" -le "$critical_threshold" ]]; then
     count=$((timer > mnt ? timer : mnt))
     while [ $count -gt 0 ] && [[ $cur_stat == "Discharging" ]]; do
       for battery in /sys/class/power_supply/BAT*; do cur_stat=$(<"$battery/status"); done
       [[ $cur_stat != "Discharging" ]] && break
-      notify-send -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-empty-symbolic" "Battery Critically Low" "$cur_perc% is critically low. Device will suspend in $((count / 60)):$((count % 60)) ."
+      notify-send -e -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-empty-symbolic" "Battery Critically Low" "$cur_perc% is critically low. Device will suspend in $((count / 60)):$((count % 60)) ."
       count=$((count - 1))
       sleep 1
     done
     [ $count -eq 0 ] && ex_action
   elif [[ "$cur_perc" -le "$low_threshold" ]] && [[ "$cur_stat" == "Discharging" ]] && ((prev_perc - cur_perc >= gap)); then
     rounded=$(printf "%1d" $(((cur_perc + 5) / 10 * 10)))
-    notify-send -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-level-${rounded:-10}-symbolic" "Battery Low" "Battery is at $cur_perc%. Connect the charger."
+    notify-send -e -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-level-${rounded:-10}-symbolic" "Battery Low" "Battery is at $cur_perc%. Connect the charger."
     prev_perc=$cur_perc
   fi
 }
@@ -48,7 +48,7 @@ get_stat() {
         prev_stat=$cur_stat
         urgency=$([[ $cur_perc -le $low_threshold ]] && echo "critical" || echo "normal")
         rounded=$(printf "%1d" $(((cur_perc + 5) / 10 * 10)))
-        notify-send -a "HYDA Power" -t 5000 -r 5 -u "${urgency:-normal}" -i "battery-level-${rounded:-10}-symbolic" "Charger Unplugged" "Battery is at $cur_perc%."
+        notify-send -e -a "HYDA Power" -t 5000 -r 5 -u "${urgency:-normal}" -i "battery-level-${rounded:-10}-symbolic" "Charger Unplugged" "Battery is at $cur_perc%."
       fi
       get_perc
       ;;
@@ -58,7 +58,7 @@ get_stat() {
         count=$((timer > mnt ? timer : mnt))
         urgency=$([[ "$cur_perc" -ge $full_threshold ]] && echo "critical" || echo "normal")
         rounded=$(printf "%1d" $(((cur_perc + 5) / 10 * 10)))
-        notify-send -a "HYDA Power" -t 5000 -r 5 -u "${urgency:-normal}" -i "battery-level-${rounded:-100}-charging-symbolic" "Charger Plugged" "Battery is at $cur_perc%."
+        notify-send -e -a "HYDA Power" -t 5000 -r 5 -u "${urgency:-normal}" -i "battery-level-${rounded:-100}-charging-symbolic" "Charger Plugged" "Battery is at $cur_perc%."
       fi
       get_perc
       ;;
@@ -66,7 +66,7 @@ get_stat() {
       if [[ $cur_stat != "Discharging" ]]; then
         now=$(date +%s)
         if [[ "$prev_stat" == *"harging"* ]] || ((now - lt >= $((notify * 60)))); then
-          notify-send -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-full-charging-symbolic" "Battery Full" "Please unplug your charger"
+          notify-send -e -a "HYDA Power" -t 5000 -r 5 -u "critical" -i "battery-full-charging-symbolic" "Battery Full" "Please unplug your charger"
           prev_stat=$cur_stat
           lt=$now
         fi
