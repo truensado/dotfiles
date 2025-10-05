@@ -93,10 +93,11 @@ get_bat() {
 
 get_change() {
   get_bat
-  if [ "$cur_stat" != "$prev_stat" ] || [ "$cur_perc" != "$prev_perc" ]; then
-    prev_stat=$cur_stat
-    prev_perc=$cur_perc
+  if [ "$cur_stat" != "$last_stat" ] || [ "$cur_perc" != "$last_perc" ]; then
+    last_stat=$cur_stat
+    last_perc=$cur_perc
     get_stat
+    get_perc
   fi
 }
 
