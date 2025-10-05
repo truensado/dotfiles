@@ -47,7 +47,11 @@ use_hyprsunset() {
     return 1
   fi
   
-  new=$((base + $1))
+  if [[ "$1" =~ ^[+-] ]]; then
+    new=$((base + $1))
+  else
+    new=$1
+  fi
   ((new > 100)) && new=100
   ((new < 0)) && new=0
 
@@ -102,6 +106,11 @@ case $1 in
     if $is_backlight; then
       brightnessctl "${2:-10}"
     elif $is_hyprsunset; then
+      if [[ "$2" =~ ^[+-] ]]; then
+        echo -e "${bold}Error${reset}: ${error}Use absolute values with 'set', not relative...${reset}${ierror}"
+        usage
+        exit 1
+      fi
       use_hyprsunset "${2:-10}"
     else
       echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
