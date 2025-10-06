@@ -1,7 +1,9 @@
-# Core fish behavior
+# ---- Core
+
 set -Ux fish_key_bindings fish_default_key_bindings
 
-# Fish colors
+# ---- Colors
+
 set -Ux fish_color_autosuggestion 6c7086
 set -Ux fish_color_cancel f38ba8
 set -Ux fish_color_command 89b4fa
@@ -28,7 +30,6 @@ set -Ux fish_color_status f38ba8
 set -Ux fish_color_user 94e2d5
 set -Ux fish_color_valid_path --underline
 
-# Pager colors
 set -Ux fish_pager_color_completion cdd6f4
 set -Ux fish_pager_color_description 6c7086
 set -Ux fish_pager_color_prefix f5c2e7
