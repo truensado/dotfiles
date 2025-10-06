@@ -2,14 +2,15 @@
 
 scroll_mode=""
 kbd_state=""
+cur_cursor=""
 
 kID=$(xinput list --id-only "xwayland-keyboard:1" 2>/dev/null)
 
-# Define event handler
 handle() {
   case "$1" in
     activewindow* | activewindowv2*)
       local tag=$(hyprctl -j activewindow | jq -r '.tags? // [] | join(" ")' 2>/dev/null)
+      local cursor="$(gsettings get org.gnome.desktop.interface cursor-theme | sed -E 's/^[^A-Za-z]+//; s/[^A-Za-z]+$//') $(gsettings get org.gnome.desktop.interface cursor-size)"
 
       # ---- scroll method change
       if [[ "$tag" == *game* ]]; then
@@ -34,9 +35,14 @@ handle() {
         xinput "$new_kbd" "$kID" &> /dev/null
         kbd_state="$new_kbd"
       fi
+
+      # ---- change cursor dynamically
+      if [[ "$cursor" != "$cur_cursor" ]]; then
+        hyprctl setcursor "$cursor" &> /dev/null
+        cur_cursor="$cursor"
+      fi
       ;;
   esac
 }
-
 
 socat -U - UNIX-CONNECT:"$XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/.socket2.sock" | while read -r line; do handle "$line"; done
