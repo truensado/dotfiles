@@ -53,7 +53,7 @@ function yy
   end
 end
 
-function tt
+function t
   if type -q tmux
     set sessions (tmux list-sessions -F "#{session_name}" 2>/dev/null | grep -E '^session-[0-9]+$')
     set amount (count $sessions)
@@ -120,7 +120,7 @@ alias tka='tmux kill-sessions -a'
 alias tkt='tmux kill-session -t'
 alias ff='clear;fastfetch'
 alias cha='chezmoi apply'
-alias gc='git commit -am'
+alias gca='git commit -am'
 alias cha='chezmoi init'
 alias chc='chezmoi cd'
 alias gb='git branch'
