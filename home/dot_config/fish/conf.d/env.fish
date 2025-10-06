@@ -1,6 +1,3 @@
-# Base editor
-set -Ux EDITOR nvim
-
 # Core fish behavior
 set -Ux fish_key_bindings fish_default_key_bindings
 
