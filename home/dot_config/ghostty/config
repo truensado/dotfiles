@@ -24,5 +24,5 @@ keybind = ctrl+insert=copy_to_clipboard
 keybind = shift+insert=paste_from_selection
 keybind = ctrl+r=reload_config
 # custom
-keybind = alt+grave_accent=text:tt\r
+keybind = alt+grave_accent=text:t\r
 keybind = alt+escape=text: cc\r

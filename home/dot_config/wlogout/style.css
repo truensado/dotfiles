@@ -5,7 +5,7 @@
 
 window {
     background-color: rgba(0, 0, 0, 0.308);
-    background-image: url("/home/nsado/.config/wlogout/wlogout.bg");
+    background-image: none;
     background-size: cover; /* Ensures the image covers the entire background */
     background-position: center; /* Centers the background image */
     background-repeat: no-repeat; /* Prevents the image from repeating */

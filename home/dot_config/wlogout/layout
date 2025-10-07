@@ -1,12 +1,12 @@
 {
     "label" : "lock",
-    "action" : "hyprlock",
+    "action" : "setsid uwsm app hyprlock",
     "text" : "Lock",
     "keybind" : "l"
 }
 {
     "label" : "hibernate",
-    "action" : "systemctl hibernate",
+    "action" : "setsid uwsm app hyprlock && systemctl hibernate",
     "text" : "Hibernate",
     "keybind" : "h"
 }
@@ -24,7 +24,7 @@
 }
 {
     "label" : "suspend",
-    "action" : "hyprlock & sleep 0.3 && systemctl suspend",
+    "action" : "setsid uwsm app hyprlock && systemctl suspend",
     "text" : "Suspend",
     "keybind" : "u"
 }
