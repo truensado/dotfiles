@@ -1,6 +1,7 @@
 [Unit]
 Description=Notification Daemon and Center
 After=graphical.target
+ConditionEnvironment=WAYLAND_DISPLAY
 
 [Service]
 Environment=GSK_RENDERER=gl
