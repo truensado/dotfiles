@@ -9,6 +9,14 @@ size = "75% 70%"
 lazy = "true"
 margin = 180
 
+[scratchpads.code]
+animation = "fromTop"
+class = "com.nvim"
+command = "uwsm app -- ghostty --class=com.nvim -e nvim"
+size = "70% 70%"
+lazy = "true"
+margin = 180
+
 [scratchpads.spotify]
 animation = "fromTop"
 class = "[Ss]potify"
