@@ -2,6 +2,10 @@
 
 set -g fish_greeting
 
+if status is-interactive
+  set -g fish_key_bindings fish_vi_key_bindings
+end
+
 if status is-login
   if not set -q TMUX; and uwsm check may-start
     exec uwsm start hyprland.desktop
