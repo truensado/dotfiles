@@ -1,0 +1,13 @@
+[Unit]
+Description=Hyda Audio OSD
+After=graphical-session.target
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/bin/hydacli audio
+Restart=on-failure
+RestartSec=1
+
+[Install]
+WantedBy=graphical-session.target

@@ -14,7 +14,6 @@ Usage:
 Commands:
   theme             Manage Hyprland themes
   updater           Launches Updater
-  audio             Changes Audio Output
   binds             Launches Keybinds Cheat Sheet
   events            Daemon to Dynamically Change Config Based On Events
   devices           Starts Devices Daemon That Notifies of Connected Devices
@@ -26,6 +25,8 @@ Commands:
   install           Launches pacman fzf installer
   record            Starts and stops screenrecord
   spotify           spotify daemon for waybar
+  audio             audio volume osd
+  switch-audio      Changes Audio Output
 
 Examples:
   hydacli theme list
@@ -44,7 +45,7 @@ main() {
     theme)
       "$hydaScript/hyda-theme.sh" "$@"
       ;;
-    audio)
+    switch-audio)
       "$hydaScript/hyda-switch-audio.sh" "$@"
       ;;
     screenshot)
@@ -85,6 +86,9 @@ main() {
       ;;
     spotify)
       "$hydaScript/hyda-spotify.sh" "$@"
+      ;;
+    audio)
+      "$hydaScript/hyda-audio.sh" "$@"
       ;;
     ""|-h|--help|help)
       usage
