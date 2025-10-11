@@ -123,7 +123,6 @@ packages:
   aur:
     - proton-mail-bin
     - pyprland
-    - syshud
     - uwsm
     - bibata-cursor-git
     - kvantum-qt6-git
