@@ -50,7 +50,7 @@ do_mic_volume() {
   notify-send -e "Volume" "$text" -i "$icon" -a "HYDA Volume" -r 9984 -h string:synchronous:volume -h int:value:"$cur_mic_vol"
 }
 
-main() {
+handle() {
   cur_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | head -n1)
   cur_mic_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | awk '{print $5}' | head -n1)
   cur_vol=${cur_vol%\%}
@@ -61,16 +61,33 @@ main() {
   if [[ "$cur_stat" != "$prev_stat" ]]; then
     do_mute
     prev_stat="$cur_stat"
-  elif [[ "$cur_vol" != "$prev_vol" ]]; then
+  fi
+
+  if [[ "$cur_vol" != "$prev_vol" ]]; then
     do_volume
     prev_vol="$cur_vol"
-  elif [[ "$cur_mic_stat" != "$prev_mic_stat" ]]; then
+  fi
+
+  if [[ "$cur_mic_stat" != "$prev_mic_stat" ]]; then
     do_mic_mute
     prev_mic_stat="$cur_mic_stat"
-  elif [[ "$cur_mic_vol" != "$prev_mic_vol" ]]; then
+  fi
+  
+  if [[ "$cur_mic_vol" != "$prev_mic_vol" ]]; then
     do_mic_volume
     prev_mic_vol="$cur_mic_vol"
   fi
 }
 
-pactl subscribe | grep --line-buffered "Event 'change' on sink\|source" | while read -r volume_change; do main; done
+main() {
+  prev_vol=$(pactl get-sink-volume @DEFAULT_SINK@ | awk '{print $5}' | head -n1)
+  prev_mic_vol=$(pactl get-source-volume @DEFAULT_SOURCE@ | awk '{print $5}' | head -n1)
+  prev_vol=${prev_vol%\%}
+  prev_mic_vol=${prev_mic_vol%\%}
+  prev_stat=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+  prev_mic_stat=$(pactl get-source-mute @DEFAULT_SOURCE@ | awk '{print $2}')
+ 
+  pactl subscribe | grep --line-buffered "Event 'change' on sink\|source" | while read -r volume_change; do handle; done
+}
+
+[ $# -gt 0 ] && usage || main
