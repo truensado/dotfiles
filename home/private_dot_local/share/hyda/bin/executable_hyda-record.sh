@@ -49,7 +49,7 @@ main() {
       notify-send -e "Screen recording cancelled" -i "replay-record-error" -t 3000 
       exit 1 
     }
-    start_record && notify-send -e "Screen recording started" -i "replay-record" -t 3000
+    start_record
   fi
 }
 
