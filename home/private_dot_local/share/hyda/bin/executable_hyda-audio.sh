@@ -112,13 +112,13 @@ main() {
   prev_stat="$cur_stat"
   prev_mic_stat="$cur_mic_stat"
 
+  log_info "Hyda Audio Daemon Started"
   pactl subscribe | grep --line-buffered "Event 'change' on sink\|source" | while read -r volume_change; do handle_change; done
 }
 
 if [[ $# -gt 0 ]]; then 
-  log_error "hyda audio daemon doesn't require argument, just run it as is"
+  log_error "hyda audio daemon doesn't require arguments — just run it as is"
   exit 1
 else
-  log_info "Hyda Audio Daemon Started"
   main
 fi

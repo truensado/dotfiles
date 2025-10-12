@@ -38,7 +38,7 @@ main() {
 }
 
 if [[ $# -gt 0 ]]; then
-  log_error "hyda devices daemon doesn't require argument, just run it as is"
+  log_error "hyda devices daemon doesn't require arguments — just run it as is"
   exit 1
 else
   main
