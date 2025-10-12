@@ -1,21 +1,9 @@
 #!/usr/bin/env bash
-
-usage() {
-  cat <<'EOF'
-
-Hyda-Devices — Daemon To Detect Connect|Disconnected Devices
-
-Usage: run the script directly and it will remain in the background
-
-EOF
-}
+# description: daemon for detecting connected/disconnected devices
 
 trim_name() {
   basename "$1" \
-    | sed 's/_/ /g' \
-    | sed 's/\bbattery\b//g' \
-    | sed 's/  */ /g' \
-    | sed 's/^ //;s/ $//' \
+    | sed 's/_/ /g; s/\bbattery\b//g; s/  */ /g; s/^ //; s/ $//' \
     | awk '{print $1, $2}'
 }
 
@@ -27,23 +15,31 @@ notify_event() {
   notify-send -e "🔌 Device $status" "<b>$name</b>" -a "HYDA" -r 9993 -t 3000
 }
 
-main() {
+handle() {
   case "$1" in
     *added*)
+      log_info "Device connected: $1"
       notify_event "Connected" "$1"
       ;;
     *removed*)
+      log_info "Device disconnected: $1"
       notify_event "Disconnected" "$1"
       ;;
-    *) 
-      echo "unhandled: $1"
-      ;; 
+    *)
+      log_warning "Unhandled event: $line"
+      notify_event "Unknown Event: $1"
+      ;;
   esac
 }
 
-if [[ $# -gt 0 ]]; then
-  usage
-  exit 0
-fi
+main() {
+  log_info "Hyda Devices Daemon Started"
+  while read -r line; do handle "$line"; done < <(upower --monitor 2>/dev/null | grep --line-buffered -E "device (added|removed):")
+}
 
-while read -r line; do main "$line"; done < <(upower --monitor 2>/dev/null | grep --line-buffered -E "device (added|removed):")
+if [[ $# -gt 0 ]]; then
+  log_error "hyda devices daemon doesn't require argument, just run it as is"
+  exit 1
+else
+  main
+fi

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
-
-scrDir=$(dirname "$(realpath "$0")")
-source "$scrDir/hyda-variables.sh"
+# description: switch between audio sinks and sources interactively
 
 filter=(
   "alsa_output.pci-0000_00_1f.3.iec958-stereo"
@@ -13,101 +11,93 @@ filter=(
   "alsa_input.usb-Generic_USB2.0_Device_20170726905923-00.mono-fallback"
 )
 
-sources=$(pactl list short sources | awk '{print $2}' | grep -vFf <(printf "%s\n" "${filter[@]}"))
-sinks=$(pactl list short sinks | awk '{print $2}' | grep -vFf <(printf "%s\n" "${filter[@]}"))
-
-[[ -z "$sinks" && -z "$sources" ]] && { echo -e "${error}no sinks or sources available"; exit 1; }
-
 usage() {
-  cat <<'EOF'
+  cat <<EOF
 
-Hyda-Switch-Audio — Changes Audio Sink or Source
+${bold}Hyda Audio Switcher${reset} — cli tool for cycling audio devices
 
-Usage:
- list         -l  ->  Lists available sinks while filtered
- switch       -s  ->  Use with source or sink to cycle through either
+${bold}Usage:${reset}
+  ${bold}list${reset},    -l, --list    ${info}list all sinks/sources${reset}
+  ${bold}switch${reset},  -s, --switch  ${info}cyle through available devices${reset} (${bold}sink/source${reset})
+
+${bold}Example:${reset}
+  hydacli switch-audio list
+  hydacli switch-audio switch ${info}sink${reset}
+  hydacli switch-audio switch ${info}source${reset}
 EOF
 }
 
+get_sinks() {
+  pactl list short sinks 2>/dev/null | awk '{print $2}' | grep -vFf <(printf "%s\n" "${filter[@]}")
+}
+
+get_sources() {
+  pactl list short sources 2>/dev/null | awk '{print $2}' | grep -vFf <(printf "%s\n" "${filter[@]}")
+}
+
+do_notify() {
+  local title="$1"
+  local text="$2"
+  local icon="$3"
+  notify-send -e "$title" "$text" -i "$icon" -a "HYDA" -r 9998 -h string:synchronous:switch
+}
+
 switch_sink() {
-  [[ -z "$sinks" ]] && { echo -e "${error}no sinks available"; return 1; }
+  local sinks current next idx=-1
+  mapfile -t sinks < <(get_sinks)
+  [[ ${#sinks[@]} -eq 0 ]] && { log_error "No sinks available"; return 1; }
 
-  local current next idx=-1 i
- 
-  current="$(pactl info | awk '/Default Sink:/ {print $3}')"
-
-  mapfile -t sinks_array <<< "$sinks"
-
-  for i in "${!sinks_array[@]}"; do
-    if [[ "${sinks_array[$i]}" == "$current" ]]; then
-      idx=$i
-      break
-    fi
+  current=$(pactl info | awk '/Default Sink:/ {print $3}')
+  for i in "${!sinks[@]}"; do
+    [[ "${sinks[$i]}" == "$current" ]] && idx=$i && break
   done
+  next="${sinks[$(((idx + 1) % ${#sinks[@]}))]}"
 
-  next="${sinks_array[$(((idx + 1) % ${#sinks_array[@]}))]}"
-
-  pactl set-default-sink "$next"
-  notify-send -e "Switched Sink:" "$next" -i "audio-speakers-symbolic" -a "Hyda Devices" -r 9998 -h string:synchronous:sinks -t 3000
-  echo -e "${success}Switched sink to${reset}: $next"
+  pactl set-default-sink "$next" 2>/dev/null || { log_error "Failed to switch sink"; return 1; }
+  log_success "Switched sink to ${bold}$next${reset}"
+  do_notify "Audio Output Changed" "$next" "audio-headphones-symbolic"
 }
 
 switch_source() {
-  [[ -z "$sources" ]] && { echo -e "${error}no sources available"; return 1; }
+  local sources current next idx=-1
+  mapfile -t sources < <(get_sources)
+  [[ ${#sources[@]} -eq 0 ]] && { log_error "No sources available"; return 1; }
 
-  local current next idx=-1 i
- 
-  current="$(pactl info | awk '/Default Source:/ {print $3}')"
-
-  mapfile -t sources_array <<< "$sources"
-
-  for i in "${!sources_array[@]}"; do
-    if [[ "${sources_array[$i]}" == "$current" ]]; then
-      idx=$i
-      break
-    fi
+  current=$(pactl info | awk '/Default Source:/ {print $3}')
+  for i in "${!sources[@]}"; do
+    [[ "${sources[$i]}" == "$current" ]] && idx=$i && break
   done
+  next="${sources[$(((idx + 1) % ${#sources[@]}))]}"
 
-  next="${sources_array[$(((idx + 1) % ${#sources_array[@]}))]}"
-
-  pactl set-default-source "$next"
-  notify-send -e "Switched Source:" "$next" -i "audio-input-microphone-symbolic" -a "Hyda Devices" -r 9998 -h string:synchronous:sources -t 3000
-  echo -e "${success}Switched source to${reset}: $next"
+  pactl set-default-source "$next" 2>/dev/null || { log_error "Failed to switch source"; return 1; }
+  log_success "Switched source to ${bold}$next${reset}"
+  do_notify "Audio input Changed" "$next" "audio-headset-symbolic"
 }
 
-while (($#)); do
-  case $1 in
-    list | -l)
-      [[ -n "$sinks" ]] && echo -e "${bold}List of Sinks${reset}:\n$sinks\n"
-      [[ -n "$sources" ]] && echo -e "${bold}List of Sources${reset}:\n$sources"
-      shift
-      ;;
-    switch | -s)
-      case "${2:-}" in
-        sink | sinks)
-          switch_sink
-          shift
-          ;;
-        source | sources)
-          switch_source
-          shift
-          ;;
-        *)
-          echo -e "${error}unknown switch target: '$2' (expected 'sink' or 'source')"
-          usage
-          exit 1
-          ;;
+list_devices() {
+  local sinks sources
+  sinks=$(get_sinks)
+  sources=$(get_sources)
+
+  [[ -z "$sinks" && -z "$sources" ]] && { log_error "No sinks or sources available"; exit 1; }
+  
+  [[ -n "$sinks" ]] && { echo -e "\n${bold}Sinks:${reset}"; echo "$sinks"; }
+  [[ -n "$sources" ]] && { echo -e "\n${bold}Sources:${reset}"; echo "$sources"; }
+}
+
+main() {
+  case "$1" in
+    *list | -l) list_devices ;;
+    *switch | -s)
+      case "$2" in
+        sink) switch_sink ;;
+        source) switch_source ;;
+        *) log_error "Unknown target '${2:-}' (expected 'sink' or 'source')"; usage; exit 1 ;;
       esac
-      shift
       ;;
-    help | -h | --help | -help)
-      usage
-      shift
-      ;;
-    *)
-      echo -e "${error}unknown argument: $1"
-      usage
-      exit 1
-      ;;
+    *help | -h) usage ;;
+    *) log_error "Unknown argument: $1"; usage; exit 1 ;;
   esac
-done
+}
+
+main "$@"

@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
-
-scrDir=$(dirname "$(realpath "$0")")
-source "$scrDir/hyda-variables.sh"
-source "$scrDir/hyda-state.sh"
+# description: manage screen brightness
 
 usage() {
-  cat <<'EOF'
+  cat <<EOF
 
-Hyda-Brightness — Script Utility for Managing Brightness
+${bold}Hyda Brightness${reset} — cli tool for managing brightness
 
-Usage:
- --increase | increase  | -i    ->  increases brightness
- --decrease | decrease  | -d    ->  decreases brightness
- --restore  | restore   | -r    ->  restore previous brightness
- --set      | set       | -s    ->  sets the brightness value directly
-Example:
+${bold}Usage:${reset}
+  ${bold}increase${reset},  -i, --increase  ${info}increases brightness${reset} (${bold}default +10${reset})
+  ${bold}decrease${reset},  -d, --decrease  ${info}decreases brightness${reset} (${bold}default -10${reset})
+  ${bold}restore${reset},   -r, --restore   ${info}restore previous brightness${reset}
+  ${bold}set${reset},       -s, --set       ${info}sets the brightness value directly${reset} (${bold}0-100${reset})
+
+${bold}Example:${reset}
   hydacli brightness increase 40
   hydacli brightness decrease 20
   hydacli brightness restore
@@ -26,36 +24,33 @@ if [ -n "$(ls -A /sys/class/backlight &>/dev/null)" ] && command -v brightnessct
   backend="laptop"
 elif command -v hyprsunset &>/dev/null; then
   ! pgrep -x hyprsunset &>/dev/null && systemctl --user enable --now hyprsunset
-  backend="desktop"
 else
-  echo -e "${bold}Error${reset}: no backend detected...${reset}${ierror}"
+  log_error "no brightness backend detected"
   exit 1
 fi
 
 use_hypr() {
-  local base=$(awk '/\[Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null | tr -dc '0-9')
-  local previous=$(awk '/\[Previous Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null | tr -dc '0-9')
+  local base=$(hyda_state_get "Brightness" | tr -dc '0-9')
+  local prev=$(hyda_state_get "Previous Brightness" | tr -dc '0-9')
 
   [[ -z "$base" ]] && base=100
-  [[ -z "$previous" ]] && previous=$base
+  [[ -z "$prev" ]] && prev=$base
 
   if [[ ! "$1" =~ ^[+-]?[0-9]+$ ]]; then
-    echo -e "${bold}Error${reset}: ${error}number must be an integer like 10 or 5...${reset}${ierror}"
+    log_error "brightness value must be an integer (e.g. 10, +10, -5)"
     return 1
+  elif [[ "$1" =~ ^[+-] ]]; then
+    new=$((base + $1))
   else
-    if [[ "$1" =~ ^[+-] ]]; then
-      new=$((base + $1))
-    else
-      new=$1
-    fi
+    new=$1
   fi
 
   ((new < 20)) && new=20
   ((new > 100)) && new=100
 
   if [[ "$new" -ne "$base" ]]; then
-    set_state_lock "Previous Brightness" "$base"
-    set_state_lock "Brightness" "$new"
+    hyda_state "Previous Brightness" "$base"
+    hyda_state "Brightness" "$new"
   fi
 
   notify-send "Brightness" "<big>=====<b>$new%</b>=====</big>" -e -a "HYDA" -r 9992 -i "brightness-display-symbolic" -h string:synchronous:brightness -h int:value:$new
@@ -63,55 +58,47 @@ use_hypr() {
 }
 
 restore_hypr() {
-  local value=$(awk '/\[Previous Brightness\]/{getline; print $0}' "$state_file" 2>/dev/null)
-  
-  if [[ ! "$value" =~ ^[0-9]+$ ]] || [[ -z "$value" ]]; then
-    value=100
-  fi
-  
+  local value=$(hyda_state_get "Previous Brightness")
+  [[ -z "$value" || ! "$value" =~ ^[0-9]+$ ]] && value=100
   use_hypr "$value"
 }
 
 case $1 in
   *increase | -i)
+    shift
     if [[ "$backend" == "laptop" ]]; then
-      brightnessctl "+${2:-10}"
-    elif [[ "$backend" == "desktop" ]]; then
-      use_hypr "+${2:-10}"
+      brightnessctl "+${1:-10}"
     else
-      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
+      use_hypr "+${1:-10}"
     fi
     ;;
   *decrease | -d)
+    shift
     if [[ "$backend" == "laptop" ]]; then
-      brightnessctl "-${2:-10}"
-    elif [[ "$backend" == "desktop" ]]; then
-      use_hypr "-${2:-10}"
+      brightnessctl "-${1:-10}"
     else
-      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
+      use_hypr "-${1:-10}"
     fi
     ;;
   *restore | -r)
     if [[ "$backend" == "laptop" ]]; then
       brightnessctl -r
-    elif [[ "$backend" == "desktop" ]]; then
-      restore_hypr
     else
-      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
+      restore_hypr
     fi
     ;;
   *set | -s)
+    shift
+    if [[ -z "$1" ]]; then
+      echo
+      log_error "missing brightness value"
+      usage
+      exit 1
+    fi
     if [[ "$backend" == "laptop" ]]; then
-      brightnessctl "${2:-10}"
-    elif [[ "$backend" == "desktop" ]]; then
-      if [[ "$2" =~ ^[+-] ]]; then
-        echo -e "${bold}Error${reset}: ${error}number must be an integer like 10 or 5...${reset}${ierror}"
-        usage
-        exit 1
-      fi
-      use_hypr "${2:-10}"
+      brightnessctl "$1"
     else
-      echo -e "${bold}Error${reset}: ${error}no backlight method found...${reset}${ierror}"
+      use_hypr "$1"
     fi
     ;;
   *)

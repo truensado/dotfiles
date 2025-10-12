@@ -115,7 +115,7 @@
     "format": "{0}",
     "rotate": 0,
     "on-click": "hyprctl dispatch exec hydacli updater default", 
-    "interval": 86400,
+    "interval": 3600,
     "tooltip": true,
     "signal": 20
   },

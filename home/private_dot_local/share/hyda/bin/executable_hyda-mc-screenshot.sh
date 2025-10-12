@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# description: cli tool to copy screenshots of minecraft instance
 
 mkdir -p "$HOME/Pictures/screenshots"
 

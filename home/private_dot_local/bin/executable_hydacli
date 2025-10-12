@@ -1,104 +1,126 @@
 #!/usr/bin/env bash
 
-hydaDir="${XDG_DATA_HOME:-$HOME/.local/share}/hyda"
-hydaScript="$hydaDir/bin"
-hydaCache="${XDG_CACHE_HOME:-$HOME/.cache}/hyda"
+set -a
+
+# ---- paths
+
+hyda_dir="${XDG_DATA_HOME:-$HOME/.local/share}/hyda"
+hyda_cache="${XDG_CACHE_HOME:-$HOME/.cache}/hyda"
+hyda_lock="$hyda_cache/hyda.lock"
+hyda_log="$hyda_cache/hyda.log"
+hyda_bin="$hyda_dir/bin"
+hyda_scripts=("$hyda_bin"/hyda-*.sh)
+
+# ---- colors
+
+error=$'\e[31m'
+success=$'\e[32m'
+warning=$'\e[33m'
+info=$'\e[36m'
+reset=$'\e[0m'
+bold=$'\e[1m'
+
+# ---- icons
+
+isuccess="[✔]"
+ierror="[✖]"
+iwarning="[!]"
+iinfo="[i]"
+
+set +a
+
+# ---- logs
+
+log_success() { echo -e "${success}${isuccess}${reset} ${bold}$*${reset}"; }
+log_warning() { echo -e "${warning}${iwarning}${reset} ${bold}$*${reset}"; }
+log_error() { echo -e "${error}${ierror}${reset} ${bold}$*${reset}"; }
+log_info() { echo -e "${info}${iinfo}${reset} ${bold}$*${reset}"; }
+
+# ---- state
+
+hyda_state() {
+  local header="${1:-}" value="${2:-}"
+  if [[ -z "$header" || -z "$value" ]]; then
+    cat <<EOF
+${bold}Hyda State${reset} — manage hyda.lock
+
+${bold}Usage:${reset}
+  hyda_state <header> <value>
+
+${bold}Example:${reset}
+  hyda_state theme (${info}header${reset}) dark(${info}value${reset})
+EOF
+    return 2
+  fi
+  mkdir -p "$(dirname "$hyda_lock")"
+  touch "$hyda_lock"
+  if grep -qxF "[$header]" "$hyda_lock"; then
+    local tmp
+    tmp="$(mktemp)"
+    awk -v H="[$header]" -v V="$value" '
+      p { print V; p=0; next }
+      { print }
+      $0==H { p=1 }
+    ' "$hyda_lock" > "$tmp" && mv "$tmp" "$hyda_lock"
+  else
+    if [[ -s "$hyda_lock" ]]; then
+      printf "\n[%s]\n%s\n" "$header" "$value" >>"$hyda_lock"
+    else
+      printf "[%s]\n%s\n" "$header" "$value" >>"$hyda_lock"
+    fi
+  fi
+}
+
+hyda_state_get() {
+  local header="$1"
+  if [[ -z "$header" ]]; then
+    log_error "Usage: hyda_state_get <header>"
+    return 1
+  fi
+  awk -v H="[$header]" '
+    $0==H {getline; print; exit}
+  ' "$hyda_lock" 2>/dev/null
+}
+
+export -f log_success log_warning log_error log_info hyda_state hyda_state_get
+
+# ---- functions
 
 usage() {
   cat <<EOF
-Hyda CLI — manage all Hyda project scripts
+${bold}Hyda Cli${reset} - cli wrapper for hyda tools
 
-Usage:
+${bold}Usage:${reset}
   hydacli <command> [args...]
-
-Commands:
-  theme             Manage Hyprland themes
-  updater           Launches Updater
-  binds             Launches Keybinds Cheat Sheet
-  events            Daemon to Dynamically Change Config Based On Events
-  devices           Starts Devices Daemon That Notifies of Connected Devices
-  battery           Starts Battery Notification Daemon That Notifies of Battery Changes
-  screenshot        Takes Screenshot
-  gamemode          Toggles Animations and effects for better performance
-  reshade           Set Up Reshade for Steam Proton Game 'Credits to kevinlekiller for the script'
-  brightness        Changes Brightness
-  install           Launches pacman fzf installer
-  record            Starts and stops screenrecord
-  spotify           spotify daemon for waybar
-  audio             audio volume osd
-  switch-audio      Changes Audio Output
-
-Examples:
-  hydacli theme list
-  hydacli audio
-  hydacli update
+  
+${bold}Commands:${reset}
 EOF
+  for f in "${hyda_scripts[@]}"; do
+    [[ -f "$f" ]] || continue
+    name=$(basename "$f")
+    name="${name#hyda-}"
+    name="${name%.sh}"
+    desc=$(grep -m1 '^# description:' "$f" | cut -d':' -f2- | xargs)
+    desc="${desc:-${warning}no description found - possibly external script${reset}}"
+    printf "  hydacli %-12s %s\n" "$name" "-> ${info}$desc${reset}"
+  done
 }
 
-mkdir -p "$hydaCache"
-
 main() {
-  local cmd="$1"
-  shift || true
-
-  case "$cmd" in
-    theme)
-      "$hydaScript/hyda-theme.sh" "$@"
-      ;;
-    switch-audio)
-      "$hydaScript/hyda-switch-audio.sh" "$@"
-      ;;
-    screenshot)
-      "$hydaScript/hyda-screenshot.sh" "$@"
-      ;;
-    update)
-      "$hydaScript/hyda-update.sh" "$@"
-      ;;
-    binds)
-      "$hydaScript/hyda-binds.sh" "$@"
-      ;;
-    gamemode)
-      "$hydaScript/hyda-gamemode.sh" "$@"
-      ;;
-    events)
-      "$hydaScript/hyda-events.sh" "$@"
-      ;;
-    brightness)
-      "$hydaScript/hyda-brightness.sh" "$@"
-      ;;
-    updater)
-      "$hydaScript/hyda-updater.sh" "$@"
-      ;;
-    devices)
-      "$hydaScript/hyda-devices.sh" "$@"
-      ;;
-    battery)
-      "$hydaScript/hyda-battery.sh" "$@"
-      ;;
-    reshade)
-      "$hydaScript/hyda-reshade.sh" "$@"
-      ;;
-    install)
-      "$hydaScript/hyda-install.sh" "$@"
-      ;;
-    record)
-      "$hydaScript/hyda-record.sh" "$@"
-      ;;
-    spotify)
-      "$hydaScript/hyda-spotify.sh" "$@"
-      ;;
-    audio)
-      "$hydaScript/hyda-audio.sh" "$@"
-      ;;
-    ""|-h|--help|help)
-      usage
-      ;;
-    *)
-      echo "Unknown command: $cmd" >&2
-      usage
-      exit 1
-      ;;
-  esac
+  local cmd="$1"; shift || true
+  if [[ -z "$cmd" ]]; then
+    usage
+    exit 0
+  fi
+  local script="$hyda_bin/hyda-${cmd}.sh"
+  if [[ -f "$script" ]]; then
+    exec "$script" "$@"
+  else
+    log_error "Unknown command: $cmd"
+    echo
+    usage
+    exit 1
+  fi
 }
 
 main "$@"
