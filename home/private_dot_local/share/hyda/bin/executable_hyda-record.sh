@@ -28,7 +28,7 @@ start_record() {
 
   "${cmd_base[@]}" &
   log_info "Recording started — saving to: ${bold}$sr_file${reset}"
-  notify-send -e "Screen Recording" "Recording started" -i "replay-record" -t 3000
+  notify-send -e "Screen Recording Started" -i "replay-record" -t 3000
 }
 
 stop_record() {

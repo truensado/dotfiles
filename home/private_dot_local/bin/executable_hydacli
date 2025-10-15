@@ -2,15 +2,6 @@
 
 set -a
 
-# ---- paths
-
-hyda_dir="${XDG_DATA_HOME:-$HOME/.local/share}/hyda"
-hyda_cache="${XDG_CACHE_HOME:-$HOME/.cache}/hyda"
-hyda_lock="$hyda_cache/hyda.lock"
-hyda_log="$hyda_cache/hyda.log"
-hyda_bin="$hyda_dir/bin"
-hyda_scripts=("$hyda_bin"/hyda-*.sh)
-
 # ---- colors
 
 error=$'\e[31m'
@@ -31,10 +22,10 @@ set +a
 
 # ---- logs
 
-log_success() { echo -e "${success}${isuccess}${reset} ${bold}$*${reset}"; }
-log_warning() { echo -e "${warning}${iwarning}${reset} ${bold}$*${reset}"; }
-log_error() { echo -e "${error}${ierror}${reset} ${bold}$*${reset}"; }
-log_info() { echo -e "${info}${iinfo}${reset} ${bold}$*${reset}"; }
+log_success() { echo -e "${success}${isuccess}${reset} ${bold}$*${reset}" >&2; }
+log_warning() { echo -e "${warning}${iwarning}${reset} ${bold}$*${reset}" >&2; }
+log_error() { echo -e "${error}${ierror}${reset} ${bold}$*${reset}" >&2; }
+log_info() { echo -e "${info}${iinfo}${reset} ${bold}$*${reset}" >&2; }
 
 # ---- state
 
@@ -84,6 +75,14 @@ hyda_state_get() {
 
 export -f log_success log_warning log_error log_info hyda_state hyda_state_get
 
+# ---- paths
+
+hyda_dir="${XDG_DATA_HOME:-$HOME/.local/share}/hyda"
+hyda_cache="${XDG_CACHE_HOME:-$HOME/.cache}/hyda"
+hyda_lock="$hyda_cache/hyda.lock"
+hyda_bin="$hyda_dir/bin"
+hyda_scripts=("$hyda_bin"/hyda-*.sh)
+
 # ---- functions
 
 usage() {
@@ -114,7 +113,7 @@ main() {
   fi
   local script="$hyda_bin/hyda-${cmd}.sh"
   if [[ -f "$script" ]]; then
-    exec "$script" "$@"
+    exec -a "hyda-${cmd}" "$script" "$@"
   else
     log_error "Unknown command: $cmd"
     echo

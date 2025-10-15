@@ -114,7 +114,7 @@
     "return-type": "json",
     "format": "{0}",
     "rotate": 0,
-    "on-click": "hyprctl dispatch exec hydacli updater default", 
+    "on-click": "hyprctl dispatch exec hydacli updater", 
     "interval": 3600,
     "tooltip": true,
     "signal": 20

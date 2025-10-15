@@ -2,7 +2,7 @@
 # description: cli system updater
 
 usage() {
-  cat <<EOF
+  cat <<eof
 
 ${bold}Hyda Updater${reset} — cli tool for managing updates
 
@@ -16,7 +16,7 @@ ${bold}Example:${reset}
   hydacli updater --notify
   hydacli updater waybar
   hydacli updater
-EOF
+eof
 }
 
 do_notify() {
@@ -28,8 +28,8 @@ get_aur() {
   local helper
   for helper in paru yay; do
     if command -v "$helper" &>/dev/null; then
-      aur=$("$helper" -Qua 2>/dev/null | wc -l)
-      hyda_state "Update Aur Cache" "$aur"
+      aur=$("$helper" -qua 2>/dev/null | wc -l)
+      hyda_state "update aur cache" "$aur"
       return
     fi
   done
@@ -70,7 +70,7 @@ get_deps() {
   local deps=(topgrade)
   for dep in "${deps[@]}"; do
     if ! command -v "$dep" &>/dev/null; then
-      log_error "Missing dependency: ${bold}$dep${reset}"
+      log_error "missing dependency: ${bold}$dep${reset}"
       notify-send -e "Missing dependency: $dep"
       exit 1
     fi
@@ -85,8 +85,6 @@ do_waybar() {
   else
     echo "{\"text\":\"\", \"tooltip\":\" Packages are up to date\"}"
   fi
-  echo "last-time:$last"
-  echo "diff-time:$diff"
 }
 
 notify_updates() {
@@ -99,7 +97,7 @@ notify_updates() {
   elif (( aur > 0 )); then
     title="AUR Updates Available"; msg="AUR: $aur"
   else
-    log_info "No updates available."
+    log_info "no updates available."
     do_notify "normal" "System is up to date"
     return
   fi
@@ -131,7 +129,7 @@ main() {
       if (( ofc > 0 || aur > 0 )); then
         launch_update
       else
-        log_info "No updates available."
+        log_info "no updates available."
       fi
       ;;
   esac
