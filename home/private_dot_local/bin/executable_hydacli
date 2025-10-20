@@ -2,6 +2,17 @@
 
 set -a
 
+# ---- paths
+
+hyda_dir="${XDG_DATA_HOME:-$HOME/.local/share}/hyda"
+hyda_cache="${XDG_CACHE_HOME:-$HOME/.cache}/hyda"
+hyda_lock="$hyda_cache/hyda.lock"
+hyda_bin="$hyda_dir/bin"
+hyda_scripts=("$hyda_bin"/hyda-*.sh)
+rofi_themes="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/configs"
+ROFI_SELECTOR_THEME="${rofi_theme}/configs/selector.rasi"
+ROFI_PROMPT_THEME="${rofi_theme}/configs/prompt.rasi"
+
 # ---- colors
 
 error=$'\e[31m'
@@ -30,58 +41,91 @@ log_info() { echo -e "${info}${iinfo}${reset} ${bold}$*${reset}" >&2; }
 # ---- state
 
 hyda_state() {
-  local header="${1:-}" value="${2:-}"
-  if [[ -z "$header" || -z "$value" ]]; then
-    cat <<EOF
-${bold}Hyda State${reset} — manage hyda.lock
+  local header="${1:-}" key="${2:-}" value="${3:-}"
 
-${bold}Usage:${reset}
-  hyda_state <header> <value>
-
-${bold}Example:${reset}
-  hyda_state theme (${info}header${reset}) dark(${info}value${reset})
-EOF
+  if [[ -z "$header" || -z "$key" || -z "$value" ]]; then
+    log_error "Usage: hyda_state <header> <key> <value>" 
+    log_info "missing args: header=($header) key=($key) value=($value)"
     return 2
   fi
+
   mkdir -p "$(dirname "$hyda_lock")"
   touch "$hyda_lock"
-  if grep -qxF "[$header]" "$hyda_lock"; then
-    local tmp
-    tmp="$(mktemp)"
-    awk -v H="[$header]" -v V="$value" '
-      p { print V; p=0; next }
-      { print }
-      $0==H { p=1 }
-    ' "$hyda_lock" > "$tmp" && mv "$tmp" "$hyda_lock"
-  else
-    if [[ -s "$hyda_lock" ]]; then
-      printf "\n[%s]\n%s\n" "$header" "$value" >>"$hyda_lock"
-    else
-      printf "[%s]\n%s\n" "$header" "$value" >>"$hyda_lock"
-    fi
-  fi
+
+  local tmp
+  tmp="$(mktemp)"
+
+  awk -v HEADER="[$header]" -v KEY="$key" -v VALUE="$value" '
+    BEGIN {
+      in_section = 0
+      header_found = 0
+      key_written = 0
+    }
+
+    # When we hit any header line
+    /^\[.*\]/ {
+      # If we were inside target section and key wasn’t written yet
+      if (in_section && !key_written) {
+        print KEY ": " VALUE
+      }
+
+      # Start new section if it matches
+      in_section = ($0 == HEADER)
+      if (in_section) {
+        header_found = 1
+      }
+
+      print
+      next
+    }
+
+    # Inside target section: update or print
+    in_section {
+      if ($0 ~ "^" KEY ":[[:space:]]*") {
+        print KEY ": " VALUE
+        key_written = 1
+      } else {
+        print
+      }
+      next
+    }
+
+    # Default print for other lines
+    { print }
+
+    END {
+      # If header never appeared, add it
+      if (!header_found) {
+        if (NR > 0) print ""
+        print HEADER
+        print KEY ": " VALUE
+      } 
+      # If header appeared but we reached EOF while still in it
+      else if (in_section && !key_written) {
+        print KEY ": " VALUE
+      }
+    }
+  ' "$hyda_lock" > "$tmp" && mv "$tmp" "$hyda_lock"
 }
 
 hyda_state_get() {
-  local header="$1"
-  if [[ -z "$header" ]]; then
-    log_error "Usage: hyda_state_get <header>"
+  local header="$1" key="$2"
+  if [[ -z "$header" || -z "$key" ]]; then
+    log_error "Usage: hyda_state_get <header> <key>"
     return 1
   fi
-  awk -v H="[$header]" '
-    $0==H {getline; print; exit}
+
+  awk -v HEADER="[$header]" -v KEY="$key" '
+    $0 == HEADER { found=1; next }
+    found && /^\[.*\]/ { exit }
+    found && $0 ~ "^" KEY ":[[:space:]]*" {
+      sub("^" KEY ":[[:space:]]*", "")
+      print; exit
+    }
   ' "$hyda_lock" 2>/dev/null
 }
 
 export -f log_success log_warning log_error log_info hyda_state hyda_state_get
-
-# ---- paths
-
-hyda_dir="${XDG_DATA_HOME:-$HOME/.local/share}/hyda"
-hyda_cache="${XDG_CACHE_HOME:-$HOME/.cache}/hyda"
-hyda_lock="$hyda_cache/hyda.lock"
-hyda_bin="$hyda_dir/bin"
-hyda_scripts=("$hyda_bin"/hyda-*.sh)
 
 # ---- functions
 

@@ -30,8 +30,8 @@ else
 fi
 
 use_hypr() {
-  local base=$(hyda_state_get "Brightness" | tr -dc '0-9')
-  local prev=$(hyda_state_get "Previous Brightness" | tr -dc '0-9')
+  local base=$(hyda_state_get "Brightness" "current")
+  local prev=$(hyda_state_get "Brightness" "previous")
 
   [[ -z "$base" ]] && base=100
   [[ -z "$prev" ]] && prev=$base
@@ -49,8 +49,8 @@ use_hypr() {
   ((new > 100)) && new=100
 
   if [[ "$new" -ne "$base" ]]; then
-    hyda_state "Previous Brightness" "$base"
-    hyda_state "Brightness" "$new"
+    hyda_state "Brightness" "previous" "$base"
+    hyda_state "Brightness" "current" "$new"
   fi
 
   notify-send "Brightness" "<big>=====<b>$new%</b>=====</big>" -e -a "HYDA" -r 9992 -i "brightness-display-symbolic" -h string:synchronous:brightness -h int:value:$new
@@ -58,7 +58,7 @@ use_hypr() {
 }
 
 restore_hypr() {
-  local value=$(hyda_state_get "Previous Brightness")
+  local value=$(hyda_state_get "Brightness" "previous" | tr -dc '0-9')
   [[ -z "$value" || ! "$value" =~ ^[0-9]+$ ]] && value=100
   use_hypr "$value"
 }
