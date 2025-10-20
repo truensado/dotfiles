@@ -53,7 +53,8 @@ get_stat() {
         prev_stat=$cur_stat
         local urgency=$([[ "$cur_perc" -ge $full_threshold ]] && echo "critical" || echo "normal")
         local rounded=$(printf "%1d" $(((cur_perc + 5) / 10 * 10)))
-        do_notify "${urgency:-normal}" "battery-level-${rounded:-100}-charging-symbolic" "Charger Plugged" "Battery is at $cur_perc%."
+        local charg_stat=$([[ "$rounded" -eq 100 ]] && echo "charged" || echo "charging")
+        do_notify "${urgency:-normal}" "battery-level-${rounded:-100}-${charg_stat:-charging}-symbolic" "Charger Plugged" "Battery is at $cur_perc%."
       fi
       get_perc
       ;;
