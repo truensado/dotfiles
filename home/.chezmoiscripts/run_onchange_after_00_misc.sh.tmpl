@@ -1,23 +1,21 @@
 #!/usr/bin/env bash
 
-do_nextcloud() {
-  if command -v nextcloud &> /dev/null; then
-    
-    local path="{{ .chezmoi.homeDir }}/.config/Nextcloud/nextcloud.cfg"
-    local value="showMainDialogAsNormalWindow=true"
-    
-    mkdir -p "$(dirname "$path")"
-    
-    if [ ! -f "$path" ]; then
-      printf "[General]\n%s=%s\n" "$value" >"$path"
-    elif ! grep -q "^${value}\$" "$path"; then
-      if grep -q "^\[General\]" "$path"; then
-        sed -i "/\[General\]/a $value" "$path"
-      else
-        printf "\n[General]\n%s\n" "$value" >> "$path"
-      fi
-    fi
+scrDir="{{ .chezmoi.sourceDir }}/.chezmoiscripts/lib"
+source "${scrDir}/run_vars.sh"
 
+do_nextcloud() {
+  if command -v nextcloud &>/dev/null; then
+    local path="{{ .chezmoi.homeDir }}/.config/Nextcloud/nextcloud.cfg"
+    local key="showMainDialogAsNormalWindow"
+    local value="true"
+
+    mkdir -p "$(dirname "$path")"
+
+    if [[ ! -f "$path" ]]; then
+      printf "[General]\n%s=%s\n" "$key" "$value" > "$path"
+    elif ! grep -q "^$key=$value\$" "$path"; then
+      grep -q "^\[General\]" "$path" && sed -i "/^\[General\]/a $key=$value" "$path" || printf "\n[General]\n%s=%s\n" "$key" "$value" >> "$path"
+    fi
   fi
 }
 
@@ -25,28 +23,35 @@ do_autologin() {
   local path="/etc/systemd/system/getty@tty1.service.d"
   local file="$path/autologin.conf"
 
-  sudo mkdir -p "$path"
-  
   if [[ ! -f "$file" ]]; then
+    sudo mkdir -p "$path"
+
     sudo tee "$file" > /dev/null <<'EOF'
 [Service]
 ExecStart=
 ExecStart=-/sbin/agetty --autologin {{ .chezmoi.username }} --noclear -o '-p -f -- \\u' %I linux
 EOF
 
-  sudo systemctl daemon-reload
-  sudo systemctl enable getty@tty1
-  sudo systemctl restart getty@tty1
+    sudo systemctl daemon-reload
 
+    if ! systemctl is-enabled getty@tty1 &> /dev/null; then
+      sudo systemctl enable getty@tty1
+    fi
+
+    sudo systemctl restart getty@tty1
   fi
 }
 
 do_yazi() {
   if command -v ya &> /dev/null; then
-    ya pkg install && ya pkg upgrade
+    ya pkg install && ya pkg upgrade || log_error "ya pkg command failed"
   fi
 }
 
-do_autologin
-do_nextcloud
-do_yazi
+main() {
+  do_nextcloud
+  do_yazi
+  do_autologin
+}
+
+main

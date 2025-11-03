@@ -15,14 +15,21 @@ map("n", "ss", ":vsplit<Return>", opts)
 map("n", "sh", ":split<Return>", opts)
 
 -- quick paste in directions
-map("n", "<leader><Down>", "p", opts)
-map("n", "<leader><Up>", "P", opts)
+map("n", "<leader><S-Down>", "p", opts)
+map("n", "<leader><S-Up>", "P", opts)
+
+-- quick paste in directions
+map("n", "<leader>g", ":%y<CR>", opts)
 
 -- Indent left / right
 map("v", "<leader><Left>", "<gv", opts)
 map("v", "<leader><Right>", ">gv", opts)
 map("n", "<leader><Left>", "<<", opts)
 map("n", "<leader><Right>", ">>", opts)
+
+-- move line up / down
+map("n", "<leader><Up>", ":m .-2<CR>==", opts)
+map("n", "<leader><Down>", ":m .+1<CR>==", opts)
 
 -- Select block
 map("n", "<leader>v", "<C-v>", opts)

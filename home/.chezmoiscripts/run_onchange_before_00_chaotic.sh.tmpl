@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+scrDir="{{ .chezmoi.sourceDir }}/.chezmoiscripts/lib"
+source "${scrDir}/run_vars.sh"
+
+pacman_conf="/etc/pacman.conf"
+
+chaotic_key=3056513887B78AEB
+chaotic_key_full=EF925EA60F33D0CB85C44AD13056513887B78AEB
+
+if grep -q "chaotic-aur" "$pacman_conf"; then
+  log_info "chaotic aur already set up"
+  exit 0
+fi
+
+backup_chaotic() {
+  log_info "backing up pacman.conf"
+  sudo cp "$pacman_path" "$pacman_path.bak.$(date +%s)"
+}
+
+write_chaotic() {
+  backup_chaotic
+  log_info "writing to pacman.conf"
+  printf "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist\n" | sudo tee -a "$pacman_path" > /dev/null
+}
+
+install_chaotic() {
+  trap 'error_chaotic' ERR
+  log_info "installing chaotic aur"
+  sudo pacman-key --recv-key "$chaotic_key" --keyserver keyserver.ubuntu.com
+  sudo pacman-key --lsign-key "$chaotic_key"
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
+  sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
+  write_chaotic
+  sudo pacman -Sy
+  log_success "chaotic aur installed"
+  exit 0
+}
+
+clean_chaotic() {
+  log_warning "cleaning up chaotic entries"
+  sudo pacman-key --list-keys "$chaotic_key" &> /dev/null && sudo pacman-key --delete "$chaotic_key_full" || true
+  pacman -Qq chaotic-keyring &> /dev/null && sudo pacman -Rns --noconfirm chaotic-keyring || true
+  pacman -Qq chaotic-mirrorlist &> /dev/null && sudo pacman -Rns --noconfirm chaotic-mirrorlist || true
+  sudo sed -i '/chaotic-aur/d' "$pacman_path" || true
+  sudo sed -i '/chaotic-mirrorlist/d' "$pacman_path" || true
+  sudo pacman -Sy
+}
+
+error_chaotic() {
+  tput setaf 1
+  log_error "install failed - reverting"
+  tput sgr0
+  clean_chaotic
+  log_success "revert successful"
+  exit 1
+}
+
+install_chaotic

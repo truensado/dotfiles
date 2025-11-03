@@ -27,9 +27,13 @@
 {{ if not .personal -}}
 .config/vivaldi
 .secrets
+.chezmoiscripts/personal/**
 {{ end -}}
 
 {{ if not .desktop -}}
 .local/share/PrismLauncher
 .config/hypr/hyprsunset.conf
+.chezmoiscripts/desktop/**
 {{ end -}}
+
+.chezmoiscripts/lib/**

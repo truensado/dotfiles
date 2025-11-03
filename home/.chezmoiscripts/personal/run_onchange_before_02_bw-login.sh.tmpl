@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+scrDir="{{ .chezmoi.sourceDir }}/.chezmoiscripts/lib"
+source "${scrDir}/run_vars.sh"
+
+if ! command -v bw &>/dev/null; then
+  log_info "installing ${bold}bitwarden-cli${reset}"
+  sudo pacman -S --needed --noconfirm bitwarden-cli
+fi
+
+if ! bw login --check &> /dev/null; then
+  log_info "logging into bitwarden"
+  bw config server "{{ .bw_url }}"
+  bw login {{ .bw_login }}
+fi

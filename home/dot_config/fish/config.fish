@@ -119,31 +119,32 @@ end
 # ----  Aliases
 
 alias fp='faillock --user $USER --reset'
-alias chia='chezmoi init --apply'
-alias tka='tmux kill-sessions -a'
-alias tkt='tmux kill-session -t'
-alias ff='clear;fastfetch'
-alias cha='chezmoi apply'
-alias gca='git commit -am'
-alias cha='chezmoi init'
-alias chc='chezmoi cd'
-alias gb='git branch'
-alias gc='git clone'
-alias gpl='git pull'
-alias gps='git push'
-alias gd='git diff'
-alias gi='git init'
-alias ga='git add'
-alias tl='tmux ls'
-alias ch='chezmoi'
 alias cc='clear'
+alias ff='clear; fastfetch'
 alias mp='mkdir -p'
 
+alias cha='chezmoi apply'
+alias chi='chezmoi init --apply'
+alias chc='chezmoi cd'
+
+alias ga='git add'
+alias gb='git branch'
+alias gc='git clone'
+alias gci='git commit -am'
+alias gd='git diff'
+alias gi='git init'
+alias gpl='git pull'
+alias gps='git push'
+
+alias tl='tmux ls'
+alias tka='tmux kill-session -a'
+alias tkt='tmux kill-session -t'
+
 if type -q eza
-  alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
-  alias lt='eza --icons=auto --tree'
-  alias ld='eza -lhD --icons=auto'
   alias l='eza -lh --icons=auto'
+  alias ll='eza -lha --icons=auto --sort=name --group-directories-first'
+  alias ld='eza -lhD --icons=auto'
+  alias lt='eza --icons=auto --tree'
   alias ls='eza -1 --icons=auto'
 end
 
