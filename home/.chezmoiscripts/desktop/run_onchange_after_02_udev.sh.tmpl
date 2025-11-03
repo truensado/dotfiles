@@ -31,14 +31,14 @@ set_udev() {
     fi
   done
 
-  sudo chmod 0644 "${udev_path}"/*.rules
-
-  if [[ "$installed" -eq 0 ]]; then
+  if [[ "$installed" -eq 1 ]]; then
+    log_info "finishing udev rules"
+    sudo chmod 0644 "${udev_path}"/*.rules
+    sudo udevadm control --reload-rules
+    sudo udevadm trigger
+  elif [[ "$installed" -eq 0 ]]; then
     log_info "udev rules already set up"
   fi
-
-  sudo udevadm control --reload-rules
-  sudo udevadm trigger
 }
 
 main() {

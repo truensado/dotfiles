@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+scrDir="{{ .chezmoi.sourceDir }}/.chezmoiscripts/lib"
+source "${scrDir}/run_vars.sh"
+
 if command -v paru &> /dev/null; then
   aur=paru
 elif command -v yay &> /dev/null; then
@@ -10,10 +13,15 @@ fi
 
 {{- $packages := includeTemplate "packages" . | fromYaml }}
 
+log_info "installing pacman packages"
+
 sudo -v
 
 sudo pacman -Syu --needed {{ $packages.packages.pacman | join " " }} || true
 
 if [[ $aur != "false" ]]; then
+  log_info "installing aur packages"
   $aur -S --needed {{ $packages.packages.aur | join " " }} || true
+else
+  log_warning "aur helper not found"
 fi

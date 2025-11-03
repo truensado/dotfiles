@@ -5,7 +5,7 @@
 error=$'\e[31m'
 success=$'\e[32m'
 warning=$'\e[33m'
-info=$'\e[36m'
+info=$'\e[34m'
 reset=$'\e[0m'
 bold=$'\e[1m'
 
